@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Histórias animadas com Claude | do zero ao Reel</title>
+<meta name="description" content="Aprenda a fazer episódios animados de sobrevivência com o Claude, sem saber desenhar nem programar. 16 aulas curtas, o kit pronto e como ganhar dinheiro com os vídeos.">
+<meta property="og:title" content="Histórias animadas com Claude">
+<meta property="og:description" content="Faça episódios animados de sobrevivência com o Claude, sem saber desenhar nem programar.">
+<meta property="og:image" content="midia/vsl-capa.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!--
+  Página de vendas do curso (20/10/2026). Uma página só, sem dependência: hospeda no GitHub Pages.
+  O LINK DO CHECKOUT fica num lugar só, na constante CHECKOUT do script lá embaixo.
+  Mesmas cores dos episódios: azul-noite, âmbar, creme, vermelho e verde.
+-->
+<style>
+  :root {
+    --fundo: #101319; --fundo2: #1a2131; --cartao: #1c2434; --borda: #2c3750;
+    --creme: #ece3cf; --cinza: #9aa1ad; --ambar: #e9a23b; --vermelho: #d0413a; --verde: #5f9a5a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--fundo); color: var(--creme); font-family: Inter, system-ui, sans-serif; font-size: 17px; line-height: 1.55; }
+  h1, h2, h3, .oswald { font-family: Oswald, Impact, sans-serif; text-transform: uppercase; line-height: 1.08; margin: 0; }
+  h1 { font-size: clamp(27px, 7vw, 56px); }
+  h2 { font-size: clamp(28px, 6vw, 42px); margin-bottom: 22px; }
+  h3 { font-size: 22px; }
+  .ambar { color: var(--ambar); }
+  .cinza { color: var(--cinza); }
+  section { padding: 56px 16px; }
+  .miolo { max-width: 960px; margin: 0 auto; }
+  .estreito { max-width: 680px; margin: 0 auto; }
+  .rotulo { display: inline-block; background: var(--vermelho); color: #fff; font-family: Oswald, sans-serif; font-weight: 600; letter-spacing: .12em; font-size: 14px; padding: 4px 12px; border-radius: 6px; margin-bottom: 14px; }
+
+  /* topo */
+  .topo { padding: 14px 16px; border-bottom: 1px solid var(--borda); }
+  .topo .miolo { display: flex; align-items: center; gap: 10px; }
+  .topo .marca { font-family: Oswald, sans-serif; font-weight: 600; letter-spacing: .14em; font-size: 15px; color: var(--cinza); }
+  .topo .marca::before { content: ""; display: inline-block; width: 8px; height: 22px; background: var(--ambar); vertical-align: -4px; margin-right: 10px; }
+
+  /* primeira dobra: a VSL e o botão */
+  .heroi { text-align: center; padding-top: 20px; background: radial-gradient(ellipse at 70% 0%, var(--fundo2), var(--fundo) 70%); }
+  .heroi p.sub { color: var(--cinza); font-size: 16px; margin: 10px auto 16px; max-width: 560px; }
+  .heroi .rotulo { margin-bottom: 10px; }
+  .vsl { position: relative; width: min(100%, 380px, 52vh); margin: 0 auto 20px; border-radius: 26px; overflow: hidden; border: 4px solid #2a3244; background: #000; aspect-ratio: 9 / 16; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .vsl video { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .botao { display: inline-block; background: var(--verde); color: #fff; text-decoration: none; font-family: Oswald, sans-serif; font-weight: 600; font-size: 24px; letter-spacing: .04em; text-transform: uppercase; padding: 18px 34px; border-radius: 999px; box-shadow: 0 8px 0 #3f6e3b; transition: transform .1s, box-shadow .1s; }
+  .botao:active { transform: translateY(5px); box-shadow: 0 3px 0 #3f6e3b; }
+  .botao small { display: block; font-family: Inter, sans-serif; font-weight: 500; font-size: 13px; text-transform: none; letter-spacing: 0; opacity: .9; margin-top: 2px; }
+  .seguro { color: var(--cinza); font-size: 14px; margin-top: 16px; }
+
+  /* cartões e grades */
+  .grade { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: 18px; padding: 22px; }
+  .cartao p { margin: 8px 0 0; color: var(--cinza); }
+  .quadros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
+  .quadros img { width: 150px; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 14px; border: 3px solid #2a3244; flex: none; scroll-snap-align: start; }
+
+  /* passos */
+  .passos { counter-reset: passo; display: grid; gap: 12px; }
+  .passo { display: flex; gap: 16px; align-items: center; background: var(--cartao); border: 1px solid var(--borda); border-radius: 16px; padding: 16px 18px; }
+  .passo::before { counter-increment: passo; content: counter(passo); flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--ambar); color: var(--fundo); font-family: Oswald, sans-serif; font-weight: 700; font-size: 24px; display: grid; place-items: center; }
+
+  /* aulas */
+  .aulas { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .modulo { font-size: 18px; line-height: 1.3; color: var(--ambar); letter-spacing: .06em; margin: 26px 0 12px; }
+  .aulas li { display: grid; gap: 4px; padding: 14px 18px; background: var(--cartao); border-radius: 12px; border-left: 5px solid var(--ambar); }
+  .aulas li strong { font-weight: 600; }
+  .aulas li span { color: var(--cinza); font-size: 15px; line-height: 1.45; }
+
+  /* listas com marca */
+  ul.marcas { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  ul.marcas li { padding-left: 34px; position: relative; }
+  ul.marcas li::before { content: ""; position: absolute; left: 0; top: 4px; width: 20px; height: 11px; border-left: 4px solid var(--verde); border-bottom: 4px solid var(--verde); transform: rotate(-45deg); }
+  ul.nao li::before { width: 18px; height: 18px; border: none; top: 3px; transform: none; background: linear-gradient(45deg, transparent 42%, var(--vermelho) 42% 58%, transparent 58%), linear-gradient(-45deg, transparent 42%, var(--vermelho) 42% 58%, transparent 58%); }
+
+  /* oferta */
+  .oferta { text-align: center; background: var(--cartao); border: 2px solid var(--ambar); border-radius: 24px; padding: 34px 20px; }
+  .preco { font-family: Oswald, sans-serif; font-weight: 700; font-size: clamp(72px, 18vw, 110px); color: var(--ambar); line-height: 1; margin: 6px 0 4px; }
+  .garantia { display: flex; gap: 16px; align-items: center; text-align: left; border: 2px solid var(--verde); border-radius: 18px; padding: 18px 20px; margin-top: 24px; }
+  .garantia .selo { flex: none; width: 74px; height: 74px; border-radius: 50%; border: 4px solid var(--verde); display: grid; place-items: center; font-family: Oswald, sans-serif; font-weight: 700; font-size: 30px; color: var(--verde); line-height: .9; text-align: center; }
+  .garantia .selo small { display: block; font-size: 12px; letter-spacing: .1em; }
+
+  /* perguntas */
+  details { background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; list-style: none; position: relative; padding-right: 28px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: 0; top: -2px; color: var(--ambar); font-size: 24px; font-weight: 600; }
+  details[open] summary::after { content: "−"; }
+  details p { color: var(--cinza); margin: 10px 0 0; }
+
+  footer { padding: 34px 16px 110px; text-align: center; color: var(--cinza); font-size: 13px; border-top: 1px solid var(--borda); }
+
+  /* o botão que acompanha a rolagem no celular, depois da primeira dobra */
+  .fixo { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(16,19,25,.94); border-top: 1px solid var(--borda); text-align: center; transform: translateY(110%); transition: transform .25s; z-index: 10; }
+  .fixo.visivel { transform: none; }
+  .fixo .botao { font-size: 20px; padding: 13px 26px; width: 100%; max-width: 420px; box-shadow: none; animation: none; }
+  @media (min-width: 900px) { .fixo { display: none; } }
+
+  /* ===== animações ===== */
+  /* o botão pulsa de leve e um brilho passa por ele; no toque ele afunda */
+  .botao { position: relative; overflow: hidden; animation: pulso 2.6s ease-in-out infinite; }
+  .botao::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent); transform: skewX(-20deg); animation: brilho 3.2s ease-in-out infinite; }
+  .botao:hover { filter: brightness(1.08); }
+  .botao:active, .heroi .botao:active { animation: none; transform: translateY(5px) scale(.98); box-shadow: 0 3px 0 #3f6e3b; }
+  @keyframes pulso { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+  @keyframes brilho { 0%, 55% { left: -60%; } 85%, 100% { left: 130%; } }
+
+  /* entrada da primeira dobra */
+  .heroi .rotulo { animation: cair .6s ease-out both; }
+  .heroi h1 { animation: subir .7s .1s ease-out both; }
+  .heroi p.sub { animation: subir .7s .25s ease-out both; }
+  .heroi .vsl { animation: subir .8s .4s ease-out both, brilhoVsl 3s 1.2s ease-in-out infinite; }
+  .heroi .botao { animation: subir .7s .6s ease-out both, pulso 2.6s 1.4s ease-in-out infinite; }
+  @keyframes subir { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  @keyframes cair { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+  @keyframes brilhoVsl { 0%, 100% { box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 0 rgba(233,162,59,0); } 50% { box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 34px 4px rgba(233,162,59,.35); } }
+
+  /* o que entra na tela ao rolar: sobe e aparece, um depois do outro */
+  .revela { opacity: 0; transform: translateY(28px); transition: opacity .6s ease-out, transform .6s ease-out; transition-delay: var(--atraso, 0s); }
+  .revela.visto { opacity: 1; transform: none; }
+
+  /* cartões e passos reagem ao toque e ao mouse */
+  .cartao, .passo, .aulas li { transition: transform .25s, border-color .2s, opacity .6s ease-out var(--atraso, 0s); }
+  .cartao:hover, .passo:hover, .aulas li:hover { transform: translateY(-3px); border-color: var(--ambar); }
+  .passo.visto::before { animation: carimbo .5s var(--atraso, 0s) ease-out both; }
+  @keyframes carimbo { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+  /* o preço salta quando aparece, e o selo da garantia balança de leve */
+  .preco.visto { animation: salto .7s ease-out both; }
+  @keyframes salto { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+  .garantia .selo { animation: balanca 4s ease-in-out infinite; }
+  @keyframes balanca { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+
+  /* perguntas: o + vira x e a resposta desce */
+  summary::after { transition: transform .25s; }
+  details[open] summary::after { content: "+"; transform: rotate(45deg); }
+  details[open] p { animation: subir .35s ease-out both; }
+
+  /* os quadros do episódio deslizam sozinhos */
+  .quadros img { transition: transform .25s; }
+  .quadros img:hover { transform: scale(1.04); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .revela { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topo"><div class="miolo"><span class="marca">Histórias animadas com Claude</span></div></header>
+
+<section class="heroi">
+  <div class="miolo">
+    <span class="rotulo">Curso + kit pronto</span>
+    <h1>Faça episódios animados de <span class="ambar">sobrevivência</span> com o Claude</h1>
+    <p class="sub">Sem saber desenhar, animar ou programar. Assista o vídeo:</p>
+    <div class="vsl">
+      <video src="midia/vsl.mp4" poster="midia/vsl-capa.jpg" controls playsinline preload="metadata"></video>
+    </div>
+    <a class="botao comprar" href="#">Quero começar<small>R$ 47, pagamento único</small></a>
+    <p class="seguro">Acesso logo depois da compra · 7 dias de garantia</p>
+  </div>
+</section>
+
+<section>
+  <div class="miolo">
+    <h2>O que você vai <span class="ambar">fazer</span></h2>
+    <p class="cinza" style="margin-top:-8px">Episódios como este, com gancho, voz, legenda e música, prontos pra Reels, TikTok e Shorts.</p>
+    <div class="quadros" aria-label="Cenas de um episódio feito com o kit">
+      <img src="midia/cidade.jpg" alt="Fachada de hospital à noite" loading="lazy">
+      <img src="midia/enfermaria.jpg" alt="Técnico de enfermagem na enfermaria" loading="lazy">
+      <img src="midia/corte.jpg" alt="Prédio em corte com os andares" loading="lazy">
+      <img src="midia/escada.jpg" alt="Porta corta-fogo da escada" loading="lazy">
+      <img src="midia/lista.jpg" alt="Lista de itens" loading="lazy">
+      <img src="midia/final.jpg" alt="Cartela final com o botão seguir" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--fundo2)">
+  <div class="estreito">
+    <h2>Como <span class="ambar">funciona</span></h2>
+    <div class="passos">
+      <div class="passo"><div><h3>Você escreve o tema</h3><span class="cinza">O cenário, quem está lá e a lógica do lugar.</span></div></div>
+      <div class="passo"><div><h3>O Claude escreve o roteiro</h3><span class="cinza">Na estrutura que prende, e um revisor confere as dicas.</span></div></div>
+      <div class="passo"><div><h3>O kit desenha as cenas</h3><span class="cinza">Personagens, prédio em corte, alertas, cronômetro.</span></div></div>
+      <div class="passo"><div><h3>Voz, legenda e música</h3><span class="cinza">A narração, a legenda no ritmo da fala e o som mixado.</span></div></div>
+      <div class="passo"><div><h3>Episódio pronto</h3><span class="cinza">Depois da máquina preparada, uns 10 minutos por episódio.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="estreito">
+    <h2>As <span class="ambar">16 aulas</span></h2>
+    <h3 class="modulo">Módulo 1 · Do zero ao Reel</h3>
+    <ul class="aulas">
+      <li><strong>0 · Boas-vindas</strong><span>O que você vai fazer no curso, o que vem no kit e o que precisa ter.</span></li>
+      <li><strong>1 · O formato que prende</strong><span>A estrutura em 11 passos que segura quem assiste, e as 4 regras que a gente aprendeu errando.</span></li>
+      <li><strong>2 · Preparando a máquina</strong><span>O Claude instala tudo pra você, você cria a chave grátis da voz e testa se está tudo pronto.</span></li>
+      <li><strong>3 · O roteiro com o Claude</strong><span>Como escrever um tema bom, o revisor que confere as dicas e como pedir ajuste com as suas palavras.</span></li>
+      <li><strong>4 · O visual</strong><span>As cenas, os personagens e os elementos na tela, e como pedir uma cena nova que o kit ainda não tem.</span></li>
+      <li><strong>5 · Voz, legenda e som</strong><span>Como escolher a voz de ouvido, a legenda no ritmo da fala e música que não toma reivindicação.</span></li>
+      <li><strong>6 · Renderizar e revisar</strong><span>O vídeo pronto em minutos e a revisão pela folha de quadros, pra não publicar com erro.</span></li>
+      <li><strong>7 · Publicar e crescer</strong><span>A capa no recorte certo, o perfil, a legenda com pergunta e o mesmo vídeo no Reels, TikTok e Shorts.</span></li>
+      <li><strong>8 · Do episódio 1 à série</strong><span>A parte 2 que continua de onde parou, as regras que não mudam e como abrir séries novas.</span></li>
+    </ul>
+    <h3 class="modulo">Módulo 2 · Ganhar dinheiro com os vídeos</h3>
+    <ul class="aulas">
+      <li><strong>9 · Os quatro caminhos</strong><span>A plataforma que paga pelas views, a publi, o afiliado e o produto próprio, e o que cada um exige.</span></li>
+      <li><strong>10 · Monetização no TikTok</strong><span>Os requisitos do Programa de Recompensas, o que conta como vídeo original e como se inscrever.</span></li>
+      <li><strong>11 · YouTube Shorts e Facebook</strong><span>O que cada um pede pra pagar, e a regra de conteúdo repetitivo que todo criador de série precisa conhecer.</span></li>
+      <li><strong>12 · Publi e afiliados</strong><span>O mídia kit feito pelo Claude, como avisar a publicidade e a lista de compras que sai do próprio episódio.</span></li>
+      <li><strong>13 · Criar o seu produto</strong><span>Como este curso foi feito com o Claude: a estrutura, as aulas, o material, o preço e a garantia.</span></li>
+      <li><strong>14 · Página de vendas e VSL</strong><span>A página deste curso, parte por parte, o vídeo que vende e o checkout que cobra e libera o acesso.</span></li>
+      <li><strong>15 · Vender no Instagram e no TikTok</strong><span>Onde fica o link, o conteúdo que leva à venda sem estragar a página, e o que nunca fazer.</span></li>
+    </ul>
+    <p class="cinza">Aulas curtas, direto ao ponto. As regras de cada plataforma foram conferidas nas páginas oficiais em outubro de 2026.</p>
+  </div>
+</section>
+
+<section style="background:var(--fundo2)">
+  <div class="miolo">
+    <h2>O que vem <span class="ambar">junto</span></h2>
+    <div class="grade">
+      <div class="cartao"><h3 class="ambar">O kit</h3><p>O motor pronto que faz o episódio inteiro: roteirista, cenas, voz, legenda, som e render, num pedido só.</p></div>
+      <div class="cartao"><h3 class="ambar">O guia</h3><p>A instalação passo a passo, o molde do tema, os checklists e os pedidos prontos pra colar no Claude.</p></div>
+      <div class="cartao"><h3 class="ambar">Um episódio de exemplo</h3><p>Um episódio completo pra você ver o resultado e testar um ajuste antes de fazer o seu.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="miolo grade">
+    <div class="cartao">
+      <h3>É pra você se</h3>
+      <ul class="marcas" style="margin-top:14px">
+        <li>quer começar uma página de histórias no Instagram ou no TikTok</li>
+        <li>nunca programou e quer usar a IA pra trabalhar por você</li>
+        <li>quer um método pra fazer episódio toda semana, sem depender de editor</li>
+        <li>quer conhecer os caminhos pra ganhar dinheiro com a página</li>
+      </ul>
+    </div>
+    <div class="cartao">
+      <h3>Não é pra você se</h3>
+      <ul class="marcas nao" style="margin-top:14px">
+        <li>procura seguidor garantido ou dinheiro rápido</li>
+        <li>usa só Mac ou só celular (por enquanto, é Windows)</li>
+        <li>não quer assinar o Claude</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--fundo2)">
+  <div class="estreito">
+    <h2>O que você <span class="ambar">precisa ter</span></h2>
+    <ul class="marcas">
+      <li><strong>Um computador com Windows</strong>, com uns 5 GB livres</li>
+      <li><strong>Uma assinatura do Claude que inclua o Claude Code</strong> (Pro ou Max), paga à parte, direto na Anthropic</li>
+      <li><strong>Uma chave grátis do Google</strong> pra voz, que a aula 2 ensina a criar</li>
+    </ul>
+  </div>
+</section>
+
+<section id="oferta">
+  <div class="estreito">
+    <div class="oferta">
+      <h2 style="margin-bottom:6px">Tudo isso por</h2>
+      <div class="preco">R$ 47</div>
+      <p class="cinza" style="margin:0 0 22px">pagamento único</p>
+      <ul class="marcas" style="text-align:left;max-width:380px;margin:0 auto 26px">
+        <li>16 aulas curtas, em 2 módulos</li>
+        <li>O kit com o motor pronto</li>
+        <li>O guia com os pedidos prontos</li>
+        <li>Um episódio de exemplo</li>
+      </ul>
+      <a class="botao comprar" href="#">Quero começar<small>acesso logo depois da compra</small></a>
+      <div class="garantia">
+        <div class="selo">7<small>DIAS</small></div>
+        <div><strong>Garantia de 7 dias.</strong> Assistiu e não gostou? Peça o reembolso em até 7 dias depois da compra e receba o valor de volta.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--fundo2)">
+  <div class="estreito">
+    <h2>Perguntas <span class="ambar">frequentes</span></h2>
+    <details><summary>Preciso saber programar?</summary><p>Não. Você pede em português, e o Claude instala, escreve e monta. Os comandos aparecem na tela pra você saber o que está acontecendo, mas quem roda é ele, pedindo a sua permissão antes.</p></details>
+    <details><summary>Quanto custa o Claude?</summary><p>A assinatura do Claude é paga à parte, direto na Anthropic, e não está incluída no curso. Ela precisa incluir o Claude Code (planos Pro ou Max). Confira o preço atual no site do Claude.</p></details>
+    <details><summary>A voz é paga?</summary><p>A narração sai do Gemini, do Google, que tem uma cota grátis por dia. Na aula 2 você cria a chave, sem cartão.</p></details>
+    <details><summary>Funciona no Mac ou no celular?</summary><p>Por enquanto, só no Windows. O kit roda no computador, e o celular serve pra publicar.</p></details>
+    <details><summary>Posso usar qualquer música?</summary><p>Não. Música de banco grátis também pode ser reivindicada no YouTube. A aula 5 ensina a escolher faixa fora do Content ID.</p></details>
+    <details><summary>O curso ensina a ganhar dinheiro?</summary><p>O módulo 2 mostra os caminhos (o que o TikTok, o YouTube e o Facebook exigem pra pagar, publi, afiliado e produto próprio) com as regras de cada um. Ele não promete quanto você vai ganhar: isso depende da sua página, e ninguém pode garantir.</p></details>
+    <details><summary>O curso garante seguidores?</summary><p>Não. O curso ensina a fazer os episódios e a publicar do jeito certo. O crescimento depende da sua história, da frequência e do público, e ninguém pode garantir isso.</p></details>
+    <details><summary>Os episódios são meus?</summary><p>Sim. A história, os personagens e a série que você cria são seus. Só não copie a série de outra página: o curso ensina a criar a sua.</p></details>
+    <details><summary>Como recebo o curso?</summary><p>Logo depois da compra, você recebe o acesso à área de membros, com as aulas, o kit e o guia.</p></details>
+  </div>
+</section>
+
+<section style="text-align:center">
+  <div class="estreito">
+    <h2>Faça o seu <span class="ambar">primeiro episódio</span></h2>
+    <a class="botao comprar" href="#">Quero começar<small>R$ 47 · 7 dias de garantia</small></a>
+  </div>
+</section>
+
+<footer>
+  <p>Histórias animadas com Claude · curso independente, sem afiliação com a Anthropic. Claude é marca da Anthropic.</p>
+  <p>O pagamento é processado pela plataforma de checkout. Dúvidas: <span id="contato">contato a definir</span></p>
+</footer>
+
+<div class="fixo" id="fixo"><a class="botao comprar" href="#">Quero começar por R$ 47</a></div>
+
+<script>
+  // ===== o link do checkout da Kirvano: troque só aqui =====
+  const CHECKOUT = "https://pay.kirvano.com/TROCAR-PELO-LINK-DO-PRODUTO";
+  for (const a of document.querySelectorAll("a.comprar")) a.href = CHECKOUT;
+
+  // o botão fixo do celular aparece sempre que nenhum botão de compra da página está à vista
+  const fixo = document.getElementById("fixo"), daPágina = [...document.querySelectorAll("main a.comprar, section a.comprar")], vistos = new Set();
+  const olho = new IntersectionObserver((es) => {
+    for (const e of es) e.isIntersecting ? vistos.add(e.target) : vistos.delete(e.target);
+    fixo.classList.toggle("visivel", vistos.size === 0);
+  });
+  daPágina.forEach((a) => olho.observe(a));
+
+  // aparece ao rolar: cada bloco sobe quando entra na tela, os itens de uma lista um depois do outro
+  const alvos = [];
+  document.querySelectorAll("section:not(.heroi) h2, .quadros, .oferta, .garantia, details, section > .estreito > p, section > .miolo > p").forEach((e) => alvos.push([e, 0]));
+  document.querySelectorAll(".passos, .aulas, .grade, ul.marcas").forEach((lista) => [...lista.children].forEach((e, i) => alvos.push([e, i * 0.08])));
+  const olhoRevela = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visto"); olhoRevela.unobserve(e.target); } }), { threshold: 0.15 });
+  for (const [e, atraso] of alvos) { e.classList.add("revela"); e.style.setProperty("--atraso", `${atraso}s`); olhoRevela.observe(e); }
+  const preço = document.querySelector(".preco");
+  new IntersectionObserver(([e], o) => { if (e.isIntersecting) { preço.classList.add("visto"); o.disconnect(); } }, { threshold: 0.6 }).observe(preço);
+
+  // os quadros do episódio deslizam devagar sozinhos; quem toca assume o controle
+  const faixa = document.querySelector(".quadros");
+  let parado = false, voltaEm = 0;
+  for (const ev of ["pointerdown", "touchstart", "wheel"]) faixa.addEventListener(ev, () => { parado = true; voltaEm = Date.now() + 4000; }, { passive: true });
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => {
+    if (parado && Date.now() < voltaEm) return;
+    parado = false;
+    const fim = faixa.scrollWidth - faixa.clientWidth;
+    if (fim <= 0) return;
+    faixa.scrollLeft = faixa.scrollLeft >= fim - 1 ? 0 : faixa.scrollLeft + 1;
+  }, 30);
+</script>
+</body>
+</html>
