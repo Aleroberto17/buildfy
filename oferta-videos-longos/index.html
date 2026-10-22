@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Espere: uma oferta pra quem acabou de comprar</title>
+<title>Espere: uma oportunidade pra quem acabou de comprar</title>
 <meta name="description" content="Vídeos longos animados pro YouTube com Claude: do tema ao vídeo de 8 a 10 minutos, com pesquisa e fontes, voz, trilha, legenda, capítulos e 5 thumbnails.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,6 +53,8 @@
   .etapas .agora { color: var(--ambar); }
   .etapas .agora b { background: var(--ambar); color: var(--fundo); }
   @media (max-width: 420px) { .etapas { gap: 4px; font-size: 13px; letter-spacing: .04em; } .etapas span + span::before { width: 12px; margin-right: 4px; } }
+  /* os três passos numa linha só, mesmo no celular estreito ("Oportunidade" empurrava o "Acesso" pra baixo) */
+  @media (max-width: 360px) { .etapas { flex-wrap: nowrap; gap: 3px; padding: 12px 8px; font-size: 11.5px; letter-spacing: .02em; } .etapas span { gap: 5px; } .etapas b { width: 20px; height: 20px; } .etapas span + span::before { width: 8px; margin-right: 3px; } }
 
   /* primeira dobra: a VSL e o botão */
   .heroi { text-align: center; padding-top: 28px; background: radial-gradient(ellipse at 70% 0%, var(--fundo2), var(--fundo) 70%); }
@@ -174,15 +176,15 @@
 <div class="confirmado"><span class="marca"></span>Seu pedido do Histórias animadas com Claude está confirmado.</div>
 <nav class="etapas" aria-label="Etapas da compra">
   <span class="feita"><b>1</b>Compra</span>
-  <span class="agora"><b>2</b>Oferta</span>
+  <span class="agora"><b>2</b>Oportunidade</span>
   <span><b>3</b>Acesso</span>
 </nav>
 
 <section class="heroi">
   <div class="miolo">
     <span class="rotulo">Espere! Não feche esta página</span>
-    <h1>Uma oferta só pra quem <span class="ambar">acabou de comprar</span>: o vídeo longo pro YouTube</h1>
-    <p class="sub">O mesmo jeito de trabalhar do curso que você comprou, agora pra vídeos animados de 8 a 10 minutos, com pesquisa e fontes. Assista, é rapidinho:</p>
+    <h1>Uma oportunidade só pra quem <span class="ambar">acabou de comprar</span>: a estrutura do vídeo longo pro YouTube</h1>
+    <p class="sub">O sistema que você comprou faz Reels de 1 a 2 minutos. Vídeo de 8 a 10 minutos no YouTube pede outra estrutura, e é ela que você aprende aqui. Assista, é rapidinho:</p>
     <div class="vsl">
       <video src="midia/vsl.mp4" poster="midia/vsl-capa.jpg" controls playsinline preload="metadata"></video>
     </div>
@@ -197,8 +199,8 @@
 
 <section>
   <div class="miolo">
-    <h2>Do Reel pro <span class="ambar">vídeo longo</span></h2>
-    <p class="cinza" style="margin-top:-8px">No curso que você comprou, você faz episódios curtos em pé. Aqui, o vídeo deitado de 8 a 10 minutos, feito pra ser assistido no YouTube do começo ao fim.</p>
+    <h2>Vídeo longo não é <span class="ambar">Reel esticado</span></h2>
+    <p class="cinza" style="margin-top:-8px">Pedir um vídeo de 10 minutos ao sistema que você comprou dá um Reel esticado: o gancho de 3 segundos e a história de 80 segundos não seguram ninguém por 10 minutos, e o público sai no começo. O vídeo longo é outro roteiro, outra tela e outro kit:</p>
     <div class="compara">
       <div class="cartao">
         <h3>O Reel</h3>
@@ -207,6 +209,7 @@
           <dt>Tela</dt><dd>Em pé, 1080x1920</dd>
           <dt>Onde</dt><dd>Reels, TikTok e Shorts</dd>
           <dt>O roteiro</dt><dd>Gancho nos primeiros segundos e uma história curta</dd>
+          <dt>O kit</dt><dd>O Sistema Operacional do curso que você comprou</dd>
         </dl>
       </div>
       <div class="cartao longo">
@@ -216,10 +219,11 @@
           <dt>Tela</dt><dd>Deitada, 1920x1080</dd>
           <dt>Onde</dt><dd>YouTube, com capítulos, legenda e 5 thumbnails</dd>
           <dt>O roteiro</dt><dd>Pesquisado na web, cada número com a fonte, numa estrutura de 8 partes que segura 10 minutos</dd>
+          <dt>O kit</dt><dd>Um kit próprio, com pesquisa, prévia, diagramas, capítulos e as 5 thumbnails</dd>
         </dl>
       </div>
     </div>
-    <p class="cinza" style="margin-top:18px">O que não muda: você pede em português, e o Claude faz. Sem desenhar, sem editar, sem programar.</p>
+    <p class="cinza" style="margin-top:18px">A estrutura é o que você aprende. O que não muda é o jeito de trabalhar: você pede em português, e o Claude faz. Sem desenhar, sem editar, sem programar.</p>
   </div>
 </section>
 
@@ -311,7 +315,7 @@
         <li>quer um canal no YouTube com vídeos animados de 8 a 10 minutos</li>
         <li>quer roteiro com pesquisa e fonte, sem inventar fato</li>
         <li>quer conhecer as regras pra monetizar no YouTube antes de começar</li>
-        <li>gostou do jeito de pedir ao Claude e quer ir além do Reel</li>
+        <li>quer aprender a estrutura que segura 10 minutos, em vez de esticar um Reel</li>
       </ul>
     </div>
     <div class="cartao">
@@ -363,6 +367,7 @@
 <section>
   <div class="estreito">
     <h2>Perguntas <span class="ambar">frequentes</span></h2>
+    <details><summary>Não dá pra pedir um vídeo de 10 minutos ao sistema que eu comprei?</summary><p>Dá pra pedir, mas sai um Reel esticado. O sistema do primeiro curso foi feito pra 1 a 2 minutos em pé: o roteiro é gancho e história curta, a tela é vertical, e não tem pesquisa com fonte, diagrama nem capítulo. O vídeo longo precisa de outra estrutura, e é ela que este curso ensina, com um kit feito pra isso.</p></details>
     <details><summary>Preciso ter feito o curso que comprei antes?</summary><p>Não precisa terminar, mas ajuda. Os dois kits usam as mesmas peças (o Claude, a voz do Google, o FFmpeg), então quem já preparou a máquina no primeiro começa o segundo bem mais rápido.</p></details>
     <details><summary>Serve pro meu nicho?</summary><p>O curso ensina o método, não um assunto. O exemplo é de lendas e mistérios, mas a estrutura, a pesquisa com fontes, o palco e o pacote do YouTube servem pra qualquer nicho que conte uma história com fatos. A aula 2 mostra como escolher o tema no seu.</p></details>
     <details><summary>Vou ganhar dinheiro com o canal?</summary><p>Ninguém pode garantir isso. A aula 10 mostra as regras do Programa de Parcerias do YouTube, conferidas nas páginas oficiais, o que o YouTube considera conteúdo original e os caminhos de publi e afiliado. Se o canal vai chegar lá depende dos seus vídeos, da frequência e do público.</p></details>
