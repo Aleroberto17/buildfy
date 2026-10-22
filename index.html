@@ -323,11 +323,19 @@
 
   // o botão fixo do celular aparece sempre que nenhum botão de compra da página está à vista
   const fixo = document.getElementById("fixo"), daPágina = [...document.querySelectorAll("main a.comprar, section a.comprar")], vistos = new Set();
+  // e nunca na primeira dobra: o preço ali chamava atenção antes da headline e do vídeo
+  const heroi = document.querySelector(".heroi");
+  let naPrimeiraDobra = true;
+  const mostrar = () => fixo.classList.toggle("visivel", !naPrimeiraDobra && vistos.size === 0);
   const olho = new IntersectionObserver((es) => {
-    for (const e of es) e.isIntersecting ? vistos.add(e.target) : vistos.delete(e.target);
-    fixo.classList.toggle("visivel", vistos.size === 0);
+    for (const e of es) {
+      if (e.target === heroi) naPrimeiraDobra = e.isIntersecting;
+      else e.isIntersecting ? vistos.add(e.target) : vistos.delete(e.target);
+    }
+    mostrar();
   });
   daPágina.forEach((a) => olho.observe(a));
+  olho.observe(heroi);
 
   // aparece ao rolar: cada bloco sobe quando entra na tela, os itens de uma lista um depois do outro
   const alvos = [];
