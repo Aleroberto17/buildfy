@@ -28,6 +28,8 @@
   h1 { font-size: clamp(27px, 7vw, 56px); }
   h2 { font-size: clamp(28px, 6vw, 42px); margin-bottom: 22px; }
   h3 { font-size: 22px; }
+  /* título que não quebra: a letra encolhe com a tela */
+  h2.uma-linha { white-space: nowrap; font-size: clamp(18px, 6.6vw, 42px); }
   .ambar { color: var(--ambar); }
   .cinza { color: var(--cinza); }
   section { padding: 56px 16px; }
@@ -154,7 +156,7 @@
   <div class="miolo">
     <span class="rotulo">Curso + Sistema Operacional</span>
     <h1>Transforme qualquer ideia num <span class="ambar">vídeo animado</span> pronto pra postar em 10 minutos</h1>
-    <p class="sub">Sem saber desenhar, editar ou programar: a inteligência artificial escreve o roteiro, desenha as cenas, narra e legenda. Você escolhe a história e publica. Assista:</p>
+    <p class="sub">Sem saber desenhar, editar ou programar: você só escolhe a história e publica. Assista:</p>
     <div class="vsl">
       <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl-capa.jpg" autoplay muted playsinline preload="auto"></video>
       <button class="som" id="som" type="button" hidden><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Toque pra ouvir</button>
@@ -166,7 +168,7 @@
 
 <section>
   <div class="miolo">
-    <h2>Vídeos assim, <span class="ambar">feitos por você</span></h2>
+    <h2 class="uma-linha">Vídeos assim, <span class="ambar">feitos por você</span></h2>
     <p class="cinza" style="margin-top:-8px">Com gancho, narração, legenda e música, prontos pra Reels, TikTok e Shorts. O exemplo é uma série de sobrevivência, mas a história é sua: mistério, curiosidades, lendas, histórias pra crianças, o que o seu público gosta. E quando ela pede um lugar novo, a IA desenha a cena pra você.</p>
     <div class="quadros" aria-label="Cenas de um episódio feito com o Sistema Operacional">
       <img src="midia/cidade.jpg" alt="Fachada de hospital à noite" loading="lazy">
