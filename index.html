@@ -41,8 +41,6 @@
   .heroi .rotulo { margin-bottom: 10px; }
   .vsl { position: relative; width: min(100%, 380px, 52vh); margin: 0 auto 20px; border-radius: 26px; overflow: hidden; border: 4px solid #2a3244; background: #000; aspect-ratio: 9 / 16; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
   .vsl video { width: 100%; height: 100%; display: block; object-fit: cover; }
-  .heroi .aviso { display: inline-flex; align-items: center; gap: 8px; margin: 14px auto 0; padding: 7px 16px; border-radius: 999px; background: rgba(233,162,59,.14); border: 1px solid rgba(233,162,59,.5); color: var(--ambar); font-weight: 600; font-size: 15px; }
-  .heroi .aviso svg { flex: none; }
   /* o vídeo começa sozinho no mudo (navegador nenhum deixa começar com som): o toque liga o som e volta pro início */
   .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 22px; border: 0; border-radius: 18px; background: rgba(16,19,25,.82); color: #fff; font-family: Oswald, sans-serif; font-weight: 600; font-size: 20px; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; animation: pulsoSom 1.6s ease-in-out infinite; }
   .som[hidden] { display: none; }
@@ -156,7 +154,6 @@
   <div class="miolo">
     <span class="rotulo">Curso + Sistema Operacional</span>
     <h1>Faça episódios animados de <span class="ambar">sobrevivência</span> com o Claude</h1>
-    <p class="aviso"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Confira se o som do celular está ligado</p>
     <p class="sub">Sem saber desenhar, animar ou programar. Assista o vídeo:</p>
     <div class="vsl">
       <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl-capa.jpg" autoplay muted playsinline preload="auto"></video>
