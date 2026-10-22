@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Histórias animadas com Claude | do zero ao Reel</title>
-<meta name="description" content="Aprenda a fazer episódios animados de sobrevivência com o Claude, sem saber desenhar nem programar. 16 aulas curtas, o kit pronto e como ganhar dinheiro com os vídeos.">
+<meta name="description" content="Aprenda a fazer episódios animados de sobrevivência com o Claude, sem saber desenhar nem programar. 16 aulas curtas, o Sistema Operacional pronto e como ganhar dinheiro com os vídeos.">
 <meta property="og:title" content="Histórias animadas com Claude">
 <meta property="og:description" content="Faça episódios animados de sobrevivência com o Claude, sem saber desenhar nem programar.">
 <meta property="og:image" content="midia/vsl-capa.jpg">
@@ -35,18 +35,18 @@
   .estreito { max-width: 680px; margin: 0 auto; }
   .rotulo { display: inline-block; background: var(--vermelho); color: #fff; font-family: Oswald, sans-serif; font-weight: 600; letter-spacing: .12em; font-size: 14px; padding: 4px 12px; border-radius: 6px; margin-bottom: 14px; }
 
-  /* topo */
-  .topo { padding: 14px 16px; border-bottom: 1px solid var(--borda); }
-  .topo .miolo { display: flex; align-items: center; gap: 10px; }
-  .topo .marca { font-family: Oswald, sans-serif; font-weight: 600; letter-spacing: .14em; font-size: 15px; color: var(--cinza); }
-  .topo .marca::before { content: ""; display: inline-block; width: 8px; height: 22px; background: var(--ambar); vertical-align: -4px; margin-right: 10px; }
-
   /* primeira dobra: a VSL e o botão */
-  .heroi { text-align: center; padding-top: 20px; background: radial-gradient(ellipse at 70% 0%, var(--fundo2), var(--fundo) 70%); }
+  .heroi { text-align: center; padding-top: 32px; background: radial-gradient(ellipse at 70% 0%, var(--fundo2), var(--fundo) 70%); }
   .heroi p.sub { color: var(--cinza); font-size: 16px; margin: 10px auto 16px; max-width: 560px; }
   .heroi .rotulo { margin-bottom: 10px; }
   .vsl { position: relative; width: min(100%, 380px, 52vh); margin: 0 auto 20px; border-radius: 26px; overflow: hidden; border: 4px solid #2a3244; background: #000; aspect-ratio: 9 / 16; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
   .vsl video { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .heroi .aviso { display: inline-flex; align-items: center; gap: 8px; margin: 14px auto 0; padding: 7px 16px; border-radius: 999px; background: rgba(233,162,59,.14); border: 1px solid rgba(233,162,59,.5); color: var(--ambar); font-weight: 600; font-size: 15px; }
+  .heroi .aviso svg { flex: none; }
+  /* o vídeo começa sozinho no mudo (navegador nenhum deixa começar com som): o toque liga o som e volta pro início */
+  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 22px; border: 0; border-radius: 18px; background: rgba(16,19,25,.82); color: #fff; font-family: Oswald, sans-serif; font-weight: 600; font-size: 20px; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; animation: pulsoSom 1.6s ease-in-out infinite; }
+  .som[hidden] { display: none; }
+  @keyframes pulsoSom { 0%, 100% { box-shadow: 0 0 0 0 rgba(233,162,59,.6); } 50% { box-shadow: 0 0 0 12px rgba(233,162,59,0); } }
   .botao { display: inline-block; background: var(--verde); color: #fff; text-decoration: none; font-family: Oswald, sans-serif; font-weight: 600; font-size: 24px; letter-spacing: .04em; text-transform: uppercase; padding: 18px 34px; border-radius: 999px; box-shadow: 0 8px 0 #3f6e3b; transition: transform .1s, box-shadow .1s; }
   .botao:active { transform: translateY(5px); box-shadow: 0 3px 0 #3f6e3b; }
   .botao small { display: block; font-family: Inter, sans-serif; font-weight: 500; font-size: 13px; text-transform: none; letter-spacing: 0; opacity: .9; margin-top: 2px; }
@@ -152,15 +152,15 @@
 </head>
 <body>
 
-<header class="topo"><div class="miolo"><span class="marca">Histórias animadas com Claude</span></div></header>
-
 <section class="heroi">
   <div class="miolo">
-    <span class="rotulo">Curso + kit pronto</span>
+    <span class="rotulo">Curso + Sistema Operacional</span>
     <h1>Faça episódios animados de <span class="ambar">sobrevivência</span> com o Claude</h1>
+    <p class="aviso"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Confira se o som do celular está ligado</p>
     <p class="sub">Sem saber desenhar, animar ou programar. Assista o vídeo:</p>
     <div class="vsl">
-      <video src="midia/vsl.mp4" poster="midia/vsl-capa.jpg" controls playsinline preload="metadata"></video>
+      <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl-capa.jpg" autoplay muted playsinline preload="auto"></video>
+      <button class="som" id="som" type="button" hidden><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Toque pra ouvir</button>
     </div>
     <a class="botao comprar" href="#">Quero começar<small>R$ 47, pagamento único</small></a>
     <p class="seguro">Acesso logo depois da compra · 7 dias de garantia</p>
@@ -171,7 +171,7 @@
   <div class="miolo">
     <h2>O que você vai <span class="ambar">fazer</span></h2>
     <p class="cinza" style="margin-top:-8px">Episódios como este, com gancho, voz, legenda e música, prontos pra Reels, TikTok e Shorts.</p>
-    <div class="quadros" aria-label="Cenas de um episódio feito com o kit">
+    <div class="quadros" aria-label="Cenas de um episódio feito com o Sistema Operacional">
       <img src="midia/cidade.jpg" alt="Fachada de hospital à noite" loading="lazy">
       <img src="midia/enfermaria.jpg" alt="Técnico de enfermagem na enfermaria" loading="lazy">
       <img src="midia/corte.jpg" alt="Prédio em corte com os andares" loading="lazy">
@@ -188,7 +188,7 @@
     <div class="passos">
       <div class="passo"><div><h3>Você escreve o tema</h3><span class="cinza">O cenário, quem está lá e a lógica do lugar.</span></div></div>
       <div class="passo"><div><h3>O Claude escreve o roteiro</h3><span class="cinza">Na estrutura que prende, e um revisor confere as dicas.</span></div></div>
-      <div class="passo"><div><h3>O kit desenha as cenas</h3><span class="cinza">Personagens, prédio em corte, alertas, cronômetro.</span></div></div>
+      <div class="passo"><div><h3>O sistema desenha as cenas</h3><span class="cinza">Personagens, prédio em corte, alertas, cronômetro.</span></div></div>
       <div class="passo"><div><h3>Voz, legenda e música</h3><span class="cinza">A narração, a legenda no ritmo da fala e o som mixado.</span></div></div>
       <div class="passo"><div><h3>Episódio pronto</h3><span class="cinza">Depois da máquina preparada, uns 10 minutos por episódio.</span></div></div>
     </div>
@@ -200,11 +200,11 @@
     <h2>As <span class="ambar">16 aulas</span></h2>
     <h3 class="modulo">Módulo 1 · Do zero ao Reel</h3>
     <ul class="aulas">
-      <li><strong>0 · Boas-vindas</strong><span>O que você vai fazer no curso, o que vem no kit e o que precisa ter.</span></li>
+      <li><strong>0 · Boas-vindas</strong><span>O que você vai fazer no curso, o que vem no Sistema Operacional e o que precisa ter.</span></li>
       <li><strong>1 · O formato que prende</strong><span>A estrutura em 11 passos que segura quem assiste, e as 4 regras que a gente aprendeu errando.</span></li>
       <li><strong>2 · Preparando a máquina</strong><span>O Claude instala tudo pra você, você cria a chave grátis da voz e testa se está tudo pronto.</span></li>
       <li><strong>3 · O roteiro com o Claude</strong><span>Como escrever um tema bom, o revisor que confere as dicas e como pedir ajuste com as suas palavras.</span></li>
-      <li><strong>4 · O visual</strong><span>As cenas, os personagens e os elementos na tela, e como pedir uma cena nova que o kit ainda não tem.</span></li>
+      <li><strong>4 · O visual</strong><span>As cenas, os personagens e os elementos na tela, e como pedir uma cena nova que o sistema ainda não tem.</span></li>
       <li><strong>5 · Voz, legenda e som</strong><span>Como escolher a voz de ouvido, a legenda no ritmo da fala e música que não toma reivindicação.</span></li>
       <li><strong>6 · Renderizar e revisar</strong><span>O vídeo pronto em minutos e a revisão pela folha de quadros, pra não publicar com erro.</span></li>
       <li><strong>7 · Publicar e crescer</strong><span>A capa no recorte certo, o perfil, a legenda com pergunta e o mesmo vídeo no Reels, TikTok e Shorts.</span></li>
@@ -212,11 +212,11 @@
     </ul>
     <h3 class="modulo">Módulo 2 · Ganhar dinheiro com os vídeos</h3>
     <ul class="aulas">
-      <li><strong>9 · Os quatro caminhos</strong><span>A plataforma que paga pelas views, a publi, o afiliado e o produto próprio, e o que cada um exige.</span></li>
+      <li><strong>9 · Os quatro caminhos</strong><span>As plataformas que pagam pelas views, a venda de infoprodutos e o que cada um exige.</span></li>
       <li><strong>10 · Monetização no TikTok</strong><span>Os requisitos do Programa de Recompensas, o que conta como vídeo original e como se inscrever.</span></li>
       <li><strong>11 · YouTube Shorts e Facebook</strong><span>O que cada um pede pra pagar, e a regra de conteúdo repetitivo que todo criador de série precisa conhecer.</span></li>
       <li><strong>12 · Publi e afiliados</strong><span>O mídia kit feito pelo Claude, como avisar a publicidade e a lista de compras que sai do próprio episódio.</span></li>
-      <li><strong>13 · Criar o seu produto</strong><span>Como este curso foi feito com o Claude: a estrutura, as aulas, o material, o preço e a garantia.</span></li>
+      <li><strong>13 · Criar o seu produto</strong><span>Como criar seus infoprodutos usando o Claude.</span></li>
       <li><strong>14 · Página de vendas e VSL</strong><span>A página deste curso, parte por parte, o vídeo que vende e o checkout que cobra e libera o acesso.</span></li>
       <li><strong>15 · Vender no Instagram e no TikTok</strong><span>Onde fica o link, o conteúdo que leva à venda sem estragar a página, e o que nunca fazer.</span></li>
     </ul>
@@ -228,7 +228,7 @@
   <div class="miolo">
     <h2>O que vem <span class="ambar">junto</span></h2>
     <div class="grade">
-      <div class="cartao"><h3 class="ambar">O kit</h3><p>O motor pronto que faz o episódio inteiro: roteirista, cenas, voz, legenda, som e render, num pedido só.</p></div>
+      <div class="cartao"><h3 class="ambar">O Sistema Operacional</h3><p>O motor pronto que faz o episódio inteiro: roteirista, cenas, voz, legenda, som e render, num pedido só.</p></div>
       <div class="cartao"><h3 class="ambar">O guia</h3><p>A instalação passo a passo, o molde do tema, os checklists e os pedidos prontos pra colar no Claude.</p></div>
       <div class="cartao"><h3 class="ambar">Um episódio de exemplo</h3><p>Um episódio completo pra você ver o resultado e testar um ajuste antes de fazer o seu.</p></div>
     </div>
@@ -276,7 +276,7 @@
       <p class="cinza" style="margin:0 0 22px">pagamento único</p>
       <ul class="marcas" style="text-align:left;max-width:380px;margin:0 auto 26px">
         <li>16 aulas curtas, em 2 módulos</li>
-        <li>O kit com o motor pronto</li>
+        <li>O Sistema Operacional com o motor pronto</li>
         <li>O guia com os pedidos prontos</li>
         <li>Um episódio de exemplo</li>
       </ul>
@@ -295,12 +295,12 @@
     <details><summary>Preciso saber programar?</summary><p>Não. Você pede em português, e o Claude instala, escreve e monta. Os comandos aparecem na tela pra você saber o que está acontecendo, mas quem roda é ele, pedindo a sua permissão antes.</p></details>
     <details><summary>Quanto custa o Claude?</summary><p>A assinatura do Claude é paga à parte, direto na Anthropic, e não está incluída no curso. Ela precisa incluir o Claude Code (planos Pro ou Max). Confira o preço atual no site do Claude.</p></details>
     <details><summary>A voz é paga?</summary><p>A narração sai do Gemini, do Google, que tem uma cota grátis por dia. Na aula 2 você cria a chave, sem cartão.</p></details>
-    <details><summary>Funciona no Mac ou no celular?</summary><p>Por enquanto, só no Windows. O kit roda no computador, e o celular serve pra publicar.</p></details>
+    <details><summary>Funciona no Mac ou no celular?</summary><p>Por enquanto, só no Windows. O sistema roda no computador, e o celular serve pra publicar.</p></details>
     <details><summary>Posso usar qualquer música?</summary><p>Não. Música de banco grátis também pode ser reivindicada no YouTube. A aula 5 ensina a escolher faixa fora do Content ID.</p></details>
     <details><summary>O curso ensina a ganhar dinheiro?</summary><p>O módulo 2 mostra os caminhos (o que o TikTok, o YouTube e o Facebook exigem pra pagar, publi, afiliado e produto próprio) com as regras de cada um. Ele não promete quanto você vai ganhar: isso depende da sua página, e ninguém pode garantir.</p></details>
     <details><summary>O curso garante seguidores?</summary><p>Não. O curso ensina a fazer os episódios e a publicar do jeito certo. O crescimento depende da sua história, da frequência e do público, e ninguém pode garantir isso.</p></details>
     <details><summary>Os episódios são meus?</summary><p>Sim. A história, os personagens e a série que você cria são seus. Só não copie a série de outra página: o curso ensina a criar a sua.</p></details>
-    <details><summary>Como recebo o curso?</summary><p>Logo depois da compra, você recebe o acesso à área de membros, com as aulas, o kit e o guia.</p></details>
+    <details><summary>Como recebo o curso?</summary><p>Logo depois da compra, você recebe o acesso à área de membros, com as aulas, o Sistema Operacional e o guia.</p></details>
   </div>
 </section>
 
@@ -339,6 +339,14 @@
   for (const [e, atraso] of alvos) { e.classList.add("revela"); e.style.setProperty("--atraso", `${atraso}s`); olhoRevela.observe(e); }
   const preço = document.querySelector(".preco");
   new IntersectionObserver(([e], o) => { if (e.isIntersecting) { preço.classList.add("visto"); o.disconnect(); } }, { threshold: 0.6 }).observe(preço);
+
+  // a VSL começa sozinha: com som se o navegador deixar, senão no mudo com o "toque pra ouvir" por cima
+  const vsl = document.getElementById("vsl"), som = document.getElementById("som");
+  const ouvir = () => { vsl.muted = false; vsl.currentTime = 0; vsl.controls = true; som.hidden = true; vsl.play(); };
+  vsl.muted = false;
+  vsl.play().catch(() => { vsl.muted = true; som.hidden = false; vsl.play().catch(() => {}); });
+  som.addEventListener("click", ouvir);
+  vsl.addEventListener("click", () => { if (vsl.muted) ouvir(); });
 
   // os quadros do episódio deslizam devagar sozinhos; quem toca assume o controle
   const faixa = document.querySelector(".quadros");
