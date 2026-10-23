@@ -4,161 +4,245 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Histórias animadas com Claude | do zero ao Reel</title>
-<meta name="description" content="Transforme qualquer ideia num vídeo animado pronto pra postar, em uns 10 minutos, sem saber desenhar, editar nem programar. A inteligência artificial faz o roteiro, as cenas, a voz e a legenda.">
+<meta name="description" content="Transforme qualquer ideia num vídeo animado pronto pra postar, em uns 10 minutos, sem saber desenhar, editar nem programar.">
 <meta property="og:title" content="Vídeos animados em 10 minutos, sem saber desenhar">
-<meta property="og:description" content="Transforme qualquer ideia num vídeo animado pronto pra postar, sem saber desenhar, editar nem programar.">
 <meta property="og:image" content="midia/vsl-capa.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <!--
-  Página de vendas do curso (20/10/2026). Uma página só, sem dependência: hospeda no GitHub Pages.
-  O LINK DO CHECKOUT fica num lugar só, na constante CHECKOUT do script lá embaixo.
-  Mesmas cores dos episódios: azul-noite, âmbar, creme, vermelho e verde.
+  Página de vendas, versão 2 (23/10/2026, PRÉVIA). Pedido do dono do canal: o mesmo tipo de movimento de
+  uma página de referência (carregamento que digita, cenas presas na rolagem e animadas por ela, títulos
+  que embaralham e assentam, carrossel 3D de celulares, contadores, janelas digitando, tarjas saindo).
+  O código, a copy, os desenhos e o tema são nossos: cinema e roteiro, nas cores da página E Se Fosse Você?.
+  Movimento com GSAP + ScrollTrigger (cdnjs). O link do checkout fica na constante CHECKOUT.
 -->
 <style>
   :root {
-    --fundo: #101319; --fundo2: #1a2131; --cartao: #1c2434; --borda: #2c3750;
-    --creme: #ece3cf; --cinza: #9aa1ad; --ambar: #e9a23b; --vermelho: #d0413a; --verde: #5f9a5a;
+    --fundo: #0c0f15; --fundo2: #131925; --cartao: #182030; --borda: #283246;
+    --creme: #ece3cf; --cinza: #98a0ad; --ambar: #e9a23b; --ambar2: #ffc56b; --vermelho: #d0413a; --verde: #5f9a5a;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--fundo); color: var(--creme); font-family: Inter, system-ui, sans-serif; font-size: 17px; line-height: 1.55; }
-  h1, h2, h3, .oswald { font-family: Oswald, Impact, sans-serif; text-transform: uppercase; line-height: 1.08; margin: 0; }
-  h1 { font-size: clamp(27px, 7vw, 56px); }
-  h2 { font-size: clamp(28px, 6vw, 42px); margin-bottom: 22px; }
-  h3 { font-size: 22px; }
-  /* título que não quebra: a letra encolhe com a tela */
-  h2.uma-linha { white-space: nowrap; font-size: clamp(18px, 6.6vw, 42px); }
-  .ambar { color: var(--ambar); }
-  .cinza { color: var(--cinza); }
-  section { padding: 56px 16px; }
-  .miolo { max-width: 960px; margin: 0 auto; }
+  body { margin: 0; background: var(--fundo); color: var(--creme); font-family: Inter, system-ui, sans-serif; font-size: 17px; line-height: 1.55; overflow-x: hidden; }
+  body.carregando { overflow: hidden; }
+  h1, h2, h3, .oswald { font-family: Oswald, Impact, sans-serif; text-transform: uppercase; line-height: 1.02; margin: 0; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12.5px; letter-spacing: .1em; color: var(--ambar); text-transform: uppercase; }
+  .ambar { color: var(--ambar); } .cinza { color: var(--cinza); } .vermelho { color: var(--vermelho); }
+  section { position: relative; padding: 80px 16px; }
+  .miolo { max-width: 980px; margin: 0 auto; }
   .estreito { max-width: 680px; margin: 0 auto; }
-  .rotulo { display: inline-block; background: var(--vermelho); color: #fff; font-family: Oswald, sans-serif; font-weight: 600; letter-spacing: .12em; font-size: 14px; padding: 4px 12px; border-radius: 6px; margin-bottom: 14px; }
+  h2 { font-size: clamp(38px, 10.5vw, 72px); margin: 12px 0 18px; }
+  /* cada palavra do título sobe por trás de uma máscara */
+  .palavra { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .06em; }
+  .palavra > span { display: inline-block; }
 
-  /* primeira dobra: a VSL e o botão */
-  .heroi { text-align: center; padding-top: 32px; background: radial-gradient(ellipse at 70% 0%, var(--fundo2), var(--fundo) 70%); }
-  .heroi p.sub { color: var(--cinza); font-size: 16px; margin: 10px auto 16px; max-width: 560px; }
-  .heroi .rotulo { margin-bottom: 10px; }
-  .vsl { position: relative; width: min(100%, 380px, 52vh); margin: 0 auto 20px; border-radius: 26px; overflow: hidden; border: 4px solid #2a3244; background: #000; aspect-ratio: 9 / 16; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  /* ===== o carregamento: a janela de render ===== */
+  #render { position: fixed; inset: 0; z-index: 60; background: #090b10; display: grid; place-items: center; padding: 16px; }
+  #render .janela { width: min(100%, 520px); border: 1px solid #3a2c18; border-radius: 10px; overflow: hidden; background: #12161f; box-shadow: 0 0 80px rgba(233,162,59,.18); }
+  #render .barra-topo { display: flex; align-items: center; justify-content: space-between; background: var(--ambar); color: #1a1208; padding: 7px 12px; font: 700 12px "JetBrains Mono", monospace; }
+  /* a claquete no lugar dos três pontinhos */
+  #render .claq { width: 34px; height: 12px; background: repeating-linear-gradient(-45deg, #1a1208 0 6px, var(--ambar) 6px 12px); border-radius: 2px; }
+  #render pre { margin: 0; padding: 16px; min-height: 150px; font: 500 13.5px/1.7 "JetBrains Mono", monospace; color: var(--creme); white-space: pre-wrap; }
+  #render pre i { color: var(--ambar); font-style: normal; }
+  #render .cursor { display: inline-block; width: 8px; height: 16px; background: var(--ambar); vertical-align: -3px; animation: pisca 1s steps(2) infinite; }
+  #render .rodape { width: min(100%, 520px); display: flex; justify-content: space-between; align-items: end; margin-top: 20px; }
+  #render .pct { font: 700 64px/1 "JetBrains Mono", monospace; color: var(--ambar); }
+  #render .pct small { font-size: 22px; }
+  #render .trilho { width: min(100%, 520px); height: 4px; background: #1f2633; margin-top: 10px; border-radius: 2px; overflow: hidden; }
+  #render .trilho i { display: block; height: 100%; width: 0; background: var(--ambar); }
+  #render .pular { position: absolute; bottom: 22px; background: none; border: 1px solid #283246; color: var(--cinza); font: 500 13px Inter, sans-serif; padding: 8px 16px; border-radius: 999px; cursor: pointer; }
+  #flash { position: fixed; inset: 0; z-index: 59; background: var(--ambar); pointer-events: none; opacity: 0; }
+  @keyframes pisca { 50% { opacity: 0; } }
+
+  /* ===== o cabeçalho fixo ===== */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: linear-gradient(#0c0f15f0, #0c0f1500); }
+  header .logo { display: flex; align-items: center; gap: 8px; font: 700 18px Oswald, sans-serif; text-transform: uppercase; letter-spacing: .02em; }
+  header .logo i { width: 26px; height: 26px; border-radius: 6px; background: var(--ambar); display: grid; place-items: center; }
+  header .logo i::after { content: ""; border-left: 9px solid #12161f; border-top: 6px solid transparent; border-bottom: 6px solid transparent; margin-left: 3px; }
+  header a.mini { font: 600 13px Oswald, sans-serif; text-transform: uppercase; letter-spacing: .06em; color: #fff; background: var(--verde); padding: 8px 14px; border-radius: 999px; text-decoration: none; }
+  .progresso { position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--ambar); z-index: 31; }
+
+  /* ===== primeira dobra ===== */
+  .heroi { text-align: center; padding-top: 86px; background: radial-gradient(ellipse at 50% 0%, rgba(233,162,59,.2), transparent 55%), var(--fundo); }
+  .heroi h1 { font-size: clamp(32px, 8.8vw, 62px); margin: 12px auto 12px; max-width: 900px; }
+  .heroi p.sub { color: var(--cinza); font-size: 16px; margin: 0 auto 18px; max-width: 540px; }
+  .vsl { position: relative; width: min(100%, 350px, 50vh); margin: 0 auto 22px; border-radius: 32px; overflow: hidden; border: 6px solid #222a39; background: #000; aspect-ratio: 9 / 16; box-shadow: 0 24px 70px rgba(0,0,0,.6), 0 0 70px rgba(233,162,59,.18); }
   .vsl video { width: 100%; height: 100%; display: block; object-fit: cover; }
-  /* o vídeo começa sozinho no mudo (navegador nenhum deixa começar com som): o toque liga o som e volta pro início */
-  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 22px; border: 0; border-radius: 18px; background: rgba(16,19,25,.82); color: #fff; font-family: Oswald, sans-serif; font-weight: 600; font-size: 20px; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; animation: pulsoSom 1.6s ease-in-out infinite; }
+  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 22px; border: 0; border-radius: 18px; background: rgba(12,15,21,.82); color: #fff; font: 600 20px Oswald, sans-serif; text-transform: uppercase; cursor: pointer; animation: pulsoSom 1.6s ease-in-out infinite; }
   .som[hidden] { display: none; }
   @keyframes pulsoSom { 0%, 100% { box-shadow: 0 0 0 0 rgba(233,162,59,.6); } 50% { box-shadow: 0 0 0 12px rgba(233,162,59,0); } }
-  .botao { display: inline-block; background: var(--verde); color: #fff; text-decoration: none; font-family: Oswald, sans-serif; font-weight: 600; font-size: 24px; letter-spacing: .04em; text-transform: uppercase; padding: 18px 34px; border-radius: 999px; box-shadow: 0 8px 0 #3f6e3b; transition: transform .1s, box-shadow .1s; }
-  .botao:active { transform: translateY(5px); box-shadow: 0 3px 0 #3f6e3b; }
-  .botao small { display: block; font-family: Inter, sans-serif; font-weight: 500; font-size: 13px; text-transform: none; letter-spacing: 0; opacity: .9; margin-top: 2px; }
+  .rec::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--vermelho); margin-right: 8px; animation: pisca 1.2s steps(2) infinite; }
+  .botao { position: relative; overflow: hidden; display: inline-block; background: var(--verde); color: #fff; text-decoration: none; font: 600 24px Oswald, sans-serif; letter-spacing: .04em; text-transform: uppercase; padding: 18px 34px; border-radius: 999px; box-shadow: 0 8px 0 #3f6e3b; animation: pulso 2.6s ease-in-out infinite; }
+  .botao small { display: block; font: 500 13px Inter, sans-serif; text-transform: none; letter-spacing: 0; opacity: .9; margin-top: 2px; }
+  .botao::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent); transform: skewX(-20deg); animation: brilho 3.2s ease-in-out infinite; }
+  .botao:active { animation: none; transform: translateY(5px) scale(.98); box-shadow: 0 3px 0 #3f6e3b; }
+  @keyframes pulso { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+  @keyframes brilho { 0%, 55% { left: -60%; } 85%, 100% { left: 130%; } }
   .seguro { color: var(--cinza); font-size: 14px; margin-top: 16px; }
 
-  /* cartões e grades */
+  /* ===== em cartaz: palco com chão de grade, feixes de luz e os celulares em 3D ===== */
+  .cartaz { overflow: hidden; background: radial-gradient(ellipse at 50% 30%, rgba(233,162,59,.16), transparent 60%), var(--fundo2); }
+  .cartaz .chao { position: absolute; left: -50%; right: -50%; bottom: 0; height: 46%; background: linear-gradient(transparent 0 calc(100% - 1px), rgba(233,162,59,.35) 0) 0 0 / 100% 46px, linear-gradient(90deg, transparent 0 calc(100% - 1px), rgba(233,162,59,.35) 0) 0 0 / 46px 100%; transform: perspective(500px) rotateX(62deg); transform-origin: 50% 0; mask-image: linear-gradient(transparent, #000 40%); -webkit-mask-image: linear-gradient(transparent, #000 40%); }
+  .cartaz .feixe { position: absolute; top: -10%; width: 34%; height: 90%; background: linear-gradient(rgba(255,213,140,.18), transparent 80%); clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%); filter: blur(2px); transform-origin: 50% 0; }
+  .cartaz .feixe.e { left: 8%; transform: rotate(14deg); } .cartaz .feixe.d { right: 8%; transform: rotate(-14deg); }
+  .estrela { position: absolute; width: 22px; height: 22px; background: var(--creme); clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%); animation: cintila 2.4s ease-in-out infinite; }
+  @keyframes cintila { 50% { transform: scale(.4) rotate(45deg); opacity: .4; } }
+  .faixa { position: relative; display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 14vw 24px; margin: 0 -16px; scrollbar-width: none; perspective: 1000px; }
+  .faixa::-webkit-scrollbar { display: none; }
+  .celular { flex: none; width: min(68vw, 260px); scroll-snap-align: center; }
+  .celular .tela { position: relative; aspect-ratio: 9 / 16; border-radius: 30px; overflow: hidden; border: 6px solid #222a39; background: #000; box-shadow: 0 30px 60px rgba(0,0,0,.6); transform: rotateY(var(--gira, 0deg)) scale(var(--escala, .9)); transition: transform .4s, box-shadow .4s; }
+  .celular.ativo .tela { --escala: 1; box-shadow: 0 30px 60px rgba(0,0,0,.6), 0 0 50px rgba(233,162,59,.35); }
+  .celular .tela::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.14), transparent 35%); pointer-events: none; }
+  .celular video, .celular img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .celular .marca { position: absolute; top: 12px; left: 12px; font: 700 11px "JetBrains Mono", monospace; background: rgba(12,15,21,.75); color: var(--creme); padding: 4px 8px; border-radius: 6px; z-index: 1; }
+  .celular .legenda { margin-top: 14px; text-align: left; }
+  .celular .legenda .num { font: 700 30px "JetBrains Mono", monospace; color: var(--ambar); }
+  .celular .legenda .num small { font-size: 13px; color: var(--cinza); }
+  .celular .legenda b { font: 700 24px Oswald, sans-serif; text-transform: uppercase; display: block; }
+  .arraste { display: inline-block; animation: arraste 1.6s ease-in-out infinite; }
+  @keyframes arraste { 50% { transform: translateX(10px); } }
+
+  /* ===== o relógio: cena presa, "DIAS" vira "10 MIN" ===== */
+  .tempo { padding: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; background: var(--fundo); }
+  .tempo .fundo-cor { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #e2483f, #9e2a24 70%); opacity: 0; }
+  .tempo .palavrao { position: absolute; font: 700 clamp(150px, 46vw, 360px) Oswald, sans-serif; letter-spacing: -.02em; text-transform: uppercase; color: rgba(255,255,255,.14); white-space: nowrap; text-align: center; }
+  .tempo .palavrao.depois { font-size: clamp(130px, 40vw, 300px); line-height: .82; color: rgba(233,162,59,.16); }
+  .tempo .relogio { position: relative; width: min(56vw, 260px); aspect-ratio: 1; border-radius: 50%; border: 8px solid var(--creme); background: rgba(12,15,21,.35); }
+  .tempo .relogio::before { content: ""; position: absolute; inset: 47%; border-radius: 50%; background: var(--creme); z-index: 2; }
+  .tempo .ponteiro { position: absolute; left: 50%; bottom: 50%; width: 8px; margin-left: -4px; border-radius: 4px; background: var(--creme); transform-origin: 50% 100%; }
+  .tempo .ponteiro.h { height: 28%; } .tempo .ponteiro.m { height: 40%; width: 5px; margin-left: -2.5px; background: var(--ambar); }
+  .tempo .marcas i { position: absolute; left: 50%; top: 4%; width: 4px; height: 9%; margin-left: -2px; background: var(--creme); transform-origin: 50% 512%; border-radius: 2px; }
+  .tempo .rotulo { position: absolute; bottom: 14vh; left: 0; right: 0; text-align: center; }
+  .tempo .rotulo .grande { font: 700 clamp(44px, 12vw, 84px) Oswald, sans-serif; text-transform: uppercase; line-height: 1; }
+  .tempo .topo { position: absolute; top: 12vh; left: 0; right: 0; text-align: center; padding: 0 16px; }
+
+  /* comparação: as duas barras enchendo com a rolagem */
+  .comparar { display: grid; gap: 22px; }
+  .linha-comp .cab { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .linha-comp .cab b { font: 700 20px Oswald, sans-serif; text-transform: uppercase; }
+  .linha-comp .cab span { font: 700 26px "JetBrains Mono", monospace; }
+  .linha-comp .trilho { height: 18px; border-radius: 9px; background: #0a0d13; border: 1px solid var(--borda); overflow: hidden; }
+  .linha-comp .trilho i { display: block; height: 100%; width: 0; border-radius: 9px; }
+  .linha-comp.antes .trilho i { background: repeating-linear-gradient(-45deg, #d0413a 0 10px, #b5352f 10px 20px); }
+  .linha-comp.agora .trilho i { background: var(--ambar); box-shadow: 0 0 20px rgba(233,162,59,.6); }
+  .linha-comp ul { list-style: none; padding: 0; margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13.5px; color: var(--cinza); }
+  .linha-comp.antes li::before { content: "✕ "; color: var(--vermelho); font-weight: 700; }
+
+  /* ===== bastidores: o roteiro vira storyboard vira vídeo (cena presa) ===== */
+  /* em coluna: título, a mesa (do tamanho que sobra) e a etapa; nada fica por cima do título nem embaixo do botão fixo */
+  .bastidores { padding: 78px 16px 104px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; background: radial-gradient(ellipse at 50% 60%, rgba(233,162,59,.12), transparent 60%), var(--fundo); }
+  .bastidores .titulo { position: relative; z-index: 2; text-align: center; padding: 0 16px; flex: none; }
+  .bastidores .mesa { position: relative; flex: 1 1 auto; min-height: 0; height: 100%; max-height: 560px; aspect-ratio: 9 / 15; width: auto; max-width: 84vw; margin-top: 16px; }
+  .bastidores .folha, .bastidores .board, .bastidores .pronto { position: absolute; inset: 0; border-radius: 14px; }
+  .bastidores .folha { background: #f4ede0; color: #2a2a2e; padding: 22px 18px; font: 500 12.5px/1.7 "JetBrains Mono", monospace; box-shadow: 0 20px 50px rgba(0,0,0,.5); }
+  .bastidores .folha b { color: var(--vermelho); }
+  .bastidores .board { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px; padding: 12px; background: #1b2232; border: 1px solid var(--borda); opacity: 0; }
+  .bastidores .board div { border-radius: 8px; background-size: cover; background-position: center; border: 2px solid #f4ede0; }
+  .bastidores .pronto { overflow: hidden; border: 6px solid #222a39; border-radius: 30px; opacity: 0; box-shadow: 0 0 60px rgba(233,162,59,.35); }
+  .bastidores .pronto video { width: 100%; height: 100%; object-fit: cover; }
+  .bastidores .etapa { flex: none; text-align: center; margin-top: 12px; line-height: 1.25; }
+  .bastidores .etapa span { font: 700 22px Oswald, sans-serif; text-transform: uppercase; }
+
+  /* ===== o método: 5 janelas que digitam (cena presa) ===== */
+  .metodo { padding: 0; height: 100vh; overflow: hidden; background: var(--fundo2); }
+  .metodo .cab { position: absolute; top: 9vh; left: 16px; right: 16px; }
+  .metodo .passo { position: absolute; left: 16px; right: 16px; top: 22vh; max-width: 560px; margin: 0 auto; opacity: 0; }
+  .metodo .contagem { font: 700 46px "JetBrains Mono", monospace; color: var(--ambar); line-height: 1; }
+  .metodo .contagem small { font-size: 14px; color: var(--cinza); }
+  .metodo .passo h3 { font-size: clamp(36px, 10vw, 58px); margin: 6px 0 8px; }
+  .metodo .passo p { color: var(--cinza); margin: 0 0 16px; max-width: 460px; }
+  .metodo .tela { border: 1px solid var(--borda); border-radius: 10px; overflow: hidden; background: #0d1119; }
+  .metodo .tela .barra-topo { display: flex; justify-content: space-between; align-items: center; padding: 7px 12px; background: #1d2535; font: 700 11.5px "JetBrains Mono", monospace; color: var(--cinza); }
+  .metodo .tela .barra-topo .ok { color: var(--verde); opacity: 0; }
+  .metodo .tela pre { margin: 0; padding: 14px; min-height: 120px; font: 500 13px/1.75 "JetBrains Mono", monospace; color: var(--creme); white-space: pre-wrap; }
+  .metodo .tela pre i { color: var(--ambar); font-style: normal; }
+  .metodo .pontos { position: absolute; bottom: 110px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; }
+  .metodo .pontos i { width: 28px; height: 4px; border-radius: 2px; background: var(--borda); }
+  .metodo .pontos i.on { background: var(--ambar); }
+
+  /* ===== as aulas: a folha com tarja que sai ===== */
+  .folha-aulas { background: #f4ede0; color: #2a2a2e; border-radius: 6px; padding: 30px 20px 24px 44px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .folha-aulas::before { content: ""; position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background: rgba(208,65,58,.45); }
+  .folha-aulas .carimbo { position: absolute; right: 12px; top: -18px; background: #f4ede0; border: 3px solid var(--vermelho); color: var(--vermelho); font: 700 16px Oswald, sans-serif; padding: 2px 10px; border-radius: 6px; letter-spacing: .1em; transform: rotate(9deg); }
+  .folha-aulas h3 { font-size: 18px; color: #2a2a2e; margin: 18px 0 6px; letter-spacing: .04em; }
+  .folha-aulas h3:first-of-type { margin-top: 0; }
+  .folha-aulas ol { list-style: none; padding: 0; margin: 0; }
+  .folha-aulas li { position: relative; padding: 7px 0; border-bottom: 1px dashed rgba(42,42,46,.18); font: 500 14px/1.45 "JetBrains Mono", monospace; }
+  .folha-aulas li b { color: var(--vermelho); }
+  .folha-aulas li span { display: block; font: 400 13.5px Inter, sans-serif; color: #5d5d63; }
+  /* a tarja preta por cima de cada linha, que corre pra direita com a rolagem */
+  .folha-aulas li::after { content: ""; position: absolute; left: -4px; right: -4px; top: 5px; bottom: 5px; background: #16181d; border-radius: 3px; transform-origin: 100% 50%; transform: scaleX(var(--tarja, 1)); }
+
+  /* ===== cartões e pra quem é ===== */
   .grade { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
   .cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: 18px; padding: 22px; }
   .cartao p { margin: 8px 0 0; color: var(--cinza); }
-  .quadros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
-  .quadros img { width: 150px; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 14px; border: 3px solid #2a3244; flex: none; scroll-snap-align: start; }
-
-  /* passos */
-  .passos { counter-reset: passo; display: grid; gap: 12px; }
-  .passo { display: flex; gap: 16px; align-items: center; background: var(--cartao); border: 1px solid var(--borda); border-radius: 16px; padding: 16px 18px; }
-  .passo::before { counter-increment: passo; content: counter(passo); flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--ambar); color: var(--fundo); font-family: Oswald, sans-serif; font-weight: 700; font-size: 24px; display: grid; place-items: center; }
-
-  /* aulas */
-  .aulas { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-  .modulo { font-size: 18px; line-height: 1.3; color: var(--ambar); letter-spacing: .06em; margin: 26px 0 12px; }
-  .aulas li { display: grid; gap: 4px; padding: 14px 18px; background: var(--cartao); border-radius: 12px; border-left: 5px solid var(--ambar); }
-  .aulas li strong { font-weight: 600; }
-  .aulas li span { color: var(--cinza); font-size: 15px; line-height: 1.45; }
-
-  /* listas com marca */
+  .cartao .icone { font-size: 30px; }
+  .perfis { display: grid; gap: 12px; }
+  .perfil { background: var(--cartao); border: 1px solid var(--borda); border-radius: 16px; padding: 16px 18px; }
+  .perfil .topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .perfil b { font: 700 20px Oswald, sans-serif; text-transform: uppercase; line-height: 1.1; }
+  .perfil .pct { font: 700 22px "JetBrains Mono", monospace; color: var(--verde); }
+  .perfil .medidor { height: 6px; border-radius: 3px; background: #0a0d13; overflow: hidden; margin: 10px 0 8px; }
+  .perfil .medidor i { display: block; height: 100%; width: 0; background: var(--verde); }
+  .perfil span { color: var(--cinza); font-size: 14.5px; }
   ul.marcas { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
   ul.marcas li { padding-left: 34px; position: relative; }
   ul.marcas li::before { content: ""; position: absolute; left: 0; top: 4px; width: 20px; height: 11px; border-left: 4px solid var(--verde); border-bottom: 4px solid var(--verde); transform: rotate(-45deg); }
   ul.nao li::before { width: 18px; height: 18px; border: none; top: 3px; transform: none; background: linear-gradient(45deg, transparent 42%, var(--vermelho) 42% 58%, transparent 58%), linear-gradient(-45deg, transparent 42%, var(--vermelho) 42% 58%, transparent 58%); }
 
-  /* oferta */
-  .oferta { text-align: center; background: var(--cartao); border: 2px solid var(--ambar); border-radius: 24px; padding: 34px 20px; }
-  .preco { font-family: Oswald, sans-serif; font-weight: 700; font-size: clamp(72px, 18vw, 110px); color: var(--ambar); line-height: 1; margin: 6px 0 4px; }
+  /* ===== a oferta: o ingresso ===== */
+  .ingresso { position: relative; text-align: center; background: linear-gradient(160deg, #1d2638, #131a26); border: 2px solid var(--ambar); border-radius: 26px; padding: 38px 22px; }
+  .ingresso::before, .ingresso::after { content: ""; position: absolute; top: 50%; width: 34px; height: 34px; border-radius: 50%; background: var(--fundo2); transform: translateY(-50%); border: 2px solid var(--ambar); }
+  .ingresso::before { left: -19px; } .ingresso::after { right: -19px; }
+  .preco { font: 700 clamp(80px, 22vw, 124px)/1 Oswald, sans-serif; color: var(--ambar); margin: 6px 0 4px; text-shadow: 0 0 40px rgba(233,162,59,.35); }
   .garantia { display: flex; gap: 16px; align-items: center; text-align: left; border: 2px solid var(--verde); border-radius: 18px; padding: 18px 20px; margin-top: 24px; }
-  .garantia .selo { flex: none; width: 74px; height: 74px; border-radius: 50%; border: 4px solid var(--verde); display: grid; place-items: center; font-family: Oswald, sans-serif; font-weight: 700; font-size: 30px; color: var(--verde); line-height: .9; text-align: center; }
+  .garantia .selo { flex: none; width: 74px; height: 74px; border-radius: 50%; border: 4px solid var(--verde); display: grid; place-items: center; font: 700 30px/.9 Oswald, sans-serif; color: var(--verde); text-align: center; animation: balanca 4s ease-in-out infinite; }
   .garantia .selo small { display: block; font-size: 12px; letter-spacing: .1em; }
+  @keyframes balanca { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
 
-  /* perguntas */
   details { background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; }
   summary { cursor: pointer; font-weight: 600; list-style: none; position: relative; padding-right: 28px; }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; position: absolute; right: 0; top: -2px; color: var(--ambar); font-size: 24px; font-weight: 600; }
-  details[open] summary::after { content: "−"; }
+  summary::after { content: "+"; position: absolute; right: 0; top: -2px; color: var(--ambar); font-size: 24px; font-weight: 600; transition: transform .25s; }
+  details[open] summary::after { transform: rotate(45deg); }
   details p { color: var(--cinza); margin: 10px 0 0; }
-
   footer { padding: 34px 16px 110px; text-align: center; color: var(--cinza); font-size: 13px; border-top: 1px solid var(--borda); }
-
-  /* o botão que acompanha a rolagem no celular, depois da primeira dobra */
-  .fixo { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(16,19,25,.94); border-top: 1px solid var(--borda); text-align: center; transform: translateY(110%); transition: transform .25s; z-index: 10; }
+  .fixo { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(12,15,21,.94); border-top: 1px solid var(--borda); text-align: center; transform: translateY(110%); transition: transform .25s; z-index: 20; }
   .fixo.visivel { transform: none; }
   .fixo .botao { font-size: 20px; padding: 13px 26px; width: 100%; max-width: 420px; box-shadow: none; animation: none; }
   @media (min-width: 900px) { .fixo { display: none; } }
 
-  /* ===== animações ===== */
-  /* o botão pulsa de leve e um brilho passa por ele; no toque ele afunda */
-  .botao { position: relative; overflow: hidden; animation: pulso 2.6s ease-in-out infinite; }
-  .botao::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent); transform: skewX(-20deg); animation: brilho 3.2s ease-in-out infinite; }
-  .botao:hover { filter: brightness(1.08); }
-  .botao:active, .heroi .botao:active { animation: none; transform: translateY(5px) scale(.98); box-shadow: 0 3px 0 #3f6e3b; }
-  @keyframes pulso { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
-  @keyframes brilho { 0%, 55% { left: -60%; } 85%, 100% { left: 130%; } }
-
-  /* entrada da primeira dobra */
-  .heroi .rotulo { animation: cair .6s ease-out both; }
-  .heroi h1 { animation: subir .7s .1s ease-out both; }
-  .heroi p.sub { animation: subir .7s .25s ease-out both; }
-  .heroi .vsl { animation: subir .8s .4s ease-out both, brilhoVsl 3s 1.2s ease-in-out infinite; }
-  .heroi .botao { animation: subir .7s .6s ease-out both, pulso 2.6s 1.4s ease-in-out infinite; }
-  @keyframes subir { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
-  @keyframes cair { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
-  @keyframes brilhoVsl { 0%, 100% { box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 0 rgba(233,162,59,0); } 50% { box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 34px 4px rgba(233,162,59,.35); } }
-
-  /* o que entra na tela ao rolar: sobe e aparece, um depois do outro */
-  .revela { opacity: 0; transform: translateY(28px); transition: opacity .6s ease-out, transform .6s ease-out; transition-delay: var(--atraso, 0s); }
-  .revela.visto { opacity: 1; transform: none; }
-
-  /* cartões e passos reagem ao toque e ao mouse */
-  .cartao, .passo, .aulas li { transition: transform .25s, border-color .2s, opacity .6s ease-out var(--atraso, 0s); }
-  .cartao:hover, .passo:hover, .aulas li:hover { transform: translateY(-3px); border-color: var(--ambar); }
-  .passo.visto::before { animation: carimbo .5s var(--atraso, 0s) ease-out both; }
-  @keyframes carimbo { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
-
-  /* o preço salta quando aparece, e o selo da garantia balança de leve */
-  .preco.visto { animation: salto .7s ease-out both; }
-  @keyframes salto { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
-  .garantia .selo { animation: balanca 4s ease-in-out infinite; }
-  @keyframes balanca { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
-
-  /* perguntas: o + vira x e a resposta desce */
-  summary::after { transition: transform .25s; }
-  details[open] summary::after { content: "+"; transform: rotate(45deg); }
-  details[open] p { animation: subir .35s ease-out both; }
-
-  /* os quadros do episódio deslizam sozinhos */
-  .quadros img { transition: transform .25s; }
-  .quadros img:hover { transform: scale(1.04); }
-
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
-    .revela { opacity: 1; transform: none; }
+    #render, #flash { display: none; }
   }
 </style>
 </head>
-<body>
+<body class="carregando">
 
+<!-- a janela de render que abre a página -->
+<div id="render" aria-hidden="true">
+  <div>
+    <div class="janela"><div class="barra-topo"><span class="claq"></span><span>episodio_01.mp4</span><span>REC</span></div><pre id="digitando"></pre></div>
+    <div class="rodape"><span class="mono" style="color:var(--cinza)">// renderizando</span><span class="pct" id="pct">00<small>%</small></span></div>
+    <div class="trilho"><i id="trilho"></i></div>
+  </div>
+  <button class="pular" type="button">pular</button>
+</div>
+<div id="flash"></div>
+
+<div class="progresso" id="progresso"></div>
+<header><span class="logo"><i></i>Histórias animadas</span><a class="mini comprar" href="#">Quero</a></header>
+
+<!-- 1. a promessa e a VSL -->
 <section class="heroi">
   <div class="miolo">
-    <span class="rotulo">Curso + Sistema Operacional</span>
-    <h1>Transforme qualquer ideia num <span class="ambar">vídeo animado</span> pronto pra postar em 10 minutos</h1>
+    <span class="mono rec">curso + sistema operacional</span>
+    <h1 class="dividir">Transforme qualquer ideia num <span class="ambar">vídeo animado</span> pronto pra postar em 10 minutos</h1>
     <p class="sub">Sem saber desenhar, editar ou programar: você só escolhe a história e publica. Assista:</p>
     <div class="vsl">
-      <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl-capa.jpg" autoplay muted playsinline preload="auto"></video>
+      <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl-capa.jpg" muted playsinline preload="auto"></video>
       <button class="som" id="som" type="button" hidden><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Toque pra ouvir</button>
     </div>
     <a class="botao comprar" href="#">Quero começar<small>R$ 47, pagamento único</small></a>
@@ -166,147 +250,168 @@
   </div>
 </section>
 
+<!-- 2. em cartaz: os celulares -->
+<section class="cartaz">
+  <div class="chao"></div><div class="feixe e"></div><div class="feixe d"></div>
+  <span class="estrela" style="top:14%;right:12%"></span><span class="estrela" style="top:36%;left:8%;animation-delay:.8s;width:14px;height:14px"></span>
+  <div class="miolo" style="text-align:center;position:relative">
+    <span class="mono">// em_cartaz.mp4</span>
+    <h2 class="embaralha">Esses episódios <span class="ambar">saíram do sistema</span></h2>
+    <p class="cinza" style="max-width:560px;margin:0 auto 10px">Roteiro, cenas, voz, legenda e música. O exemplo é sobrevivência, mas a história é sua: mistério, curiosidades, lendas, histórias pra crianças.</p>
+    <p class="mono" style="color:var(--cinza)">arraste pro lado <span class="arraste">→</span></p>
+    <div class="faixa" id="faixa">
+      <div class="celular"><div class="tela"><span class="marca">REC ● EP1</span><video src="midia/ep1.mp4" poster="midia/ep1.jpg" muted loop playsinline preload="none"></video></div><div class="legenda"><span class="num">01<small> /03</small></span><b>Última Chamada</b><span class="mono" style="color:var(--cinza)">zumbis · escola</span></div></div>
+      <div class="celular"><div class="tela"><span class="marca">REC ● EP2</span><video src="midia/ep2.mp4" poster="midia/ep2.jpg" muted loop playsinline preload="none"></video></div><div class="legenda"><span class="num">02<small> /03</small></span><b>Bote à Deriva</b><span class="mono" style="color:var(--cinza)">naufrágio · mar</span></div></div>
+      <div class="celular"><div class="tela"><span class="marca">REC ● EP3</span><video src="midia/ep3.mp4" poster="midia/ep3.jpg" muted loop playsinline preload="none"></video></div><div class="legenda"><span class="num">03<small> /03</small></span><b>Silêncio na Serra</b><span class="mono" style="color:var(--cinza)">zumbis · fazenda</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. o relógio (cena presa): DIAS vira 10 MIN -->
+<section class="tempo" id="tempo">
+  <div class="fundo-cor" id="tempoCor"></div>
+  <div class="palavrao" id="palavrao">DIAS</div>
+  <div class="topo"><span class="mono" id="tempoMono" style="color:var(--creme)">// do_jeito_dificil</span></div>
+  <div class="relogio" id="relogio">
+    <div class="marcas"><i></i><i style="transform:rotate(90deg)"></i><i style="transform:rotate(180deg)"></i><i style="transform:rotate(270deg)"></i></div>
+    <div class="ponteiro h" id="ph"></div><div class="ponteiro m" id="pm"></div>
+  </div>
+  <div class="rotulo"><span class="mono" id="tempoAntes" style="color:var(--creme)">antes levava</span><div class="grande" id="tempoValor">3 dias</div></div>
+</section>
+
+<section style="background:var(--fundo)">
+  <div class="estreito">
+    <span class="mono">// comparativo.log</span>
+    <h2 class="embaralha">Hoje é <span class="ambar">muito mais rápido</span></h2>
+    <div class="comparar" id="comparar">
+      <div class="linha-comp antes"><div class="cab"><b>Do jeito difícil</b><span class="vermelho" id="vAntes">0 h</span></div><div class="trilho"><i id="bAntes"></i></div><ul><li>aprender a desenhar</li><li>animar quadro a quadro</li><li>gravar e editar a voz</li><li>legendar na mão</li></ul></div>
+      <div class="linha-comp agora"><div class="cab"><b>Com o sistema</b><span class="ambar" id="vAgora">0 min</span></div><div class="trilho"><i id="bAgora"></i></div><ul style="color:var(--cinza)"><li>você escolhe a história, o Claude faz o resto e te mostra pra aprovar</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. bastidores (cena presa): roteiro → storyboard → vídeo -->
+<section class="bastidores" id="bastidores">
+  <div class="titulo"><span class="mono">// bastidores</span><h2 class="embaralha" style="font-size:clamp(34px,9vw,60px);margin:8px 0 0">Do roteiro ao <span class="ambar">vídeo pronto</span></h2></div>
+  <div class="mesa">
+    <div class="folha" id="bFolha"><b>CENA 1 · NOITE</b><br>Se o apocalipse zumbi começar na escola, não corra pro portão.<br><br><b>CENA 2</b><br>A professora conta as crianças.<br><br><b>CENA 3</b><br>Doze alunos. Uma porta. Silêncio.</div>
+    <div class="board" id="bBoard"><div style="background-image:url(midia/cidade.jpg)"></div><div style="background-image:url(midia/corte.jpg)"></div><div style="background-image:url(midia/enfermaria.jpg)"></div><div style="background-image:url(midia/escada.jpg)"></div></div>
+    <div class="pronto" id="bPronto"><video src="midia/ep1.mp4" muted loop playsinline preload="none"></video></div>
+  </div>
+  <div class="etapa"><span class="mono" id="bNum">01 / 03</span><br><span id="bEtapa">o roteiro</span></div>
+</section>
+
+<!-- 5. o método (cena presa): 5 janelas que digitam -->
+<section class="metodo" id="metodo">
+  <div class="cab"><span class="mono">// como_funciona</span><h2 style="font-size:clamp(28px,7.5vw,44px);margin:6px 0 0">O método em <span class="ambar">5 passos</span></h2></div>
+  <div class="passo"><div class="contagem">01<small> /05 · tema</small></div><h3>Você escolhe a história</h3><p>O tema, quem está lá e o que está em jogo, em poucas linhas. Ou um dos temas prontos.</p><div class="tela"><div class="barra-topo"><span>tema.txt</span><span class="ok">✓ pronto</span></div><pre data-texto="&lt;i&gt;tema:&lt;/i&gt; zumbis numa fazenda de café&#10;&lt;i&gt;quem:&lt;/i&gt; uma produtora, o filho e o cachorro&#10;&lt;i&gt;em jogo:&lt;/i&gt; a única ponte da fazenda"></pre></div></div>
+  <div class="passo"><div class="contagem">02<small> /05 · roteiro</small></div><h3>A IA escreve o roteiro</h3><p>O Claude escreve na estrutura que prende, e um revisor confere as dicas antes de seguir.</p><div class="tela"><div class="barra-topo"><span>roteiro.json</span><span class="ok">✓ revisado</span></div><pre data-texto="&lt;i&gt;[gancho]&lt;/i&gt; Se o apocalipse zumbi começar...&#10;&lt;i&gt;[virada]&lt;/i&gt; o cadeado está aberto&#10;&lt;i&gt;[final]&lt;/i&gt; quem abriu? segue a página"></pre></div></div>
+  <div class="passo"><div class="contagem">03<small> /05 · cenas</small></div><h3>O sistema desenha e anima</h3><p>Personagens, cenários, mapas, alertas, e cada um faz o que a narração diz.</p><div class="tela"><div class="barra-topo"><span>palco</span><span class="ok">✓ 31 cenas</span></div><pre data-texto="&lt;i&gt;cena 05&lt;/i&gt; fazenda · tarde · o cachorro late&#10;&lt;i&gt;cena 16&lt;/i&gt; o menino abraça o cachorro&#10;&lt;i&gt;cena 22&lt;/i&gt; ela puxa a corrente da porteira"></pre></div></div>
+  <div class="passo"><div class="contagem">04<small> /05 · som</small></div><h3>Voz, legenda e música</h3><p>A narração, a legenda no ritmo da fala com a palavra-chave pintada, e o som mixado.</p><div class="tela"><div class="barra-topo"><span>mixagem</span><span class="ok">✓ -14 LUFS</span></div><pre data-texto="&lt;i&gt;voz:&lt;/i&gt; gravada · 187 palavras&#10;&lt;i&gt;legenda:&lt;/i&gt; no ritmo da fala&#10;&lt;i&gt;trilha:&lt;/i&gt; sem reivindicação"></pre></div></div>
+  <div class="passo"><div class="contagem">05<small> /05 · pronto</small></div><h3>Pronto pra postar</h3><p>Reels, TikTok e Shorts. Uns 10 minutos por vídeo, depois do sistema instalado.</p><div class="tela"><div class="barra-topo"><span>episodio_01.mp4</span><span class="ok">✓ 100%</span></div><pre data-texto="&lt;i&gt;render:&lt;/i&gt; 1080x1920 · 30 fps&#10;&lt;i&gt;capa:&lt;/i&gt; pronta&#10;&lt;i&gt;destino:&lt;/i&gt; Reels · TikTok · Shorts"></pre></div></div>
+  <div class="pontos" id="pontos"><i></i><i></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 6. as aulas: a folha com tarjas -->
 <section>
+  <div class="estreito">
+    <span class="mono">// roteiro_do_curso.txt</span>
+    <h2 class="embaralha">O que você <span class="ambar">vai aprender</span></h2>
+    <div class="folha-aulas" id="folhaAulas">
+      <span class="carimbo">16 AULAS</span>
+      <h3>Módulo 1 · Do zero ao Reel</h3>
+      <ol>
+        <li><b>00</b> Boas-vindas<span>O que você vai fazer, o que vem no Sistema Operacional e o que precisa ter.</span></li>
+        <li><b>01</b> O formato que prende<span>A estrutura que segura quem assiste até o fim.</span></li>
+        <li><b>02</b> Preparando a máquina<span>O Claude instala tudo, e você cria a chave grátis da voz.</span></li>
+        <li><b>03</b> O roteiro com o Claude<span>Como escrever um tema bom e pedir ajuste com as suas palavras.</span></li>
+        <li><b>04</b> O visual<span>Cenas, personagens e como pedir uma cena nova que o sistema ainda não tem.</span></li>
+        <li><b>05</b> Voz, legenda e som<span>A voz de ouvido, a legenda no ritmo e música que não toma reivindicação.</span></li>
+        <li><b>06</b> Renderizar e revisar<span>O vídeo pronto em minutos, revisado antes de publicar.</span></li>
+        <li><b>07</b> Publicar e crescer<span>A capa certa, a legenda com pergunta e o mesmo vídeo nas três redes.</span></li>
+        <li><b>08</b> Do episódio 1 à série<span>A parte 2 que continua de onde parou, e séries novas.</span></li>
+      </ol>
+      <h3>Módulo 2 · Ganhar dinheiro com os vídeos</h3>
+      <ol>
+        <li><b>09</b> Os quatro caminhos<span>As plataformas que pagam pelas views, a venda de infoprodutos e o que cada um exige.</span></li>
+        <li><b>10</b> Monetização no TikTok<span>Os requisitos e o que conta como vídeo original.</span></li>
+        <li><b>11</b> YouTube Shorts e Facebook<span>O que cada um pede, e a regra de conteúdo repetitivo.</span></li>
+        <li><b>12</b> Publi e afiliados<span>O mídia kit feito pelo Claude e a lista que sai do próprio episódio.</span></li>
+        <li><b>13</b> Criar o seu produto<span>Como criar seus infoprodutos usando o Claude.</span></li>
+        <li><b>14</b> Página de vendas e VSL<span>A página deste curso, parte por parte, e o checkout.</span></li>
+        <li><b>15</b> Vender no Instagram e no TikTok<span>Onde fica o link e o conteúdo que leva à venda.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 7. o que vem junto -->
+<section style="background:var(--fundo2)">
   <div class="miolo">
-    <h2 class="uma-linha">Vídeos assim, <span class="ambar">feitos por você</span></h2>
-    <p class="cinza" style="margin-top:-8px">Com gancho, narração, legenda e música, prontos pra Reels, TikTok e Shorts. O exemplo é uma série de sobrevivência, mas a história é sua: mistério, curiosidades, lendas, histórias pra crianças, o que o seu público gosta. E quando ela pede um lugar novo, a IA desenha a cena pra você.</p>
-    <div class="quadros" aria-label="Cenas de um episódio feito com o Sistema Operacional">
-      <img src="midia/cidade.jpg" alt="Fachada de hospital à noite" loading="lazy">
-      <img src="midia/enfermaria.jpg" alt="Técnico de enfermagem na enfermaria" loading="lazy">
-      <img src="midia/corte.jpg" alt="Prédio em corte com os andares" loading="lazy">
-      <img src="midia/escada.jpg" alt="Porta corta-fogo da escada" loading="lazy">
-      <img src="midia/lista.jpg" alt="Lista de itens" loading="lazy">
-      <img src="midia/final.jpg" alt="Cartela final com o botão seguir" loading="lazy">
+    <span class="mono">// no_pacote</span>
+    <h2 class="embaralha">O que vem <span class="ambar">junto</span></h2>
+    <div class="grade sobe">
+      <div class="cartao"><div class="icone">🎬</div><h3 class="ambar">O Sistema Operacional</h3><p>O motor pronto que faz o episódio inteiro: roteirista, cenas, voz, legenda, som e render, num pedido só.</p></div>
+      <div class="cartao"><div class="icone">📘</div><h3 class="ambar">O guia</h3><p>A instalação passo a passo, o molde do tema, os checklists e os pedidos prontos pra colar no Claude.</p></div>
+      <div class="cartao"><div class="icone">🎞️</div><h3 class="ambar">Um episódio de exemplo</h3><p>Um episódio completo pra ver o resultado e testar um ajuste antes de fazer o seu.</p></div>
     </div>
   </div>
 </section>
 
-<section style="background:var(--fundo2)">
-  <div class="estreito">
-    <h2>Como <span class="ambar">funciona</span></h2>
-    <div class="passos">
-      <div class="passo"><div><h3>Você escolhe a história</h3><span class="cinza">O tema, quem está lá e o que está em jogo, em poucas linhas.</span></div></div>
-      <div class="passo"><div><h3>A IA escreve o roteiro</h3><span class="cinza">O Claude, a inteligência artificial que faz o trabalho pesado, escreve na estrutura que prende, e um revisor confere.</span></div></div>
-      <div class="passo"><div><h3>O sistema desenha as cenas</h3><span class="cinza">Personagens, cenários, mapas e alertas, tudo animado.</span></div></div>
-      <div class="passo"><div><h3>Voz, legenda e música</h3><span class="cinza">A narração, a legenda no ritmo da fala e o som mixado.</span></div></div>
-      <div class="passo"><div><h3>Vídeo pronto pra postar</h3><span class="cinza">Uns 10 minutos por vídeo, depois do sistema instalado.</span></div></div>
-    </div>
-  </div>
-</section>
-
+<!-- 8. pra quem é -->
 <section>
   <div class="estreito">
-    <h2>As <span class="ambar">16 aulas</span></h2>
-    <h3 class="modulo">Módulo 1 · Do zero ao Reel</h3>
-    <ul class="aulas">
-      <li><strong>0 · Boas-vindas</strong><span>O que você vai fazer no curso, o que vem no Sistema Operacional e o que precisa ter.</span></li>
-      <li><strong>1 · O formato que prende</strong><span>A estrutura em 11 passos que segura quem assiste, e as 4 regras que a gente aprendeu errando.</span></li>
-      <li><strong>2 · Preparando a máquina</strong><span>O Claude instala tudo pra você, você cria a chave grátis da voz e testa se está tudo pronto.</span></li>
-      <li><strong>3 · O roteiro com o Claude</strong><span>Como escrever um tema bom, o revisor que confere as dicas e como pedir ajuste com as suas palavras.</span></li>
-      <li><strong>4 · O visual</strong><span>As cenas, os personagens e os elementos na tela, e como pedir uma cena nova que o sistema ainda não tem.</span></li>
-      <li><strong>5 · Voz, legenda e som</strong><span>Como escolher a voz de ouvido, a legenda no ritmo da fala e música que não toma reivindicação.</span></li>
-      <li><strong>6 · Renderizar e revisar</strong><span>O vídeo pronto em minutos e a revisão pela folha de quadros, pra não publicar com erro.</span></li>
-      <li><strong>7 · Publicar e crescer</strong><span>A capa no recorte certo, o perfil, a legenda com pergunta e o mesmo vídeo no Reels, TikTok e Shorts.</span></li>
-      <li><strong>8 · Do episódio 1 à série</strong><span>A parte 2 que continua de onde parou, as regras que não mudam e como abrir séries novas.</span></li>
-    </ul>
-    <h3 class="modulo">Módulo 2 · Ganhar dinheiro com os vídeos</h3>
-    <ul class="aulas">
-      <li><strong>9 · Os quatro caminhos</strong><span>As plataformas que pagam pelas views, a venda de infoprodutos e o que cada um exige.</span></li>
-      <li><strong>10 · Monetização no TikTok</strong><span>Os requisitos do Programa de Recompensas, o que conta como vídeo original e como se inscrever.</span></li>
-      <li><strong>11 · YouTube Shorts e Facebook</strong><span>O que cada um pede pra pagar, e a regra de conteúdo repetitivo que todo criador de série precisa conhecer.</span></li>
-      <li><strong>12 · Publi e afiliados</strong><span>O mídia kit feito pelo Claude, como avisar a publicidade e a lista de compras que sai do próprio episódio.</span></li>
-      <li><strong>13 · Criar o seu produto</strong><span>Como criar seus infoprodutos usando o Claude.</span></li>
-      <li><strong>14 · Página de vendas e VSL</strong><span>A página deste curso, parte por parte, o vídeo que vende e o checkout que cobra e libera o acesso.</span></li>
-      <li><strong>15 · Vender no Instagram e no TikTok</strong><span>Onde fica o link, o conteúdo que leva à venda sem estragar a página, e o que nunca fazer.</span></li>
-    </ul>
-    <p class="cinza">Aulas curtas, direto ao ponto. As regras de cada plataforma foram conferidas nas páginas oficiais em outubro de 2026.</p>
+    <span class="mono">// elenco.exe</span>
+    <h2 class="embaralha">Pra quem <span class="ambar">é</span></h2>
+    <div class="perfis sobe">
+      <div class="perfil" data-v="96"><div class="topo"><b>Quem quer uma página de animação</b><span class="pct">0%</span></div><div class="medidor"><i></i></div><span>no Instagram, no TikTok ou no YouTube, postando toda semana.</span></div>
+      <div class="perfil" data-v="93"><div class="topo"><b>Quem não sabe desenhar nem editar</b><span class="pct">0%</span></div><div class="medidor"><i></i></div><span>e quer que a IA faça o trabalho pesado.</span></div>
+      <div class="perfil" data-v="88"><div class="topo"><b>Criadores de conteúdo</b><span class="pct">0%</span></div><div class="medidor"><i></i></div><span>que querem um formato novo, sem depender de editor.</span></div>
+      <div class="perfil" data-v="84"><div class="topo"><b>Quem quer ganhar com os vídeos</b><span class="pct">0%</span></div><div class="medidor"><i></i></div><span>e conhecer os caminhos: views, publi, afiliado e produto próprio.</span></div>
+    </div>
+    <div class="cartao sobe" style="margin-top:16px"><h3>Não é pra você se</h3><ul class="marcas nao" style="margin-top:12px"><li>usa só Mac ou só celular (por enquanto, é Windows)</li><li>não quer assinar o Claude</li></ul></div>
+    <div class="cartao sobe" style="margin-top:16px"><h3>O que você precisa ter</h3><ul class="marcas" style="margin-top:12px"><li><strong>Um computador com Windows</strong>, com uns 5 GB livres</li><li><strong>Uma assinatura do Claude que inclua o Claude Code</strong> (Pro ou Max), paga à parte, direto na Anthropic</li><li><strong>Uma chave grátis do Google</strong> pra voz, que a aula 2 ensina a criar</li></ul></div>
   </div>
 </section>
 
-<section style="background:var(--fundo2)">
-  <div class="miolo">
-    <h2>O que vem <span class="ambar">junto</span></h2>
-    <div class="grade">
-      <div class="cartao"><h3 class="ambar">O Sistema Operacional</h3><p>O motor pronto que faz o episódio inteiro: roteirista, cenas, voz, legenda, som e render, num pedido só.</p></div>
-      <div class="cartao"><h3 class="ambar">O guia</h3><p>A instalação passo a passo, o molde do tema, os checklists e os pedidos prontos pra colar no Claude.</p></div>
-      <div class="cartao"><h3 class="ambar">Um episódio de exemplo</h3><p>Um episódio completo pra você ver o resultado e testar um ajuste antes de fazer o seu.</p></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="miolo grade">
-    <div class="cartao">
-      <h3>É pra você se</h3>
-      <ul class="marcas" style="margin-top:14px">
-        <li>quer criar uma página de vídeos animados no Instagram, no TikTok ou no YouTube</li>
-        <li>não sabe desenhar, editar nem programar, e quer que a IA faça o trabalho pesado</li>
-        <li>quer postar toda semana sem depender de editor</li>
-        <li>quer conhecer os caminhos pra ganhar dinheiro com os vídeos</li>
-      </ul>
-    </div>
-    <div class="cartao">
-      <h3>Não é pra você se</h3>
-      <ul class="marcas nao" style="margin-top:14px">
-        <li>usa só Mac ou só celular (por enquanto, é Windows)</li>
-        <li>não quer assinar o Claude</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section style="background:var(--fundo2)">
+<!-- 9. a oferta -->
+<section id="oferta" style="background:var(--fundo2)">
   <div class="estreito">
-    <h2>O que você <span class="ambar">precisa ter</span></h2>
-    <ul class="marcas">
-      <li><strong>Um computador com Windows</strong>, com uns 5 GB livres</li>
-      <li><strong>Uma assinatura do Claude que inclua o Claude Code</strong> (Pro ou Max), paga à parte, direto na Anthropic</li>
-      <li><strong>Uma chave grátis do Google</strong> pra voz, que a aula 2 ensina a criar</li>
-    </ul>
-  </div>
-</section>
-
-<section id="oferta">
-  <div class="estreito">
-    <div class="oferta">
-      <h2 style="margin-bottom:6px">Tudo isso por</h2>
-      <div class="preco">R$ 47</div>
+    <div class="ingresso" id="ingresso">
+      <span class="mono">// ingresso · acesso completo</span>
+      <h2 style="margin:8px 0 4px;font-size:clamp(28px,7vw,40px)">Tudo isso por</h2>
+      <div class="preco" id="preco">R$ 47</div>
       <p class="cinza" style="margin:0 0 22px">pagamento único</p>
-      <ul class="marcas" style="text-align:left;max-width:380px;margin:0 auto 26px">
-        <li>16 aulas curtas, em 2 módulos</li>
-        <li>O Sistema Operacional com o motor pronto</li>
-        <li>O guia com os pedidos prontos</li>
-        <li>Um episódio de exemplo</li>
-      </ul>
+      <ul class="marcas" style="text-align:left;max-width:380px;margin:0 auto 26px"><li>16 aulas curtas, em 2 módulos</li><li>O Sistema Operacional com o motor pronto</li><li>O guia com os pedidos prontos</li><li>Um episódio de exemplo</li></ul>
       <a class="botao comprar" href="#">Quero começar<small>acesso logo depois da compra</small></a>
-      <div class="garantia">
-        <div class="selo">7<small>DIAS</small></div>
-        <div><strong>Garantia de 7 dias.</strong> Assistiu e não gostou? Peça o reembolso em até 7 dias depois da compra e receba o valor de volta.</div>
-      </div>
+      <div class="garantia"><div class="selo">7<small>DIAS</small></div><div><strong>Garantia de 7 dias.</strong> Assistiu e não gostou? Peça o reembolso em até 7 dias depois da compra e receba o valor de volta.</div></div>
     </div>
   </div>
 </section>
 
+<!-- 11. perguntas -->
 <section style="background:var(--fundo2)">
   <div class="estreito">
-    <h2>Perguntas <span class="ambar">frequentes</span></h2>
+    <span class="mono">// perguntas.txt</span>
+    <h2 class="embaralha">Perguntas <span class="ambar">frequentes</span></h2>
+    <div class="sobe">
     <details><summary>O que é o Claude?</summary><p>É uma inteligência artificial, feita pela Anthropic. No curso, ela trabalha no seu computador: instala o sistema, escreve o roteiro e monta o vídeo, sempre pedindo a sua permissão antes. A assinatura do Claude é paga à parte.</p></details>
     <details><summary>Preciso saber programar?</summary><p>Não. Você pede em português, e o Claude instala, escreve e monta. Os comandos aparecem na tela pra você saber o que está acontecendo, mas quem roda é ele, pedindo a sua permissão antes.</p></details>
     <details><summary>Quanto custa o Claude?</summary><p>A assinatura do Claude é paga à parte, direto na Anthropic, e não está incluída no curso. Ela precisa incluir o Claude Code (planos Pro ou Max). Confira o preço atual no site do Claude.</p></details>
     <details><summary>A voz é paga?</summary><p>A narração sai do Gemini, do Google, que tem uma cota grátis por dia. Na aula 2 você cria a chave, sem cartão.</p></details>
     <details><summary>Funciona no Mac ou no celular?</summary><p>Por enquanto, só no Windows. O sistema roda no computador, e o celular serve pra publicar.</p></details>
-    <details><summary>Posso usar qualquer música?</summary><p>Não. Música de banco grátis também pode ser reivindicada no YouTube. A aula 5 ensina a escolher faixa fora do Content ID.</p></details>
+    <details><summary>Só dá pra fazer história de sobrevivência?</summary><p>Não. O exemplo do curso é uma série de sobrevivência, mas o tema é seu. O sistema já vem com cidade, praia, floresta, fazenda, deserto, interiores e mais, e quando a sua história pede um lugar novo, o Claude desenha a cena.</p></details>
     <details><summary>O curso ensina a ganhar dinheiro?</summary><p>O módulo 2 mostra os caminhos (o que o TikTok, o YouTube e o Facebook exigem pra pagar, publi, afiliado e produto próprio) com as regras de cada um. Ele não promete quanto você vai ganhar: isso depende da sua página, e ninguém pode garantir.</p></details>
-    <details><summary>O curso garante seguidores?</summary><p>Não. O curso ensina a fazer os episódios e a publicar do jeito certo. O crescimento depende da sua história, da frequência e do público, e ninguém pode garantir isso.</p></details>
-    <details><summary>Só dá pra fazer história de sobrevivência?</summary><p>Não. O exemplo do curso é uma série de sobrevivência, mas o tema é seu. O sistema já vem com cidade, praia, floresta, deserto, interiores e mais, e quando a sua história pede um lugar que ele ainda não tem, você pede e o Claude desenha a cena nova.</p></details>
     <details><summary>Os vídeos são meus?</summary><p>Sim. A história, os personagens e a série que você cria são seus. Só não copie a série de outra página: o curso ensina a criar a sua.</p></details>
     <details><summary>Como recebo o curso?</summary><p>Logo depois da compra, você recebe o acesso à área de membros, com as aulas, o Sistema Operacional e o guia.</p></details>
+    </div>
   </div>
 </section>
 
 <section style="text-align:center">
   <div class="estreito">
-    <h2>Faça o seu <span class="ambar">primeiro vídeo animado</span></h2>
+    <span class="mono rec">// fim_do_trailer</span>
+    <h2 class="embaralha">Faça o seu <span class="ambar">primeiro episódio</span></h2>
     <a class="botao comprar" href="#">Quero começar<small>R$ 47 · 7 dias de garantia</small></a>
   </div>
 </section>
@@ -315,58 +420,205 @@
   <p>Histórias animadas com Claude · curso independente, sem afiliação com a Anthropic. Claude é marca da Anthropic.</p>
   <p>O pagamento é processado pela Kirvano.</p>
 </footer>
+<div class="fixo" id="fixo"><a class="botao comprar" href="#">Quero começar</a></div>
 
-<div class="fixo" id="fixo"><a class="botao comprar" href="#">Quero começar por R$ 47</a></div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-  // ===== o link do checkout da Kirvano: troque só aqui =====
   const CHECKOUT = "https://pay.kirvano.com/c155351e-faad-4566-8375-dcbba6d215a0";
   for (const a of document.querySelectorAll("a.comprar")) a.href = CHECKOUT;
+  const calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  gsap.registerPlugin(ScrollTrigger);
 
-  // o botão fixo do celular aparece sempre que nenhum botão de compra da página está à vista
-  const fixo = document.getElementById("fixo"), daPágina = [...document.querySelectorAll("main a.comprar, section a.comprar")], vistos = new Set();
-  // e nunca na primeira dobra: o preço ali chamava atenção antes da headline e do vídeo
-  const heroi = document.querySelector(".heroi");
-  let naPrimeiraDobra = true;
-  const mostrar = () => fixo.classList.toggle("visivel", !naPrimeiraDobra && vistos.size === 0);
-  const olho = new IntersectionObserver((es) => {
-    for (const e of es) {
-      if (e.target === heroi) naPrimeiraDobra = e.isIntersecting;
-      else e.isIntersecting ? vistos.add(e.target) : vistos.delete(e.target);
-    }
-    mostrar();
-  });
-  daPágina.forEach((a) => olho.observe(a));
-  olho.observe(heroi);
+  // ===== texto que embaralha e assenta (letra por letra, da esquerda pra direita) =====
+  const SINAIS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*";
+  function embaralhar(el, dur = 0.9) {
+    const nós = []; // cada nó de texto, com o original
+    const andar = (n) => { for (const c of n.childNodes) c.nodeType === 3 ? nós.push([c, c.textContent]) : andar(c); };
+    andar(el);
+    const total = nós.reduce((s, [, t]) => s + t.length, 0);
+    const obj = { p: 0 };
+    gsap.to(obj, { p: 1, duration: dur, ease: "power2.out", onUpdate() {
+      let feito = Math.floor(obj.p * total);
+      for (const [n, t] of nós) {
+        let s = "";
+        for (const ch of t) s += feito-- > 0 || ch === " " ? ch : SINAIS[(Math.random() * SINAIS.length) | 0];
+        n.textContent = s;
+      }
+    }, onComplete() { for (const [n, t] of nós) n.textContent = t; } });
+  }
+  // ===== título que sobe palavra por palavra por trás de uma máscara =====
+  function dividirEmPalavras(el) {
+    const andar = (n) => { for (const c of [...n.childNodes]) {
+      if (c.nodeType === 3) { const frag = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach((p) => { if (!p) return; if (/^\s+$/.test(p)) frag.append(p); else { const w = document.createElement("span"); w.className = "palavra"; const i = document.createElement("span"); i.textContent = p; w.append(i); frag.append(w); } }); c.replaceWith(frag); }
+      else andar(c);
+    } };
+    andar(el);
+    return $$(".palavra > span", el);
+  }
 
-  // aparece ao rolar: cada bloco sobe quando entra na tela, os itens de uma lista um depois do outro
-  const alvos = [];
-  document.querySelectorAll("section:not(.heroi) h2, .quadros, .oferta, .garantia, details, section > .estreito > p, section > .miolo > p").forEach((e) => alvos.push([e, 0]));
-  document.querySelectorAll(".passos, .aulas, .grade, ul.marcas").forEach((lista) => [...lista.children].forEach((e, i) => alvos.push([e, i * 0.08])));
-  const olhoRevela = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visto"); olhoRevela.unobserve(e.target); } }), { threshold: 0.15 });
-  for (const [e, atraso] of alvos) { e.classList.add("revela"); e.style.setProperty("--atraso", `${atraso}s`); olhoRevela.observe(e); }
-  const preço = document.querySelector(".preco");
-  new IntersectionObserver(([e], o) => { if (e.isIntersecting) { preço.classList.add("visto"); o.disconnect(); } }, { threshold: 0.6 }).observe(preço);
+  // ===== a janela de render: digita, conta até 100, clarão e entra =====
+  const linhas = ["<i>></i> abrindo o roteiro...", "<i>></i> desenhando as cenas [31/31]", "<i>></i> gravando a voz... ok", "<i>></i> episódio pronto ✓"];
+  const pre = $("#digitando"), pct = $("#pct"), trilho = $("#trilho"), render = $("#render"), flash = $("#flash");
+  let saiu = false;
+  function entrar() {
+    if (saiu) return; saiu = true;
+    gsap.timeline()
+      .to(flash, { opacity: 1, duration: 0.18 })
+      .set(render, { display: "none" })
+      .add(() => { document.body.classList.remove("carregando"); comecarPagina(); })
+      .to(flash, { opacity: 0, duration: 0.5, ease: "power2.out" });
+  }
+  if (calmo) { render.style.display = "none"; document.body.classList.remove("carregando"); comecarPagina(); }
+  else {
+    // digita as linhas em sequência, com a porcentagem andando junto
+    const texto = linhas.join("\n"), visível = texto.replace(/<[^>]+>/g, "");
+    const obj = { p: 0 };
+    gsap.to(obj, { p: 1, duration: 2.4, ease: "none", onUpdate() {
+      const n = Math.floor(obj.p * visível.length);
+      // recoloca as tags no pedaço visível
+      let i = 0, out = "", dentroTag = false;
+      for (const ch of texto) { if (ch === "<") dentroTag = true; if (dentroTag) { out += ch; if (ch === ">") dentroTag = false; continue; } if (i++ >= n) break; out += ch; }
+      pre.innerHTML = out + '<span class="cursor"></span>';
+      const v = Math.round(obj.p * 100);
+      pct.innerHTML = `${String(v).padStart(2, "0")}<small>%</small>`;
+      trilho.style.width = `${v}%`;
+    }, onComplete: () => setTimeout(entrar, 250) });
+    $("#render .pular").addEventListener("click", entrar);
+    // garantia, se a aba ficar em segundo plano (o navegador segura a animação): entra sem o clarão
+    setTimeout(() => { if (saiu) return; saiu = true; render.style.display = "none"; document.body.classList.remove("carregando"); comecarPagina(); }, 4000);
+  }
 
-  // a VSL começa sozinha: com som se o navegador deixar, senão no mudo com o "toque pra ouvir" por cima
-  const vsl = document.getElementById("vsl"), som = document.getElementById("som");
+  function comecarPagina() {
+    // a primeira dobra entra palavra por palavra
+    const pal = dividirEmPalavras($(".heroi h1"));
+    gsap.from(pal, { yPercent: 110, duration: 0.8, ease: "power4.out", stagger: 0.045 });
+    gsap.from([".heroi .mono", ".heroi .sub", ".heroi .vsl", ".heroi .botao", ".heroi .seguro"], { y: 30, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.1, delay: 0.25 });
+    tocarVsl();
+    ScrollTrigger.refresh();
+  }
+
+  // a VSL: com som se o navegador deixar, senão mudo com o "toque pra ouvir"
+  const vsl = $("#vsl"), som = $("#som");
   const ouvir = () => { vsl.muted = false; vsl.currentTime = 0; vsl.controls = true; som.hidden = true; vsl.play(); };
-  vsl.muted = false;
-  vsl.play().catch(() => { vsl.muted = true; som.hidden = false; vsl.play().catch(() => {}); });
+  function tocarVsl() { vsl.muted = false; vsl.play().catch(() => { vsl.muted = true; som.hidden = false; vsl.play().catch(() => {}); }); }
   som.addEventListener("click", ouvir);
   vsl.addEventListener("click", () => { if (vsl.muted) ouvir(); });
 
-  // os quadros do episódio deslizam devagar sozinhos; quem toca assume o controle
-  const faixa = document.querySelector(".quadros");
-  let parado = false, voltaEm = 0;
-  for (const ev of ["pointerdown", "touchstart", "wheel"]) faixa.addEventListener(ev, () => { parado = true; voltaEm = Date.now() + 4000; }, { passive: true });
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => {
-    if (parado && Date.now() < voltaEm) return;
-    parado = false;
-    const fim = faixa.scrollWidth - faixa.clientWidth;
-    if (fim <= 0) return;
-    faixa.scrollLeft = faixa.scrollLeft >= fim - 1 ? 0 : faixa.scrollLeft + 1;
-  }, 30);
+  // a barra de progresso da leitura, no topo
+  gsap.to("#progresso", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: true } });
+
+  // os títulos com "embaralha": as palavras sobem e as letras se ajeitam quando entram
+  $$("h2.embaralha").forEach((h) => {
+    const pal = dividirEmPalavras(h);
+    gsap.set(pal, { yPercent: 110 });
+    ScrollTrigger.create({ trigger: h, start: "top 85%", once: true, onEnter: () => { gsap.to(pal, { yPercent: 0, duration: 0.7, ease: "power4.out", stagger: 0.06 }); embaralhar(h, 1); } });
+  });
+  // blocos que sobem, um depois do outro
+  $$(".sobe").forEach((b) => gsap.from(b.children.length > 1 ? b.children : b, { y: 40, opacity: 0, duration: 0.7, ease: "power3.out", stagger: 0.1, scrollTrigger: { trigger: b, start: "top 85%" } }));
+
+  // ===== em cartaz: o do meio cresce e toca; os do lado giram em 3D =====
+  const faixa = $("#faixa"), celulares = $$(".celular", faixa);
+  const girar = () => { const meio = faixa.scrollLeft + faixa.clientWidth / 2; let melhor; celulares.forEach((c) => { const d = (c.offsetLeft + c.offsetWidth / 2 - meio) / c.offsetWidth; c.querySelector(".tela").style.setProperty("--gira", `${Math.max(-28, Math.min(28, -d * 26))}deg`); if (!melhor || Math.abs(d) < melhor.d) melhor = { c, d: Math.abs(d) }; }); celulares.forEach((c) => { const v = c.querySelector("video"); const ativo = c === melhor.c; c.classList.toggle("ativo", ativo); if (ativo && aVista) v.play().catch(() => {}); else v.pause(); }); };
+  let aVista = false;
+  ScrollTrigger.create({ trigger: ".cartaz", start: "top 70%", end: "bottom 20%", onToggle: (s) => { aVista = s.isActive; girar(); } });
+  faixa.addEventListener("scroll", girar, { passive: true });
+  // os celulares entram de baixo, em leque
+  gsap.from(celulares, { y: 120, rotate: (i) => (i - 1) * 8, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.12, scrollTrigger: { trigger: faixa, start: "top 85%" } });
+  gsap.to(".cartaz .feixe.e", { rotate: 4, scrollTrigger: { trigger: ".cartaz", scrub: true } });
+  gsap.to(".cartaz .feixe.d", { rotate: -4, scrollTrigger: { trigger: ".cartaz", scrub: true } });
+  // começa no do meio
+  requestAnimationFrame(() => { faixa.scrollLeft = celulares[1].offsetLeft - (faixa.clientWidth - celulares[1].offsetWidth) / 2; girar(); });
+
+  // ===== o relógio (preso): os ponteiros giram com a rolagem, "DIAS" cresce, o fundo esquenta, e vira "10 MIN" =====
+  const tl = gsap.timeline({ scrollTrigger: { trigger: "#tempo", start: "top top", end: "+=220%", scrub: 0.6, pin: true } });
+  tl.fromTo("#palavrao", { scale: 0.6, opacity: 0.3 }, { scale: 1.15, opacity: 1, duration: 1 }, 0)
+    .to("#tempoCor", { opacity: 1, duration: 0.6 }, 0.1)
+    .to("#pm", { rotate: 360 * 9, duration: 1.4, ease: "none" }, 0)
+    .to("#ph", { rotate: 360 * 1.5, duration: 1.4, ease: "none" }, 0)
+    .to("#relogio", { rotate: -8, x: () => Math.sin(1) * 4, duration: 0.2, yoyo: true, repeat: 5 }, 0.3)
+    // a virada: tudo apaga, o fundo esfria e o relógio para
+    .add(() => {}, 1.4)
+    .to("#tempoCor", { opacity: 0, duration: 0.3 }, 1.4)
+    .to("#palavrao", { opacity: 0, scale: 1.6, duration: 0.2 }, 1.4)
+    .to("#relogio", { scale: 0.85, borderColor: "#e9a23b", duration: 0.3 }, 1.4)
+    // depois da virada o "10 MIN" volta em âmbar, em duas linhas, no tamanho da tela (numa linha só ele saía cortado no celular)
+    .fromTo("#palavrao", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3 }, 1.65);
+  // os textos trocam no meio da virada, com o palavrão apagado
+  const VIRADA = 1.62 / tl.duration();
+  ScrollTrigger.create({ trigger: "#tempo", start: "top top", end: "+=220%", onUpdate: (s) => {
+    const depois = s.progress > VIRADA, pal = $("#palavrao");
+    if (pal.classList.contains("depois") === depois) return;
+    $("#tempoAntes").textContent = depois ? "agora leva" : "antes levava";
+    $("#tempoValor").innerHTML = depois ? '<span class="ambar">10 min</span>' : "3 dias";
+    $("#tempoMono").textContent = depois ? "// com_o_sistema" : "// do_jeito_dificil";
+    pal.innerHTML = depois ? "10<br>MIN" : "DIAS";
+    pal.classList.toggle("depois", depois);
+  } });
+
+  // as barras de comparação enchem com a rolagem, com os números contando
+  const comp = { a: 0, b: 0 };
+  gsap.timeline({ scrollTrigger: { trigger: "#comparar", start: "top 80%", end: "bottom 45%", scrub: 0.5 } })
+    .to("#bAgora", { width: "4%", duration: 0.15 }, 0)
+    .to(comp, { b: 10, duration: 0.15, onUpdate: () => ($("#vAgora").textContent = `${Math.round(comp.b)} min`) }, 0)
+    .to("#bAntes", { width: "100%", duration: 1 }, 0)
+    .to(comp, { a: 72, duration: 1, onUpdate: () => ($("#vAntes").textContent = `${Math.round(comp.a)} h`) }, 0);
+
+  // ===== bastidores (preso): a folha do roteiro vira storyboard, que vira o vídeo =====
+  const nomes = ["o roteiro", "o storyboard", "o vídeo"];
+  const bt = gsap.timeline({ scrollTrigger: { trigger: "#bastidores", start: "top top", end: "+=200%", scrub: 0.6, pin: true,
+    onUpdate: (s) => { const k = Math.min(2, Math.floor(s.progress * 3)); $("#bNum").textContent = `0${k + 1} / 03`; $("#bEtapa").textContent = nomes[k]; if (k === 2) $("#bPronto video").play().catch(() => {}); } } });
+  bt.from("#bFolha", { rotate: -8, y: 80, opacity: 0, duration: 0.3 })
+    .to("#bFolha", { rotateY: 90, opacity: 0, duration: 0.25 }, 0.6)
+    .fromTo("#bBoard", { rotateY: -90, opacity: 0 }, { rotateY: 0, opacity: 1, duration: 0.25 }, 0.85)
+    .from("#bBoard div", { scale: 0.4, opacity: 0, stagger: 0.06, duration: 0.2 }, 0.95)
+    .to("#bBoard", { scale: 0.9, opacity: 0, duration: 0.25 }, 1.5)
+    .fromTo("#bPronto", { scale: 1.25, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3 }, 1.6);
+
+  // ===== o método (preso): um passo por vez, a janela digita o que o passo faz =====
+  const passos = $$("#metodo .passo"), pontos = $$("#pontos i");
+  passos.forEach((p) => { const pre = $("pre", p); pre.dataset.html = pre.dataset.texto; pre.innerHTML = ""; });
+  function digitar(pre, k) {
+    // k de 0 a 1: quanto do texto já apareceu (com as tags preservadas)
+    const html = pre.dataset.html, vis = html.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&"), n = Math.floor(k * vis.length);
+    let i = 0, out = "", tag = false;
+    for (const ch of html) { if (ch === "<") tag = true; if (tag) { out += ch; if (ch === ">") tag = false; continue; } if (i++ >= n) break; out += ch; }
+    pre.innerHTML = out + (k < 1 ? '<span style="color:var(--ambar)">▍</span>' : "");
+  }
+  const mt = gsap.timeline({ scrollTrigger: { trigger: "#metodo", start: "top top", end: `+=${passos.length * 90}%`, scrub: 0.5, pin: true } });
+  passos.forEach((p, i) => {
+    const pre = $("pre", p), ok = $(".ok", p), est = { k: 0 };
+    mt.fromTo(p, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.25, onStart: () => pontos.forEach((d, j) => d.classList.toggle("on", j <= i)), onReverseComplete: () => pontos.forEach((d, j) => d.classList.toggle("on", j < i)) }, i)
+      .fromTo($("h3", p), { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.25 }, i + 0.05)
+      .to(est, { k: 1, duration: 0.45, ease: "none", onUpdate: () => digitar(pre, est.k) }, i + 0.2)
+      .to(ok, { opacity: 1, duration: 0.05 }, i + 0.66);
+    if (i < passos.length - 1) mt.to(p, { opacity: 0, y: -60, duration: 0.2 }, i + 0.8);
+  });
+
+  // ===== as aulas: a tarja de cada linha corre pra direita conforme a folha passa =====
+  const linhasAula = $$("#folhaAulas li");
+  ScrollTrigger.create({ trigger: "#folhaAulas", start: "top 75%", end: "bottom 60%", scrub: true, onUpdate: (s) => {
+    linhasAula.forEach((li, i) => { const ini = i / linhasAula.length * 0.85, k = Math.max(0, Math.min(1, (s.progress - ini) / 0.12)); li.style.setProperty("--tarja", (1 - k).toFixed(3)); });
+  } });
+  gsap.from("#folhaAulas .carimbo", { scale: 2.4, opacity: 0, rotate: 30, duration: 0.5, ease: "back.out(2.5)", scrollTrigger: { trigger: "#folhaAulas", start: "top 70%" } });
+
+  // ===== pra quem é: o medidor enche e a porcentagem conta =====
+  $$(".perfil").forEach((p) => {
+    const v = +p.dataset.v, o = { n: 0 };
+    gsap.to(o, { n: v, duration: 1.2, ease: "power2.out", scrollTrigger: { trigger: p, start: "top 85%" }, onUpdate: () => { $(".pct", p).textContent = `${Math.round(o.n)}%`; $(".medidor i", p).style.width = `${o.n}%`; } });
+  });
+
+  // ===== a oferta: o ingresso entra girando e o preço salta =====
+  gsap.from("#ingresso", { rotate: -6, y: 80, opacity: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: "#ingresso", start: "top 85%" } });
+  gsap.from("#preco", { scale: 0.4, opacity: 0, duration: 0.8, ease: "back.out(2.2)", scrollTrigger: { trigger: "#preco", start: "top 85%" } });
+
+  // o botão fixo do celular: nunca na primeira dobra, e some quando outro botão de compra está à vista
+  const fixo = $("#fixo"), heroi = $(".heroi"), vistos = new Set();
+  let naPrimeira = true;
+  const olho = new IntersectionObserver((es) => { for (const e of es) { if (e.target === heroi) naPrimeira = e.isIntersecting; else e.isIntersecting ? vistos.add(e.target) : vistos.delete(e.target); } fixo.classList.toggle("visivel", !naPrimeira && vistos.size === 0); });
+  $$("section a.comprar").forEach((a) => olho.observe(a));
+  olho.observe(heroi);
 </script>
 </body>
 </html>
