@@ -23,6 +23,9 @@
     --creme: #ece3cf; --cinza: #98a0ad; --ambar: #e9a23b; --ambar2: #ffc56b; --vermelho: #d0413a; --verde: #5f9a5a;
   }
   * { box-sizing: border-box; }
+  /* só rola pra baixo e pra cima: sem arrasto lateral e sem a página pulando quando a barra do navegador some (31/10/2026) */
+  html { overflow-x: hidden; overscroll-behavior-x: none; touch-action: pan-y; -webkit-text-size-adjust: 100%; }
+  body { overscroll-behavior-x: none; max-width: 100%; touch-action: pan-y; }
   body { margin: 0; background: var(--fundo); color: var(--creme); font-family: Inter, system-ui, sans-serif; font-size: 17px; line-height: 1.55; overflow-x: hidden; }
   body.carregando { overflow: hidden; }
   h1, h2, h3, .oswald { font-family: Oswald, Impact, sans-serif; text-transform: uppercase; line-height: 1.02; margin: 0; }
@@ -103,7 +106,7 @@
   @keyframes arraste { 50% { transform: translateX(10px); } }
 
   /* ===== o relógio: cena presa, "DIAS" vira "10 MIN" ===== */
-  .tempo { padding: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; background: var(--fundo); }
+  .tempo { padding: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; place-items: center; background: var(--fundo); }
   .tempo .fundo-cor { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #e2483f, #9e2a24 70%); opacity: 0; }
   .tempo .palavrao { position: absolute; font: 700 clamp(150px, 46vw, 360px) Oswald, sans-serif; letter-spacing: -.02em; text-transform: uppercase; color: rgba(255,255,255,.14); white-space: nowrap; text-align: center; }
   .tempo .palavrao.depois { font-size: clamp(130px, 40vw, 300px); line-height: .82; color: rgba(233,162,59,.16); }
@@ -130,7 +133,7 @@
 
   /* ===== bastidores: o roteiro vira storyboard vira vídeo (cena presa) ===== */
   /* em coluna: título, a mesa (do tamanho que sobra) e a etapa; nada fica por cima do título nem embaixo do botão fixo */
-  .bastidores { padding: 78px 16px 104px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; background: radial-gradient(ellipse at 50% 60%, rgba(233,162,59,.12), transparent 60%), var(--fundo); }
+  .bastidores { padding: 78px 16px 104px; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; align-items: center; background: radial-gradient(ellipse at 50% 60%, rgba(233,162,59,.12), transparent 60%), var(--fundo); }
   .bastidores .titulo { position: relative; z-index: 2; text-align: center; padding: 0 16px; flex: none; }
   .bastidores .mesa { position: relative; flex: 1 1 auto; min-height: 0; height: 100%; max-height: 560px; aspect-ratio: 9 / 15; width: auto; max-width: 84vw; margin-top: 16px; }
   .bastidores .folha, .bastidores .board, .bastidores .pronto { position: absolute; inset: 0; border-radius: 14px; }
@@ -144,7 +147,7 @@
   .bastidores .etapa span { font: 700 22px Oswald, sans-serif; text-transform: uppercase; }
 
   /* ===== o método: 5 janelas que digitam (cena presa) ===== */
-  .metodo { padding: 0; height: 100vh; overflow: hidden; background: var(--fundo2); }
+  .metodo { padding: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--fundo2); }
   .metodo .cab { position: absolute; top: 9vh; left: 16px; right: 16px; }
   .metodo .passo { position: absolute; left: 16px; right: 16px; top: 22vh; max-width: 560px; margin: 0 auto; opacity: 0; }
   .metodo .contagem { font: 700 46px "JetBrains Mono", monospace; color: var(--ambar); line-height: 1; }
@@ -430,6 +433,7 @@
   const calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   // ===== texto que embaralha e assenta (letra por letra, da esquerda pra direita) =====
   const SINAIS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*";
