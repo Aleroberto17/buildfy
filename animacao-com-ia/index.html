@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vídeo em 3D com IA | Histórias animadas com Claude</title>
+<meta name="description" content="Aprenda a fazer vídeos em 3D com a inteligência artificial, do tema ao vídeo pronto, sem programa de 3D, sem modelar e sem programar.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Vídeo em 3D, do tema ao vídeo pronto">
+<meta property="og:image" content="midia/curso-3d.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<!--
+  Página de venda de quem veio do Instagram Tijolo por Tijolo (01/11/2026, pedido do dono do canal: uma página de
+  venda por página de animação). Quem chega aqui viu vídeo em 3D, e o curso ensina a fazer: o Estúdio Zero tem o comando
+  video3d, com o mesmo motor da página. Mostra o que sai do kit, sem promessa de cinema. O link do checkout fica em CHECKOUT.
+-->
+<style>
+  :root {
+    --concreto: #d9d3c6; --concreto2: #e8e3d8; --grafite: #1b1e24; --grafite2: #2a2e36; --tijolo: #b4553a; --tijolo2: #8f4029; --amarelo: #ffc933; --cinza: #5a5e66; --cinzaclaro: #aeb2ba; --verde: #2f7d4f;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--concreto2); color: var(--grafite); font: 400 17px/1.55 Inter, system-ui, sans-serif; overflow-x: hidden; }
+  h1, h2, h3 { font-family: Anton, Impact, sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1.08; letter-spacing: .01em; margin: 0; }
+  h2 { font-size: clamp(34px, 9.4vw, 56px); margin-bottom: 14px; }
+  p { margin: 0 0 12px; }
+  section { padding: 60px 16px; }
+  .miolo { max-width: 980px; margin: 0 auto; }
+  .estreito { max-width: 640px; margin: 0 auto; }
+  .etiqueta { display: inline-block; background: var(--amarelo); color: var(--grafite); font: 400 15px Anton, sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 3px 9px; }
+  .mono { font: 700 12.5px "JetBrains Mono", ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--tijolo2); }
+
+  header { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 16px; background: var(--grafite); color: #fff; }
+  header b { font: 400 18px Anton, sans-serif; letter-spacing: .03em; text-transform: uppercase; }
+  header a { font: 400 14px Anton, sans-serif; letter-spacing: .04em; text-transform: uppercase; color: var(--grafite); background: var(--amarelo); padding: 6px 12px; text-decoration: none; white-space: nowrap; }
+
+  /* a planta: o papel quadriculado da primeira dobra */
+  .heroi { background: linear-gradient(rgba(27,30,36,.07) 1px, transparent 1px) 0 0 / 100% 28px, linear-gradient(90deg, rgba(27,30,36,.07) 1px, transparent 1px) 0 0 / 28px 100%, var(--concreto); padding-top: 34px; }
+  .heroi .miolo { display: grid; gap: 26px; align-items: start; }
+  .heroi h1 { font-size: clamp(42px, 12.4vw, 76px); margin: 12px 0; }
+  .heroi h1 em { font-style: normal; color: var(--tijolo2); }
+  .heroi .sub { max-width: 520px; color: #3a3d44; }
+  .vsl { position: relative; width: min(100%, 300px); margin: 6px auto 22px; aspect-ratio: 9 / 16; overflow: hidden; background: #000; border: 5px solid var(--grafite); box-shadow: 8px 8px 0 var(--tijolo); }
+  .vsl video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 9px 14px; border: 3px solid var(--grafite); background: var(--amarelo); color: var(--grafite); font: 400 17px Anton, sans-serif; letter-spacing: .03em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+  .som[hidden] { display: none; }
+  .botao { display: block; text-align: center; background: var(--grafite); color: var(--amarelo); text-decoration: none; font: 400 23px Anton, sans-serif; letter-spacing: .04em; text-transform: uppercase; padding: 15px 22px; max-width: 420px; box-shadow: 6px 6px 0 var(--tijolo); }
+  .botao:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--tijolo); }
+  .botao small { display: block; font: 500 13px Inter, sans-serif; text-transform: none; letter-spacing: 0; color: #fff; margin-top: 2px; }
+
+  /* a placa da obra: o que o curso é e o que ele não é, antes de qualquer botão */
+  .placa { background: #fff; border: 3px solid var(--grafite); box-shadow: 8px 8px 0 rgba(27,30,36,.22); }
+  .placa .faixa { height: 14px; background: repeating-linear-gradient(-45deg, var(--grafite) 0 16px, var(--amarelo) 16px 32px); }
+  .placa h2 { font-size: 26px; padding: 12px 14px 0; margin: 0; }
+  .placa dl { margin: 8px 0 0; }
+  .placa div { display: grid; grid-template-columns: 96px 1fr; gap: 10px; padding: 8px 14px; border-top: 1px solid #d7d2c6; }
+  .placa dt { font: 700 11.5px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .05em; color: var(--cinza); padding-top: 3px; }
+  .placa dd { margin: 0; font-weight: 600; font-size: 16px; }
+  .placa .nao { background: var(--grafite); color: #fff; }
+  .placa .nao dt { color: var(--amarelo); }
+
+  .comparar { background: var(--grafite); color: #fff; }
+  .comparar h2 { color: #fff; }
+  .comparar p.leve { color: var(--cinzaclaro); }
+  .lado { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; max-width: 560px; }
+  .fone { aspect-ratio: 9 / 16; overflow: hidden; background: #000; border: 4px solid #3a3f49; border-radius: 18px; }
+  .fone video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lado b { display: block; font: 400 19px Anton, sans-serif; text-transform: uppercase; letter-spacing: .02em; margin-top: 9px; }
+  .lado span { color: var(--cinzaclaro); font-size: 14px; line-height: 1.35; display: block; }
+  .lado .sim b { color: var(--amarelo); }
+
+  /* o muro: cada etapa assenta uma fiada de tijolos */
+  .etapa { border-left: 4px solid var(--grafite); padding: 0 0 22px 16px; }
+  .etapa:last-child { padding-bottom: 0; }
+  .etapa h3 { font-size: 27px; margin: 8px 0 4px; }
+  .etapa p { margin: 0; color: #3a3d44; }
+  .etapa code { display: block; margin-top: 8px; background: #fff; border: 1px solid #cdc7b9; padding: 8px 10px; font: 500 13px "JetBrains Mono", monospace; }
+  .fiada { display: flex; gap: 3px; height: 20px; overflow: hidden; }
+  .fiada i { flex: 1; background: var(--tijolo); border-bottom: 2px solid var(--tijolo2); transform: translateY(-120%); transition: transform .35s ease-out; }
+  .fiada i:nth-child(odd) { background: #c2613f; }
+  .fiada i:first-child { flex: .5; }
+  .etapa.visivel .fiada i { transform: none; }
+  .etapa.visivel .fiada i:nth-child(2) { transition-delay: .06s; } .etapa.visivel .fiada i:nth-child(3) { transition-delay: .12s; } .etapa.visivel .fiada i:nth-child(4) { transition-delay: .18s; } .etapa.visivel .fiada i:nth-child(5) { transition-delay: .24s; } .etapa.visivel .fiada i:nth-child(6) { transition-delay: .3s; }
+
+  /* o memorial descritivo */
+  .memorial { background: var(--concreto); }
+  .colunas { display: grid; gap: 14px; margin-top: 16px; }
+  .coluna { background: #fff; border: 3px solid var(--grafite); padding: 16px; }
+  .coluna h3 { font-size: 24px; margin-bottom: 8px; }
+  .coluna ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .coluna li { position: relative; padding-left: 26px; }
+  .coluna li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
+  .coluna.inclui li::before { content: "✓"; color: var(--verde); }
+  .coluna.fora { background: var(--grafite); color: #fff; }
+  .coluna.fora li::before { content: "✕"; color: var(--amarelo); }
+
+  .oferta { background: var(--grafite); color: #fff; text-align: center; }
+  .oferta h2 { color: #fff; }
+  .preco { font: 400 clamp(84px, 24vw, 120px)/1 Anton, sans-serif; color: var(--amarelo); margin: 6px 0; }
+  .oferta .botao { margin: 18px auto 0; background: var(--amarelo); color: var(--grafite); box-shadow: 6px 6px 0 var(--tijolo); }
+  .oferta .botao small { color: var(--grafite); }
+  .abre, .garantia { text-align: left; font-size: 15px; padding: 12px 14px; margin-top: 14px; border: 1px solid #4a4f59; }
+  .precisa { margin-top: 14px; }
+  .precisa ul { margin: 6px 0 0; padding-left: 20px; }
+  details { background: #fff; border: 2px solid var(--grafite); padding: 13px 15px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { color: #3a3d44; margin: 10px 0 0; }
+  footer { padding: 26px 16px 94px; text-align: center; color: var(--cinza); font-size: 13px; }
+  .fixo { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 9px 16px calc(9px + env(safe-area-inset-bottom)); background: var(--grafite); transform: translateY(110%); transition: transform .25s; }
+  .fixo.visivel { transform: none; }
+  .fixo .botao { margin: 0 auto; background: var(--amarelo); color: var(--grafite); font-size: 20px; padding: 10px 18px; box-shadow: none; }
+
+  @media (min-width: 860px) {
+    .heroi .miolo { grid-template-columns: 1.1fr 1fr; }
+    .colunas { grid-template-columns: 1fr 1fr; }
+    .fixo { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .fiada i { transform: none; }
+  }
+
+  /* o conteúdo do curso: o cronograma da obra */
+  .cronograma { background: var(--grafite); color: #fff; }
+  .cronograma h2 { color: #fff; }
+  .cronograma h3 { font-size: 23px; color: var(--amarelo); margin: 20px 0 8px; }
+  .cronograma ol { list-style: none; margin: 0; padding: 0; border-top: 2px solid #4a4f59; }
+  .cronograma li { display: grid; grid-template-columns: 46px 1fr; gap: 8px; padding: 9px 0; border-bottom: 2px solid #4a4f59; }
+  .cronograma li b { font: 700 15px "JetBrains Mono", monospace; color: var(--amarelo); }
+  .cronograma li strong { display: block; font-weight: 600; line-height: 1.3; }
+  .cronograma li span { font-size: 14.5px; line-height: 1.35; color: var(--cinzaclaro); }
+</style>
+</head>
+<body>
+
+<header><b>Histórias animadas</b><a href="#oferta">Ver a oferta</a></header>
+
+<section class="heroi">
+  <div class="miolo">
+    <div>
+      <span class="etiqueta">Vídeo em 3D com IA</span>
+      <h1>Vídeo em 3D também se faz <em>tijolo por tijolo.</em></h1>
+      <p class="sub">Aprenda a fazer vídeos em 3D com o Claude, do tema ao vídeo pronto, sem abrir programa de 3D, sem modelar e sem programar.</p>
+      <div class="vsl"><video id="vsl" src="midia/vsl.mp4" poster="midia/vsl.jpg" muted playsinline preload="metadata"></video><button class="som" id="som" type="button">▶ Toque pra ouvir</button></div>
+      <a class="botao comprar" href="#">Quero aprender<small>R$ 47, pagamento único</small></a>
+    </div>
+    <div class="placa">
+      <div class="faixa" style="display:block;padding:0;border:0"></div>
+      <h2>Placa da obra</h2>
+      <dl>
+        <div><dt>Curso</dt><dd>Histórias animadas com Claude</dd></div>
+        <div><dt>Entrega</dt><dd>Vídeo em pé, em 3D, com narração e legenda</dd></div>
+        <div><dt>Ritmo</dt><dd>Uns 30 minutos por vídeo em 3D, depois de instalado</dd></div>
+        <div><dt>Garantia</dt><dd>7 dias</dd></div>
+        <div class="nao"><dt>Também faz</dt><dd>Episódios animados em 2D, com personagem</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="comparar">
+  <div class="miolo">
+    <span class="mono" style="color:var(--amarelo)">Feito no Estúdio Zero</span>
+    <h2>Dois jeitos de fazer vídeo</h2>
+    <p class="leve">Os dois saíram do sistema que vem no curso, a partir de uma frase, sem ninguém desenhar nem modelar nada.</p>
+    <div class="lado">
+      <div><div class="fone"><video data-auto src="midia/curso-3d.mp4" poster="midia/curso-3d.jpg" muted loop playsinline preload="none"></video></div><b>Em 3D</b><span>Peça por peça, explicando como a coisa funciona.</span></div>
+      <div class="sim"><div class="fone"><video data-auto src="midia/curso-2d.mp4" poster="midia/curso-2d.jpg" muted loop playsinline preload="none"></video></div><b>Em 2D</b><span>Episódio com personagem e história.</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="estreito">
+    <span class="mono">As etapas</span>
+    <h2>Da fundação à entrega</h2>
+    <div class="etapa"><div class="fiada"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Fundação</h3><p>O Claude prepara o computador pra você, e você cria a chave grátis da voz.</p></div>
+    <div class="etapa"><div class="fiada"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Estrutura</h3><p>Você escreve o tema em poucas linhas. O Claude pesquisa, escreve o roteiro, e um revisor confere antes de seguir.</p><code>como um elevador não despenca; os cabos, o contrapeso e o freio</code></div>
+    <div class="etapa"><div class="fiada"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Alvenaria</h3><p>O Claude monta cada cena em 3D, peça por peça, olha os quadros e corrige o que ficou ruim. Quer mudar uma cena? É só pedir em português.</p></div>
+    <div class="etapa"><div class="fiada"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Instalações</h3><p>A narração, a legenda no ritmo da fala e o som mixado.</p></div>
+    <div class="etapa"><div class="fiada"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Entrega</h3><p>Vídeo em pé, capa, legenda do post e as fontes da pesquisa, pra Reels, TikTok e Shorts.</p></div>
+  </div>
+</section>
+
+<!-- o conteúdo do curso -->
+<section class="cronograma">
+  <div class="estreito">
+    <span class="mono" style="color:var(--amarelo)">Cronograma da obra</span>
+    <h2>O que você vai aprender</h2>
+    <h3>Etapa 1 · Do zero ao vídeo pronto</h3>
+    <ol>
+      <li><b>00</b><div><strong>Boas-vindas</strong><span>O que você vai fazer e o que precisa ter.</span></div></li>
+      <li><b>01</b><div><strong>O formato que prende</strong><span>A estrutura que segura quem assiste até o fim.</span></div></li>
+      <li><b>02</b><div><strong>Preparando a máquina</strong><span>O Claude instala tudo, e você cria a chave grátis da voz.</span></div></li>
+      <li><b>03</b><div><strong>O roteiro com o Claude</strong><span>Como escrever um tema bom e pedir ajuste com as suas palavras.</span></div></li>
+      <li><b>04</b><div><strong>O visual</strong><span>Cenas, personagens e como pedir uma cena nova.</span></div></li>
+      <li><b>05</b><div><strong>Voz, legenda e som</strong><span>A voz de ouvido, a legenda no ritmo e música sem reivindicação.</span></div></li>
+      <li><b>06</b><div><strong>Renderizar e revisar</strong><span>O vídeo pronto, revisado antes de publicar.</span></div></li>
+      <li><b>07</b><div><strong>Publicar e crescer</strong><span>A capa certa, a legenda com pergunta e o mesmo vídeo nas três redes.</span></div></li>
+      <li><b>08</b><div><strong>Do episódio 1 à série</strong><span>A parte 2 que continua de onde parou, e séries novas.</span></div></li>
+      <li><b>09</b><div><strong>Vídeo em 3D, sem programa de 3D</strong><span>Do tema ao vídeo montado peça por peça.</span></div></li>
+    </ol>
+    <h3>Etapa 2 · Ganhar dinheiro com os vídeos</h3>
+    <ol>
+      <li><b>10</b><div><strong>Os quatro caminhos</strong><span>Views, publi, afiliado e produto próprio, e o que cada um exige.</span></div></li>
+      <li><b>11</b><div><strong>Monetização no TikTok</strong><span>Os requisitos e o que conta como vídeo original.</span></div></li>
+      <li><b>12</b><div><strong>YouTube Shorts e Facebook</strong><span>O que cada um pede, e a regra de conteúdo repetitivo.</span></div></li>
+      <li><b>13</b><div><strong>Publi e afiliados</strong><span>O mídia kit e a lista que sai do próprio episódio.</span></div></li>
+      <li><b>14</b><div><strong>Criar o seu produto</strong><span>Como criar seus infoprodutos usando o Claude.</span></div></li>
+      <li><b>15</b><div><strong>Página de vendas e VSL</strong><span>A página do curso, parte por parte, e o checkout.</span></div></li>
+      <li><b>16</b><div><strong>Vender no Instagram e no TikTok</strong><span>Onde fica o link e o conteúdo que leva à venda.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="memorial">
+  <div class="miolo">
+    <span class="mono">Memorial descritivo</span>
+    <h2>O que entra e o que fica de fora</h2>
+    <div class="colunas">
+      <div class="coluna inclui"><h3>Entra</h3><ul><li>17 aulas curtas, uns 40 minutos no total</li><li>O Estúdio Zero, o motor pronto que faz o vídeo em 3D e o episódio em 2D</li><li>O guia em PDF, com os pedidos prontos pra colar no Claude</li><li>Episódios de exemplo pra ver o resultado e testar um ajuste</li><li>Um módulo sobre os caminhos pra ganhar com os vídeos e as regras de cada plataforma</li></ul></div>
+      <div class="coluna fora"><h3>Fica de fora</h3><ul><li>3D realista de cinema: o estilo é de peças simples, de cor chapada</li><li>Modelagem à mão: quem monta as cenas é o Claude</li><li>Conferência técnica: dado, número e norma quem confere é você, com as fontes que o sistema entrega</li><li>Garantia de seguidor ou de dinheiro</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="oferta" id="oferta">
+  <div class="estreito">
+    <h2>Tudo isso por</h2>
+    <div class="preco">R$ 47</div>
+    <p>pagamento único</p>
+    <a class="botao comprar" href="#">Quero aprender<small>7 dias de garantia</small></a>
+    <p class="garantia"><strong>Garantia de 7 dias.</strong> Assistiu e não gostou? Peça o reembolso em até 7 dias depois da compra e receba o valor de volta.</p>
+    <div class="abre precisa"><strong>O que você precisa ter:</strong><ul><li>Um computador com Windows, com uns 5 GB livres. Pro 3D, uma placa de vídeo deixa o render bem mais rápido</li><li>Uma assinatura do Claude que inclua o Claude Code (Pro ou Max), paga à parte, direto na Anthropic</li><li>Uma chave grátis do Google pra voz, que a aula 2 ensina a criar</li></ul></div>
+  </div>
+</section>
+
+<section>
+  <div class="estreito">
+    <span class="mono">Perguntas</span>
+    <h2>Antes de decidir</h2>
+    <details><summary>Preciso saber usar programa de 3D?</summary><p>Não. Você não abre programa de 3D nem modela nada. O Claude escreve as cenas em código, renderiza e confere olhando os quadros. O 3D é de peças simples, de cor chapada, e o sistema avisa quais cenas pedem uma segunda olhada antes de publicar.</p></details>
+    <details><summary>Sobre o que dá pra fazer?</summary><p>Sobre tudo que tem peças e um problema que cada peça resolve: máquinas, veículos, construções, aparelhos. Testamos com um elevador: cabos, contrapeso, freio e limitador de velocidade, em 3D. O dado técnico vem de uma pesquisa na web, com as fontes listadas, e quem confere é você.</p></details>
+    <details><summary>Preciso saber programar ou desenhar?</summary><p>Não. Você pede em português, e o Claude instala, escreve e monta, pedindo a sua permissão antes de cada comando.</p></details>
+    <details><summary>Quanto custa o Claude?</summary><p>A assinatura é paga à parte, direto na Anthropic, e precisa incluir o Claude Code (planos Pro ou Max). Confira o preço atual no site do Claude. O vídeo em 3D gasta bem mais da assinatura que um episódio em 2D, porque cada cena é escrita e conferida.</p></details>
+    <details><summary>A voz é paga?</summary><p>Ela sai do Gemini, do Google, que tem uma cota grátis por dia. Na aula 2 você cria a chave, sem cartão.</p></details>
+    <details><summary>Funciona no Mac ou no celular?</summary><p>Por enquanto, só no Windows. O sistema roda no computador, e o celular serve pra publicar.</p></details>
+  </div>
+</section>
+
+<footer>
+  <p>Histórias animadas com Claude · curso independente, sem afiliação com a Anthropic. Claude é marca da Anthropic.</p>
+  <p>O pagamento é processado pela Kirvano.</p>
+</footer>
+<div class="fixo" id="fixo"><a class="botao comprar" href="#">Quero aprender · R$ 47</a></div>
+
+<script>
+  const CHECKOUT = "https://pay.kirvano.com/c155351e-faad-4566-8375-dcbba6d215a0?utm_source=instagram&utm_campaign=tijoloportijolo";
+  for (const a of document.querySelectorAll("a.comprar")) a.href = CHECKOUT;
+  const olho = new IntersectionObserver((itens) => { for (const i of itens) if (i.isIntersecting) { i.target.classList.add("visivel"); olho.unobserve(i.target); } }, { threshold: 0.35 });
+  document.querySelectorAll(".etapa").forEach((e) => olho.observe(e));
+  const tocar = new IntersectionObserver((itens) => { for (const i of itens) i.isIntersecting ? i.target.play().catch(() => {}) : i.target.pause(); }, { threshold: 0.6 });
+  document.querySelectorAll("video[data-auto]").forEach((v) => tocar.observe(v));
+  const vsl = document.getElementById("vsl"), som = document.getElementById("som");
+  vsl.play().catch(() => {});
+  som.addEventListener("click", () => { vsl.muted = false; vsl.currentTime = 0; vsl.controls = true; som.hidden = true; vsl.play(); });
+  const fixo = document.getElementById("fixo");
+  const andar = () => { const fim = document.documentElement.scrollHeight - innerHeight * 1.2; fixo.classList.toggle("visivel", scrollY > innerHeight * 0.8 && scrollY < fim); };
+  addEventListener("scroll", andar, { passive: true });
+  andar();
+</script>
+</body>
+</html>
