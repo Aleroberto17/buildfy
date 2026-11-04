@@ -243,7 +243,10 @@
   var economia = navigator.connection && navigator.connection.saveData;
   var heroi = document.querySelector(".heroi");
   var ceu = document.querySelector(".ceu");
-  if (telaGrande && !economia && heroi && ceu && temWebGL()) {
+  // DESLIGADA (04/11/2026, o dono: "não gostei desse efeito da cidade rodando"): no topo fica a silhueta em SVG com as janelas
+  // piscando, como no celular. Voltar é trocar CIDADE_3D pra true.
+  var CIDADE_3D = false;
+  if (CIDADE_3D && telaGrande && !economia && heroi && ceu && temWebGL()) {
     var abrir = function () {
       import("./cidade3d.js").then(function (mod) {
         mod.iniciarCidade3D(heroi, ceu, {
