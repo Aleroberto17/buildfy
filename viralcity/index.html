@@ -15,6 +15,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilo.css">
+<script>
+/* Segura a entrada do topo até as animações chegarem. Se elas não chegarem, o CSS mostra tudo sozinho em 2,5 s. */
+if (!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) document.documentElement.classList.add("anima-espera");
+</script>
 </head>
 <body>
 
@@ -138,5 +142,10 @@
 
 <script src="notas.js"></script>
 <script src="app.js"></script>
+<!-- Animações: GSAP + ScrollTrigger (entrada e rolagem), Motion (microinterações), three.js (a cidade do topo, carregada pelo animacoes.js). -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js" defer></script>
+<script src="animacoes.js" defer></script>
 </body>
 </html>

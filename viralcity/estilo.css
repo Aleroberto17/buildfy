@@ -255,3 +255,32 @@ strong { color: var(--branco); }
 /* o topo fixo não cobre o título de quem chega por um link (#notas) */
 .secao { scroll-margin-top: 64px; }
 .numeros b { white-space: nowrap; font-size: clamp(12px, 3.8vw, 22px); }
+
+/* ---------- animações (animacoes.js e cidade3d.js) ---------- */
+/* Enquanto as animações não chegam, o topo espera escondido. Se o JS ou o CDN falharem, ele aparece sozinho em 2,5 s. */
+.anima-espera .heroi-texto > *,
+.anima-espera .tela-heroi { opacity: 0; animation: aparecer-sem-js .4s ease-out 2.5s forwards; }
+@keyframes aparecer-sem-js { to { opacity: 1; } }
+
+/* a cidade em 3D ocupa a faixa de baixo do herói, por cima do sol e por baixo do texto */
+.cidade-3d {
+  position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 420px;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+  opacity: 0; transition: opacity 1.2s ease-out;
+  pointer-events: none;
+}
+.cidade-3d.pronta { opacity: 1; }
+.heroi.com-3d .skyline { opacity: 0; transition: opacity 1.2s ease-out; }
+
+/* com o Motion ligado, quem mexe na posição dos botões é ele (a sombra continua no CSS) */
+.com-motion .botao { transition: box-shadow .12s; }
+.com-motion .botao:hover,
+.com-motion .botao:active { transform: none; }
+.cartao, .nota { transition: border-color .2s; }
+.cartao:hover { border-color: var(--ambar); }
+.nota:hover { border-color: var(--amarelo); }
+
+@media (prefers-reduced-motion: reduce) {
+  .anima-espera .heroi-texto > *, .anima-espera .tela-heroi { opacity: 1; animation: none; }
+  .cidade-3d { display: none; }
+}
