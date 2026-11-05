@@ -1,4 +1,4 @@
-// Buildfy — proteção contra inspeção/cópia (anti-tampering casual)
+// Buildfy: proteção contra inspeção/cópia (anti-tampering casual)
 (() => {
   // Bloqueia menu do botão direito
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -14,31 +14,31 @@
     const ctrl = e.ctrlKey || e.metaKey;
     const shift = e.shiftKey;
 
-    // F12 — DevTools
+    // F12: DevTools
     if (e.key === "F12") {
       e.preventDefault();
       return false;
     }
 
-    // Ctrl+Shift+I/J/C — DevTools / Inspect / Console
+    // Ctrl+Shift+I/J/C: DevTools / Inspect / Console
     if (ctrl && shift && (key === "i" || key === "j" || key === "c")) {
       e.preventDefault();
       return false;
     }
 
-    // Ctrl+U — View source
+    // Ctrl+U: View source
     if (ctrl && key === "u") {
       e.preventDefault();
       return false;
     }
 
-    // Ctrl+S — Save page
+    // Ctrl+S: Save page
     if (ctrl && key === "s") {
       e.preventDefault();
       return false;
     }
 
-    // Ctrl+P — Print
+    // Ctrl+P: Print
     if (ctrl && key === "p") {
       e.preventDefault();
       return false;
@@ -81,7 +81,7 @@
   menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", close));
 })();
 
-// Video Showcase — scroll-reveal com perspectiva 3D (rotateX → 0 conforme scrolla)
+// Video Showcase: scroll-reveal com perspectiva 3D (rotateX → 0 conforme scrolla)
 (() => {
   const section = document.querySelector("[data-video-reveal]");
   const player = section?.querySelector("[data-video-player]");
@@ -112,9 +112,9 @@
   window.addEventListener("resize", onScroll, { passive: true });
 })();
 
-// Hero Background — sempre renderizado (fixed cobrindo viewport, opacity 1).
+// Hero Background: sempre renderizado (fixed cobrindo viewport, opacity 1).
 // As seções intermediárias têm bg sólido #0B1120 e cobrem naturalmente o canvas.
-// Visível em hero e em "o que você recebe" (deliverables — bg transparente).
+// Visível em hero e em "o que você recebe" (deliverables: bg transparente).
 (() => {
   const unicorn = document.querySelector(".hero-unicorn");
   if (!unicorn) return;
@@ -533,13 +533,23 @@ if (deliverablesSection) {
 }
 
 // ============================================
-// Buildfy — Contact form (envio via WhatsApp)
+// Buildfy: Contact form (envio via WhatsApp)
 // ============================================
+// Substitua [NUMERO_WHATSAPP] pelo número real no formato 5511999999999
+// (DDI + DDD + número, sem +, sem espaços, sem hifens). Vale pras 3 páginas.
+const WHATSAPP_NUMBER = "5511913479449";
+
+// Links com data-whatsapp="mensagem" abrem o WhatsApp com a mensagem pronta
+document.querySelectorAll("[data-whatsapp]").forEach((link) => {
+  const text = link.getAttribute("data-whatsapp") || "Olá, Buildfy! Vim pelo site.";
+  link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  link.target = "_blank";
+  link.rel = "noopener";
+});
+
 const contactForm = document.getElementById("contact-form");
 if (contactForm) {
-  // Substitua [NUMERO_WHATSAPP] pelo número real no formato 5511999999999
-  // (DDI + DDD + número, sem +, sem espaços, sem hifens)
-  const WHATSAPP_NUMBER = "5511913479449";
+  const origin = contactForm.getAttribute("data-origin") || "pelo site";
 
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -551,7 +561,7 @@ if (contactForm) {
 
     const data = new FormData(contactForm);
     const message =
-      `Olá, Buildfy! Vim pelo site.\n\n` +
+      `Olá, Buildfy! Vim ${origin}.\n\n` +
       `*Nome:* ${data.get("name")}\n` +
       `*Empresa:* ${data.get("company")}\n` +
       `*Tipo de projeto:* ${data.get("project")}\n` +
@@ -564,7 +574,7 @@ if (contactForm) {
 }
 
 // ============================================
-// Buildfy — Garante que o vídeo do hero (notebookhero) toque
+// Buildfy: Garante que o vídeo do hero (notebookhero) toque
 // (alguns navegadores são restritivos com autoplay mesmo em vídeo muted)
 // ============================================
 document.querySelectorAll(".hero-media__video").forEach((v) => {
@@ -577,7 +587,7 @@ document.querySelectorAll(".hero-media__video").forEach((v) => {
   v.addEventListener("canplay", tryPlay);
 });
 
-// Video showcase — overlay de play com áudio
+// Video showcase: overlay de play com áudio
 (() => {
   const overlay = document.querySelector("[data-video-overlay]");
   const video   = overlay?.closest(".video-showcase__player")?.querySelector(".video-showcase__video");
@@ -610,7 +620,7 @@ document.querySelectorAll(".hero-media__video").forEach((v) => {
 })();
 
 // ============================================
-// Buildfy — Hero typewriter (campo fixo, palavra digitada letra a letra)
+// Buildfy: Hero typewriter (campo fixo, palavra digitada letra a letra)
 // ============================================
 const heroTypewriter = document.querySelector(".hero-typewriter");
 if (heroTypewriter) {
@@ -620,7 +630,7 @@ if (heroTypewriter) {
   const barEl = heroTypewriter.querySelector(".hero-typewriter__bar");
 
   if (words.length > 0 && textEl && barEl) {
-    // Loop de digitação (container sem largura fixa — typewriter é a última palavra da linha)
+    // Loop de digitação (container sem largura fixa: typewriter é a última palavra da linha)
     const TYPE_SPEED = 95;
     const DELETE_SPEED = 50;
     const PAUSE_FULL = 1600;
@@ -657,14 +667,14 @@ if (heroTypewriter) {
   }
 }
 
-// Float do notebook e cards removidos — estáticos por padrão.
+// Float do notebook e cards removidos: estáticos por padrão.
 // Desliga o CSS animation dos cards pra não voltar a animar
 document.querySelectorAll(".zouti-card").forEach(card => {
   card.style.animation = "none";
 });
 
 // ============================================
-// Buildfy — Cards Zouti: indicator deslizando entre rows
+// Buildfy: Cards Zouti: indicator deslizando entre rows
 // ============================================
 document.querySelectorAll(".zouti-card").forEach((card, cardIdx) => {
   const rows = Array.from(card.querySelectorAll(".zouti-card__row"));
@@ -686,7 +696,7 @@ document.querySelectorAll(".zouti-card").forEach((card, cardIdx) => {
     rows.forEach((r, i) => r.classList.toggle("is-active", i === activeIdx));
   };
 
-  // Reveal cumulativo de badges — só mostra do índice 0 até activeIdx
+  // Reveal cumulativo de badges: só mostra do índice 0 até activeIdx
   const revealBadges = (uptoIdx) => {
     rows.forEach((r, i) => {
       const badge = r.querySelector(".zouti-card__badge");
@@ -735,7 +745,7 @@ document.querySelectorAll(".zouti-card").forEach((card, cardIdx) => {
   const tick = () => {
     const nextIdx = (activeIdx + 1) % rows.length;
     if (nextIdx === 0) {
-      // Voltou pro início — esconde TODAS as badges antes de revelar a primeira de novo
+      // Voltou pro início: esconde TODAS as badges antes de revelar a primeira de novo
       hideAllBadges();
     }
     activeIdx = nextIdx;
@@ -755,7 +765,7 @@ document.querySelectorAll(".zouti-card").forEach((card, cardIdx) => {
 });
 
 // ============================================
-// Service Card [4.0] — Workflow: sincroniza .is-active dos steps com o token (5s loop)
+// Service Card [4.0]: Workflow: sincroniza .is-active dos steps com o token (5s loop)
 // ============================================
 document.querySelectorAll(".service-visual--workflow").forEach((visual) => {
   const steps = Array.from(visual.querySelectorAll(".sv-flow__step"));
@@ -772,12 +782,14 @@ document.querySelectorAll(".service-visual--workflow").forEach((visual) => {
 });
 
 // ============================================
-// Service Card [5.0] — AI Chat: typing effect alternando entre respostas
+// Service Card [5.0]: AI Chat: typing effect alternando entre respostas
 // ============================================
 document.querySelectorAll("[data-ai-chat]").forEach((chat) => {
   const target = chat.querySelector("[data-ai-typed]");
   if (!target) return;
-  const replies = [
+  // Respostas podem vir da página em data-ai-replies (separadas por "|")
+  const custom = (chat.getAttribute("data-ai-replies") || "").split("|").map((r) => r.trim()).filter(Boolean);
+  const replies = custom.length ? custom : [
     "Vendas subiram 18% em SP. Recomendo aumentar estoque…",
     "3 clientes em risco de churn. Posso disparar follow-up?",
     "Pico de tráfego às 14h: 2.3x conversão vs. média."
@@ -824,7 +836,7 @@ document.querySelectorAll("[data-ai-chat]").forEach((chat) => {
 });
 
 // ============================================
-// Buildfy — Smooth scroll para âncoras internas
+// Buildfy: Smooth scroll para âncoras internas
 // ============================================
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", (event) => {
@@ -838,7 +850,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 });
 
 // ============================================
-// Buildfy — Remover marca d'água do UnicornStudio (todos os containers)
+// Buildfy: Remover marca d'água do UnicornStudio (todos os containers)
 // Estratégia tripla: link <a>, leaf nodes com texto exato, observer permanente
 // ============================================
 (function removeUnicornWatermark() {

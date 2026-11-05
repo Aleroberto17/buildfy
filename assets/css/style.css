@@ -74,7 +74,7 @@ a {
   z-index: 2;
 }
 
-/* .page-shell::after removido — não cria mais gradient de fade no fim do hero (bg agora é estático fixed) */
+/* .page-shell::after removido: não cria mais gradient de fade no fim do hero (bg agora é estático fixed) */
 
 .hero-video,
 .hero-unicorn {
@@ -310,7 +310,7 @@ a[href*="unicornstudio"] {
   white-space: nowrap;
 }
 
-/* Wrapper das rows — context p/ indicator absoluto */
+/* Wrapper das rows: context p/ indicator absoluto */
 .zouti-card__rows {
   position: relative;
 }
@@ -344,7 +344,7 @@ a[href*="unicornstudio"] {
   transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Indicator — barra vertical fina à esquerda, estilo Zouti real */
+/* Indicator: barra vertical fina à esquerda, estilo Zouti real */
 .zouti-card__indicator {
   position: absolute;
   left: 0;
@@ -395,7 +395,7 @@ a[href*="unicornstudio"] {
   transform: translateX(0) scale(1);
 }
 
-/* Badges do Sistema sob medida — mesma largura pra alinhamento visual */
+/* Badges do Sistema sob medida: mesma largura pra alinhamento visual */
 .zouti-card--metrics .zouti-card__badge {
   min-width: 5.2rem;
   justify-content: center;
@@ -439,7 +439,7 @@ a[href*="unicornstudio"] {
   z-index: 10;
 }
 
-/* Card pill — formato menor com ícone + texto (UI/UX e Código) */
+/* Card pill: formato menor com ícone + texto (UI/UX e Código) */
 .zouti-card--pill {
   width: auto;
   min-width: 10rem;
@@ -529,12 +529,12 @@ a[href*="unicornstudio"] {
     display: block !important;
     animation: none !important;
     --float-scale: 0.7;
-    /* Glass effect — bg mais opaco compensa caso backdrop-filter não renderize bem */
+    /* Glass effect: bg mais opaco compensa caso backdrop-filter não renderize bem */
     background: rgba(15, 23, 42, 0.6) !important;
     backdrop-filter: blur(18px) !important;
     -webkit-backdrop-filter: blur(18px) !important;
   }
-  /* Rotações 3D bem sutis — entre -8° e +8° pra dar profundidade sem distorcer */
+  /* Rotações 3D bem sutis: entre -8° e +8° pra dar profundidade sem distorcer */
   .zouti-card--stack {
     top: -2%;
     left: -3%;
@@ -809,7 +809,7 @@ a[href*="unicornstudio"] {
   display: block;
   position: relative;
   z-index: 1;
-  /* Imagem PNG já tem fundo transparente — só drop-shadow azul */
+  /* Imagem PNG já tem fundo transparente: só drop-shadow azul */
   filter: drop-shadow(0 30px 60px rgba(37, 99, 235, 0.35));
   will-change: transform;
 }
@@ -863,7 +863,7 @@ a[href*="unicornstudio"] {
   margin-top: 3.6rem;
 }
 
-/* Botão ghost — secundário ao lado do gradient */
+/* Botão ghost: secundário ao lado do gradient */
 .btn-ghost {
   display: inline-flex;
   align-items: center;
@@ -900,7 +900,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Video Showcase — player com scroll-reveal motion
+   Video Showcase: player com scroll-reveal motion
    ============================================ */
 .video-showcase {
   position: relative;
@@ -910,7 +910,7 @@ a[href*="unicornstudio"] {
   pointer-events: none;
 }
 
-/* Shine animado na borda superior do player — mesmo conceito do .hero-badge__shine
+/* Shine animado na borda superior do player: mesmo conceito do .hero-badge__shine
    (gradient azul Buildfy percorre horizontal em loop infinito) */
 .video-showcase__beam {
   position: absolute;
@@ -922,10 +922,10 @@ a[href*="unicornstudio"] {
   z-index: 3;
   border-radius: 999px;
   overflow: hidden;
-  /* Mask horizontal — afina nas pontas (efeito tapered) */
+  /* Mask horizontal: afina nas pontas (efeito tapered) */
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 18%, black 82%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, black 18%, black 82%, transparent 100%);
-  /* Base sutil — linha azul tênue sempre visível */
+  /* Base sutil: linha azul tênue sempre visível */
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -937,7 +937,7 @@ a[href*="unicornstudio"] {
   box-shadow: 0 0 8px 0.5px rgba(56, 189, 248, 0.35);
 }
 
-/* Highlight que percorre — análogo ao conic-gradient rotativo do badge */
+/* Highlight que percorre: análogo ao conic-gradient rotativo do badge */
 .video-showcase__beam::after {
   content: "";
   position: absolute;
@@ -987,7 +987,7 @@ a[href*="unicornstudio"] {
   transform-origin: center bottom;
   transition: transform 80ms linear;
   will-change: transform;
-  /* overflow: hidden removido — agora o .__frame interno faz o clipping do vídeo,
+  /* overflow: hidden removido: agora o .__frame interno faz o clipping do vídeo,
      e o .__beam pode extender sutilmente acima do topo seguindo a perspectiva */
 }
 
@@ -1129,7 +1129,7 @@ a[href*="unicornstudio"] {
 }
 
 .video-showcase__glow {
-  /* glow azul do player removido — estava vazando como degrade entre video-showcase e pain-points */
+  /* glow azul do player removido: estava vazando como degrade entre video-showcase e pain-points */
   display: none;
 }
 
@@ -1140,7 +1140,7 @@ a[href*="unicornstudio"] {
   pointer-events: auto;
 }
 
-/* Shimmer percorrendo as letras de TODOS os .btn-gradient — mesma técnica do badge da hero */
+/* Shimmer percorrendo as letras de TODOS os .btn-gradient: mesma técnica do badge da hero */
 .btn-gradient__label {
   position: relative;
 }
@@ -1199,7 +1199,7 @@ a[href*="unicornstudio"] {
 }
 
 .pain-points::before {
-  /* removido — não cria mais gradient de transição no topo do pain-points */
+  /* removido: não cria mais gradient de transição no topo do pain-points */
   display: none;
 }
 
@@ -1322,7 +1322,7 @@ a[href*="unicornstudio"] {
   pointer-events: none;
 }
 
-/* Fill interno escuro — deixa só a borda do gradient visível */
+/* Fill interno escuro: deixa só a borda do gradient visível */
 .pain-card::after {
   content: "";
   position: absolute;
@@ -1935,7 +1935,7 @@ a[href*="unicornstudio"] {
   overflow: hidden;
   position: relative;
   transition: -webkit-mask-image 0.4s ease, mask-image 0.4s ease;
-  /* Right edge sempre fade — esquerda só ativa via is-scrolling */
+  /* Right edge sempre fade: esquerda só ativa via is-scrolling */
   -webkit-mask-image: linear-gradient(90deg, black 0%, black 92%, transparent 100%);
   mask-image: linear-gradient(90deg, black 0%, black 92%, transparent 100%);
 }
@@ -2091,7 +2091,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Deliverable Cards — Mockups visuais (4 variantes)
+   Deliverable Cards: Mockups visuais (4 variantes)
    ============================================ */
 
 .deliverable-card__visual {
@@ -2110,7 +2110,7 @@ a[href*="unicornstudio"] {
   gap: 0.7rem;
 }
 
-/* ---- 1.0 Sistema sob medida — Dashboard mockup animado ---- */
+/* ---- 1.0 Sistema sob medida: Dashboard mockup animado ---- */
 .dv-dashboard {
   position: relative;
   padding: 0;
@@ -2333,7 +2333,7 @@ a[href*="unicornstudio"] {
   font-size: 1.02rem;
   color: rgba(248, 250, 252, 0.95);
 }
-/* ---- 2.0 Código documentado — Mini code editor ---- */
+/* ---- 2.0 Código documentado: Mini code editor ---- */
 .dv-editor {
   position: relative;
   padding: 0;
@@ -2387,7 +2387,7 @@ a[href*="unicornstudio"] {
 .dv-editor__line--n7 { animation: dv-ed-line-7 22s linear infinite; }
 .dv-editor__line--n8 { animation: dv-ed-line-8 22s linear infinite; }
 /* Line: controla quando a linha está visível (opacity).
-   Typed: controla a largura crescente (digitação) — o cursor segue naturalmente o fim. */
+   Typed: controla a largura crescente (digitação): o cursor segue naturalmente o fim. */
 @keyframes dv-ed-line-1 {
   0%       { opacity: 0; }
   0.5%     { opacity: 1; }
@@ -2437,7 +2437,7 @@ a[href*="unicornstudio"] {
   98%, 100% { opacity: 0; }
 }
 
-/* Typed: wrapper que cresce em width conforme "digita" — usa steps() pra simular keystrokes */
+/* Typed: wrapper que cresce em width conforme "digita": usa steps() pra simular keystrokes */
 .dv-editor__typed {
   display: inline-block;
   overflow: hidden;
@@ -2501,7 +2501,7 @@ a[href*="unicornstudio"] {
 .dv-tk--s { color: #34D399; }
 .dv-tk--p { color: #F472B6; }
 
-/* Cursor — barra fina vertical que acompanha a posição do "typed".
+/* Cursor: barra fina vertical que acompanha a posição do "typed".
    Sempre depois do .dv-editor__typed no flow, então move junto com o crescer da largura.
    Visível durante typing + pause depois (até próxima linha começar). */
 .dv-editor__cursor {
@@ -2566,7 +2566,7 @@ a[href*="unicornstudio"] {
   50%, 100% { opacity: 0; }
 }
 
-/* ---- 3.0 Treinamento do time — Mockup de PDF/documentação com índice ----
+/* ---- 3.0 Treinamento do time: Mockup de PDF/documentação com índice ----
    Ciclo 12s: 4 seções (3s cada). Cada uma destaca seu item no índice + título + página. */
 .dv-doc {
   position: relative;
@@ -2759,7 +2759,7 @@ a[href*="unicornstudio"] {
   26%, 100%{ opacity: 0.3; transform: translateX(4px); }
 }
 
-/* ---- 4.0 Suporte e evolução contínua — Kanban com cards fluindo entre colunas ----
+/* ---- 4.0 Suporte e evolução contínua: Kanban com cards fluindo entre colunas ----
    Ciclo 12s, 6 cards phase-offset por 2s. Cada card passa por 5 posições:
    Backlog → Em dev → Done top → Done mid → Done bottom → sai pela direita → recicla. */
 .dv-kanban {
@@ -2828,7 +2828,7 @@ a[href*="unicornstudio"] {
   border-radius: 3px;
 }
 
-/* Cards — posicionados absolutamente, animados via left/top */
+/* Cards: posicionados absolutamente, animados via left/top */
 .dv-kb__card {
   position: absolute;
   left: 0;
@@ -2880,7 +2880,7 @@ a[href*="unicornstudio"] {
 
 /* Posições (em % do .dv-kb__board) com gap 0.45rem entre colunas (3 cols):
    col 1 left = 0%, col 2 left ≈ 34.25%, col 3 left ≈ 68%.
-   Done stack: y 2.4rem (top), 6.1rem (mid), 9.8rem (bottom) — espaço entre = card height (3.4) + 0.3rem */
+   Done stack: y 2.4rem (top), 6.1rem (mid), 9.8rem (bottom): espaço entre = card height (3.4) + 0.3rem */
 @keyframes dv-kb-flow {
   0%, 3%   { opacity: 0; left: 0.5%; top: -4rem; }
   9%       { opacity: 1; left: 0.5%; top: 2.1rem; }
@@ -3664,7 +3664,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Service Cards — Mockups visuais animados (5 variantes)
+   Service Cards: Mockups visuais animados (5 variantes)
    ============================================ */
 
 .service-panel__visual {
@@ -4277,7 +4277,7 @@ a[href*="unicornstudio"] {
     align-items: flex-start;
     touch-action: pan-y pinch-zoom;
     cursor: grab;
-    /* Remove mask de fade nas pontas no mobile — estava cortando cards */
+    /* Remove mask de fade nas pontas no mobile: estava cortando cards */
     -webkit-mask-image: none !important;
     mask-image: none !important;
   }
@@ -4670,7 +4670,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Buildfy — Header navigation
+   Buildfy: Header navigation
    ============================================ */
 .navbar {
   justify-content: space-between;
@@ -4735,7 +4735,7 @@ a[href*="unicornstudio"] {
   height: 1.4rem;
 }
 
-/* Hamburger button — só visível no mobile */
+/* Hamburger button: só visível no mobile */
 .navbar__hamburger {
   display: none;
   background: rgba(56, 189, 248, 0.08);
@@ -4854,7 +4854,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Buildfy — Botão gradient hover (Hero / Navbar / Services)
+   Buildfy: Botão gradient hover (Hero / Navbar / Services)
    Crédito: Uiverse.io by ParasSalunke
    Gradiente adaptado para Buildfy: Azul → Azul Claro → Roxo
    ============================================ */
@@ -4932,7 +4932,7 @@ a[href*="unicornstudio"] {
   transform: translateX(0.4rem);
 }
 
-/* Variante grande — Hero e Soluções */
+/* Variante grande: Hero e Soluções */
 .btn-gradient--large {
   font-size: 1.7rem;
 }
@@ -4942,7 +4942,7 @@ a[href*="unicornstudio"] {
   gap: 1rem;
 }
 
-/* Variante ghost — botão transparente com borda sutil, sem fill gradient */
+/* Variante ghost: botão transparente com borda sutil, sem fill gradient */
 .btn-gradient--ghost {
   background-color: transparent;
   box-shadow: none;
@@ -4989,7 +4989,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Buildfy — Shiny CTA (botão do formulário) — conic gradient animado
+   Buildfy: Shiny CTA (botão do formulário): conic gradient animado
    Cores adaptadas para a paleta Buildfy (#38BDF8 roxo highlight)
    ============================================ */
 :root {
@@ -5165,7 +5165,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Buildfy — Botão alternativo (Hero usa o .btn, outros usam .btn-alt)
+   Buildfy: Botão alternativo (Hero usa o .btn, outros usam .btn-alt)
    Crédito de origem: Uiverse.io by TCdesign-dev
    Cor adaptada para Buildfy: gradient azul → roxo
    ============================================ */
@@ -5231,7 +5231,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Buildfy — Botão principal (Hero) estilo Uiverse (gradient + reflection)
+   Buildfy: Botão principal (Hero) estilo Uiverse (gradient + reflection)
    Crédito de origem: Uiverse.io by ShrinilDhorda
    ============================================ */
 .btn {
@@ -5242,7 +5242,7 @@ a[href*="unicornstudio"] {
   border-radius: 0.4rem;
   cursor: pointer;
   text-transform: uppercase;
-  background-color: rgb(15, 23, 42); /* #0F172A — Buildfy Azul Escuro */
+  background-color: rgb(15, 23, 42); /* #0F172A: Buildfy Azul Escuro */
   color: rgb(234, 234, 234);
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -5297,7 +5297,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Buildfy — Hero badge (pílula visual acima do H1)
+   Buildfy: Hero badge (pílula visual acima do H1)
    Borda com gradiente cônico animado (rotating shine)
    ============================================ */
 @property --hero-badge-angle {
@@ -5360,7 +5360,7 @@ a[href*="unicornstudio"] {
 .hero-badge__icon {
   width: 1.4rem;
   height: 1.4rem;
-  color: #7DD3FC; /* Lavender — derivado da paleta Buildfy */
+  color: #7DD3FC; /* Lavender: derivado da paleta Buildfy */
   flex-shrink: 0;
 }
 
@@ -5405,7 +5405,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Buildfy — Hero typewriter (campo fixo, texto digitado)
+   Buildfy: Hero typewriter (campo fixo, texto digitado)
    ============================================ */
 .hero-typewriter {
   display: flex;
@@ -5460,7 +5460,7 @@ a[href*="unicornstudio"] {
 
 
 /* ============================================
-   Buildfy — Contact form
+   Buildfy: Contact form
    ============================================ */
 .contact-form {
   display: grid;
@@ -5557,7 +5557,7 @@ a[href*="unicornstudio"] {
 }
 
 /* ============================================
-   Buildfy — Expanded footer
+   Buildfy: Expanded footer
    ============================================ */
 .site-footer {
   padding: 6.4rem 1.6rem 2.4rem;
@@ -5658,5 +5658,83 @@ a[href*="unicornstudio"] {
   }
   .site-footer__brand {
     grid-column: 1 / -1;
+  }
+}
+
+/* ============================================
+   buildfy.tec.br: home (headline, vídeo e escolha site ou sistema)
+   ============================================ */
+.page-shell--home {
+  min-height: auto;
+}
+
+.hero--home {
+  justify-content: center;
+  min-height: auto;
+  padding: 15rem 8rem 6rem;
+}
+
+.hero--home .hero-content {
+  align-items: center;
+  text-align: center;
+  max-width: 96rem;
+  margin: 0 auto;
+}
+
+.hero--home h1 {
+  text-align: center;
+}
+
+.hero--home p {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.video-showcase--home {
+  margin-top: 0;
+}
+
+.home-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
+  margin-top: 5.6rem;
+  pointer-events: auto;
+}
+
+.home-choice__label {
+  margin: 0;
+  font: 500 1.4rem/1 var(--font-ui);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+}
+
+.home-choice__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.6rem;
+}
+
+@media (max-width: 834px) {
+  .hero--home {
+    padding: 12rem 1.6rem 6rem;
+  }
+
+  .home-choice {
+    margin-top: 3.6rem;
+  }
+
+  .home-choice__buttons {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 32rem;
+  }
+
+  .home-choice__buttons .btn-gradient__inner {
+    justify-content: center;
   }
 }
