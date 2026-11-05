@@ -539,7 +539,7 @@ const contactForm = document.getElementById("contact-form");
 if (contactForm) {
   // Substitua [NUMERO_WHATSAPP] pelo número real no formato 5511999999999
   // (DDI + DDD + número, sem +, sem espaços, sem hifens)
-  const WHATSAPP_NUMBER = "[NUMERO_WHATSAPP]";
+  const WHATSAPP_NUMBER = "5511913479449";
 
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
