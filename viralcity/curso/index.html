@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vídeos com IA</title>
+<meta name="description" content="Curso Vídeos com IA: do zero à monetização. Roteiro, voz, imagem, vídeo, montagem, thumbnail, Shorts e as regras pra monetizar, com ferramentas de IA que você mesmo usa.">
+<meta property="og:title" content="Vídeos com IA: do zero à monetização">
+<meta property="og:description" content="Aprenda a fazer qualquer tipo de vídeo com IA e as regras pra monetizar.">
+<meta property="og:image" content="midia/vsl.jpg">
+<meta name="theme-color" content="#0b1d24">
+<link rel="icon" href="../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  .pagina { max-width: var(--largura); margin: 0 auto; padding: 0 16px 120px; }
+  section { padding: 56px 0 0; }
+  .selo { display: inline-block; font-family: var(--pixel); font-size: 10px; color: #1a0f05; background: var(--ambar); padding: 6px 10px; margin-bottom: 18px; }
+  h2.tit { font-family: var(--pixel); font-size: clamp(15px, 3.4vw, 22px); color: var(--amarelo); text-align: center; margin: 0 0 12px; line-height: 1.5; }
+  .chamada { text-align: center; max-width: 680px; margin: 0 auto 28px; color: var(--texto-suave); }
+  .pequeno { font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- topo do herói ---------- */
+  .heroi { text-align: center; padding-top: 40px; position: relative; }
+  .heroi h1 { font-family: var(--pixel); font-size: clamp(21px, 5vw, 38px); line-height: 1.4; color: var(--amarelo); margin: 0 auto 18px; max-width: 900px; text-shadow: 4px 4px 0 #3a1a07; }
+  .heroi h1 em { font-style: normal; color: var(--laranja); }
+  .heroi .lead { max-width: 720px; margin: 0 auto 26px; font-size: 18px; }
+  .brilho { position: absolute; inset: -40px 0 auto; height: 520px; z-index: -1; pointer-events: none;
+    background: radial-gradient(60% 55% at 50% 30%, rgba(255,122,47,.20), transparent 70%); }
+
+  /* ---------- o monitor da VSL ---------- */
+  .monitor { position: relative; max-width: 860px; margin: 0 auto; padding: 14px; background: #061218; border: 4px solid var(--linha); box-shadow: 10px 10px 0 #05242c, 0 0 80px rgba(255,178,56,.12); }
+  .monitor::before { content: ""; position: absolute; left: 50%; bottom: -26px; transform: translateX(-50%); width: 160px; height: 22px; background: var(--linha); }
+  .monitor video { width: 100%; aspect-ratio: 16 / 9; background: #000; object-fit: cover; }
+  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--pixel); font-size: 12px; line-height: 1.4;
+    color: #1a0f05; background: var(--amarelo); border: 3px solid #1a0f05; box-shadow: 4px 4px 0 var(--laranja); padding: 16px 20px; cursor: pointer; animation: pulsar 1.4s ease-in-out infinite; }
+  .som[hidden] { display: none; }
+  @keyframes pulsar { 50% { transform: translate(-50%, -50%) scale(1.06); } }
+  .acao { margin-top: 46px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .acao .botao { font-size: 13px; padding: 18px 26px; }
+  .confianca { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font-size: 14px; color: var(--texto-suave); }
+  .confianca span::before { content: "■ "; color: var(--ambar); }
+
+  /* ---------- faixa que corre ---------- */
+  .faixa { margin: 56px -16px 0; background: var(--ambar); color: #1a0f05; overflow: hidden; border-top: 3px solid #1a0f05; border-bottom: 3px solid #1a0f05; transform: rotate(-1.2deg); }
+  .faixa .trilho { display: flex; gap: 40px; width: max-content; padding: 12px 0; font-family: var(--pixel); font-size: 12px; animation: correr 28s linear infinite; }
+  .faixa .trilho span::after { content: "✦"; margin-left: 40px; }
+  @keyframes correr { to { transform: translateX(-50%); } }
+
+  /* ---------- a fábrica: três celulares ---------- */
+  .fabrica { display: grid; grid-template-columns: 1fr 1.25fr; gap: 36px; align-items: center; }
+  .fabrica .texto p { margin: 0 0 14px; }
+  .fabrica .texto h2, .conversa h2 { text-align: left; }
+  .fones { display: flex; justify-content: center; gap: 14px; }
+  .fone { width: 32%; max-width: 190px; padding: 6px; background: #061218; border: 3px solid var(--linha); border-radius: 18px; box-shadow: 6px 6px 0 #05242c; }
+  .fone:nth-child(2) { transform: translateY(-26px); border-color: var(--ambar); }
+  .fone video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 12px; background: #000; }
+  .fone .legenda { font-family: var(--pixel); font-size: 8px; color: var(--texto-suave); text-align: center; padding: 8px 0 2px; line-height: 1.5; }
+
+  /* ---------- os formatos ---------- */
+  .formatos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .formato { background: var(--fundo-2); border: 3px solid var(--linha); padding: 18px 14px; text-align: center; transition: border-color .2s, transform .2s; }
+  .formato:hover { border-color: var(--ambar); transform: translateY(-4px); }
+  .formato svg { width: 56px; height: 56px; margin: 0 auto 10px; display: block; }
+  .formato h3 { font-size: 15px; margin: 0 0 4px; color: var(--branco); }
+  .formato p { margin: 0; font-size: 13px; color: var(--texto-suave); line-height: 1.45; }
+
+  /* ---------- as etapas ---------- */
+  .etapas { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .etapas .linha-base, .etapas .linha-viva { position: absolute; top: 34px; left: 12%; right: 12%; height: 4px; background: var(--linha); }
+  .etapas .linha-viva { background: var(--ambar); transform-origin: left; transform: scaleX(1); }
+  .etapa { position: relative; text-align: center; }
+  .etapa .bola { width: 70px; height: 70px; margin: 0 auto 14px; display: grid; place-items: center; font-family: var(--pixel); font-size: 18px;
+    color: #1a0f05; background: var(--amarelo); border: 3px solid #1a0f05; box-shadow: 4px 4px 0 var(--laranja); position: relative; z-index: 1; }
+  .etapa h3 { font-size: 17px; margin: 0 0 4px; color: var(--branco); }
+  .etapa p { margin: 0; font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- a conversa com a IA ---------- */
+  .conversa { display: grid; grid-template-columns: 1fr 1.3fr; gap: 32px; align-items: center; }
+  .janela { background: #0a1419; border: 3px solid var(--linha); box-shadow: 8px 8px 0 #05242c; }
+  .janela .barra { display: flex; gap: 7px; align-items: center; padding: 10px 12px; background: var(--fundo-3); }
+  .janela .barra i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .janela .barra b { margin-left: 8px; font-size: 12px; font-weight: 500; color: var(--texto-suave); }
+  .mensagens { padding: 18px; min-height: 280px; display: flex; flex-direction: column; gap: 12px; }
+  .msg { max-width: 86%; padding: 12px 14px; font-size: 15px; line-height: 1.5; }
+  .msg.voce { align-self: flex-end; background: var(--fundo-3); border: 2px solid var(--linha); }
+  .msg.ia { align-self: flex-start; background: #1d1407; border: 2px solid #4a3213; }
+  .msg.ia::before { content: "IA"; display: block; font-family: var(--pixel); font-size: 8px; color: var(--ambar); margin-bottom: 6px; }
+  .digitando { display: inline-flex; gap: 4px; }
+  .digitando i { width: 7px; height: 7px; background: var(--ambar); animation: pular 1s infinite; }
+  .digitando i:nth-child(2) { animation-delay: .15s; } .digitando i:nth-child(3) { animation-delay: .3s; }
+  @keyframes pular { 50% { transform: translateY(-5px); opacity: .5; } }
+  .cursor { display: inline-block; width: 8px; height: 1em; background: var(--amarelo); vertical-align: -2px; animation: piscar .8s steps(1) infinite; }
+  @keyframes piscar { 50% { opacity: 0; } }
+
+  /* ---------- por dentro das aulas ---------- */
+  .dentro { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; }
+  .dentro .grande video { width: 100%; aspect-ratio: 16 / 9; background: #000; }
+  .quadros { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-content: start; }
+  .quadro { margin: 0; background: var(--fundo-2); border: 3px solid var(--linha); overflow: hidden; }
+  .quadro img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform .4s; }
+  .quadro:hover img { transform: scale(1.07); }
+  .quadro figcaption { font-family: var(--pixel); font-size: 8px; color: var(--ambar); padding: 8px 10px; line-height: 1.5; }
+
+  /* ---------- as aulas ---------- */
+  .modulo { max-width: 860px; margin: 0 auto 26px; }
+  .modulo h3 { font-family: var(--pixel); font-size: 12px; color: var(--laranja); margin: 0 0 12px; line-height: 1.6; }
+  .aulas { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .aulas li { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; padding: 10px; background: var(--fundo-2); border: 2px solid var(--linha); transition: border-color .2s, transform .2s; }
+  .aulas li:hover { border-color: var(--ambar); transform: translateX(4px); }
+  .aulas img { width: 150px; aspect-ratio: 16 / 9; object-fit: cover; border: 2px solid #061218; }
+  .aulas b { font-family: var(--pixel); font-size: 10px; color: var(--amarelo); display: block; margin-bottom: 6px; }
+  .aulas strong { display: block; font-size: 16px; }
+  .aulas span { color: var(--texto-suave); font-size: 14px; }
+
+  /* ---------- regras, antes e depois ---------- */
+  .regras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .regra { background: var(--fundo-2); border: 3px solid var(--linha); border-top-width: 8px; padding: 18px; }
+  .regra.verde { border-top-color: #5fcf75; } .regra.vermelha { border-top-color: #ff5a4a; }
+  .regra h3 { margin: 0 0 6px; font-size: 16px; color: var(--branco); }
+  .regra p { margin: 0; font-size: 14px; color: var(--texto-suave); }
+  .antesdepois { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; max-width: 860px; margin: 0 auto; }
+  .lado { padding: 24px; border: 3px solid var(--linha); background: var(--fundo-2); text-align: center; }
+  .lado .rot { font-family: var(--pixel); font-size: 10px; display: inline-block; padding: 6px 10px; margin-bottom: 12px; color: #fff; }
+  .lado.antes .rot { background: #c23b2f; } .lado.depois .rot { background: #3f9a52; }
+  .lado.depois { border-color: #3f9a52; }
+  .lado p { margin: 0; font-size: 18px; color: var(--branco); }
+  .seta { font-family: var(--pixel); font-size: 22px; color: var(--ambar); }
+
+  /* ---------- números ---------- */
+  .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 860px; margin: 0 auto; }
+  .numero { text-align: center; padding: 22px 10px; background: var(--fundo-2); border: 3px solid var(--linha); }
+  .numero .valor { font-family: var(--pixel); font-size: clamp(26px, 6vw, 40px); color: var(--amarelo); }
+  .numero .rot { font-size: 14px; color: var(--texto-suave); margin-top: 8px; }
+
+  .honesto { max-width: 760px; margin: 0 auto; padding: 18px 20px; border: 3px solid var(--ambar); background: var(--fundo-2); }
+  .honesto p { margin: 0 0 10px; } .honesto p:last-child { margin: 0; }
+
+  /* ---------- a oferta ---------- */
+  .oferta { position: relative; max-width: 540px; margin: 0 auto; text-align: center; background: var(--fundo-2); border: 3px solid var(--laranja); box-shadow: 8px 8px 0 var(--laranja); padding: 32px 24px 28px; }
+  .oferta .preco { font-family: var(--pixel); font-size: 42px; color: var(--amarelo); margin: 12px 0 6px; text-shadow: 4px 4px 0 #3a1a07; }
+  .oferta ul { text-align: left; margin: 20px 0; padding-left: 0; list-style: none; }
+  .oferta li { padding: 6px 0 6px 28px; position: relative; }
+  .oferta li::before { content: ""; position: absolute; left: 0; top: 12px; width: 14px; height: 14px; background: var(--ambar); box-shadow: 2px 2px 0 var(--laranja); }
+  .oferta .botao { width: 100%; font-size: 13px; padding: 18px; }
+  .garantia { display: flex; gap: 14px; align-items: center; text-align: left; margin-top: 20px; padding-top: 18px; border-top: 2px dashed var(--linha); }
+  .garantia svg { flex: none; width: 54px; height: 60px; }
+  .brilhar { animation: brilho 2.4s ease-in-out infinite; }
+  @keyframes brilho { 50% { box-shadow: 4px 4px 0 var(--laranja), 0 0 28px rgba(255,216,77,.55); } }
+
+  .faq { max-width: 760px; margin: 0 auto; }
+  .faq details { background: var(--fundo-2); border: 2px solid var(--linha); margin: 8px 0; padding: 12px 16px; }
+  .faq summary { cursor: pointer; font-weight: 700; color: var(--branco); }
+  .faq p { margin: 10px 0 0; color: var(--texto-suave); }
+
+  /* ---------- barra fixa de compra ---------- */
+  .barra-compra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: center; gap: 14px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(6,18,24,.96); border-top: 3px solid var(--ambar);
+    transform: translateY(110%); transition: transform .35s ease; }
+  .barra-compra.ver { transform: none; }
+  .barra-compra .txt { font-size: 14px; } .barra-compra .txt b { font-family: var(--pixel); font-size: 12px; color: var(--amarelo); }
+
+  /* ---------- só com as animações carregadas ---------- */
+  .anima .revela { opacity: 0; transform: translateY(28px); }
+
+  @media (max-width: 860px) {
+    .fabrica, .conversa, .dentro { grid-template-columns: 1fr; }
+    .fabrica .texto h2, .conversa h2 { text-align: center !important; }
+    .formatos { grid-template-columns: repeat(2, 1fr); }
+    .formatos .formato:last-child { grid-column: 1 / -1; }
+    .etapas { grid-template-columns: repeat(2, 1fr); row-gap: 28px; }
+    .etapas .linha-base, .etapas .linha-viva { display: none; }
+    .regras { grid-template-columns: 1fr; }
+    .antesdepois { grid-template-columns: 1fr; }
+    .seta { transform: rotate(90deg); text-align: center; }
+    .aulas li { grid-template-columns: 110px 1fr; gap: 12px; }
+    .aulas img { width: 110px; }
+    .barra-compra .txt { display: none; }
+  }
+  @media (max-width: 420px) { .numeros { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) {
+    .faixa .trilho, .som, .brilhar, .digitando i, .cursor { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="../">
+    <img src="../img/logo.png" alt="" width="40" height="40">
+    <span>VIRAL CITY</span>
+  </a>
+  <a class="botao botao-pequeno" href="#oferta">Quero o curso</a>
+</header>
+
+<main class="pagina">
+
+  <section class="heroi">
+    <div class="brilho"></div>
+    <div class="selo revela">CURSO EM VÍDEO · 11 AULAS</div>
+    <h1 class="revela">Vídeos com IA: do zero à <em>monetização</em></h1>
+    <p class="lead revela">O método que eu uso pra fazer vídeo com IA, de qualquer tipo, do roteiro ao vídeo publicado. E as regras pra monetizar sem perder o canal.</p>
+    <div class="monitor revela">
+      <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl.jpg" muted playsinline autoplay loop preload="metadata"></video>
+      <button class="som" id="som" type="button">▶ Toque pra ouvir</button>
+    </div>
+    <div class="acao revela">
+      <a class="botao brilhar" href="LINK_DO_CHECKOUT?utm_source=instagram&utm_campaign=viralcity">Quero o curso</a>
+      <div class="confianca"><span>Pagamento único</span><span>7 dias de garantia</span><span>Ferramentas com opção grátis</span></div>
+    </div>
+  </section>
+
+  <div class="faixa" aria-hidden="true">
+    <div class="trilho">
+      <span>NARRADO COM IMAGENS</span><span>ANIMAÇÃO</span><span>DOCUMENTÁRIO</span><span>GERADO POR IA</span><span>MOTION</span><span>SHORTS E REELS</span>
+      <span>NARRADO COM IMAGENS</span><span>ANIMAÇÃO</span><span>DOCUMENTÁRIO</span><span>GERADO POR IA</span><span>MOTION</span><span>SHORTS E REELS</span>
+    </div>
+  </div>
+
+  <section class="fabrica">
+    <div class="texto revela">
+      <h2 class="tit">Feito por quem faz vídeo todo dia</h2>
+      <p>Esse é o meu escritório. Cada sala é um canal, e cada personagem é um agente de IA escrevendo, narrando e montando os vídeos.</p>
+      <p>Todo dia alguém me pergunta como eu faço. <strong>O sistema e o jogo não estão à venda.</strong> O método por trás de cada vídeo, sim: é ele que está no curso.</p>
+    </div>
+    <div class="fones revela">
+      <div class="fone"><video src="../img/clipes/escritorio.mp4" poster="../img/clipes/escritorio.jpg" muted playsinline autoplay loop preload="metadata"></video><div class="legenda">O ESCRITÓRIO</div></div>
+      <div class="fone"><video src="../img/clipes/agentes.mp4" poster="../img/clipes/agentes.jpg" muted playsinline autoplay loop preload="metadata"></video><div class="legenda">OS AGENTES</div></div>
+      <div class="fone"><video src="../img/clipes/cidade.mp4" poster="../img/clipes/cidade.jpg" muted playsinline autoplay loop preload="metadata"></video><div class="legenda">A CIDADE</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Qualquer tipo de vídeo</h2>
+    <p class="chamada revela">Não é só animação. O método é o mesmo pros cinco formatos, e você escolhe o que combina com você.</p>
+    <div class="formatos">
+      <div class="formato revela">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="1" y="3" width="14" height="10" fill="#1f4a56"/><rect x="2" y="4" width="12" height="8" fill="#0b1d24"/><rect x="3" y="9" width="3" height="2" fill="#ffb238"/><rect x="7" y="7" width="3" height="4" fill="#ffd84d"/><rect x="11" y="5" width="2" height="6" fill="#ff7a2f"/></svg>
+        <h3>Narrado com imagens</h3><p>Voz por cima de imagem livre ou gerada.</p></div>
+      <div class="formato revela">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="5" y="2" width="6" height="5" fill="#ffd84d"/><rect x="6" y="4" width="1" height="1" fill="#1a0f05"/><rect x="9" y="4" width="1" height="1" fill="#1a0f05"/><rect x="4" y="7" width="8" height="5" fill="#ff7a2f"/><rect x="5" y="12" width="2" height="2" fill="#1f4a56"/><rect x="9" y="12" width="2" height="2" fill="#1f4a56"/></svg>
+        <h3>Animação</h3><p>Personagem e cena pedidos à IA.</p></div>
+      <div class="formato revela">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="2" y="2" width="10" height="12" fill="#e6f0f2"/><rect x="3" y="4" width="8" height="1" fill="#9fbcc3"/><rect x="3" y="6" width="8" height="1" fill="#9fbcc3"/><rect x="3" y="8" width="5" height="1" fill="#9fbcc3"/><rect x="9" y="9" width="5" height="5" fill="#ffb238"/><rect x="10" y="10" width="3" height="3" fill="#0b1d24"/></svg>
+        <h3>Documentário</h3><p>Com material livre e fonte em cada fato.</p></div>
+      <div class="formato revela">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="7" y="1" width="2" height="4" fill="#ffd84d"/><rect x="7" y="11" width="2" height="4" fill="#ffd84d"/><rect x="1" y="7" width="4" height="2" fill="#ffd84d"/><rect x="11" y="7" width="4" height="2" fill="#ffd84d"/><rect x="6" y="6" width="4" height="4" fill="#ff7a2f"/><rect x="3" y="3" width="2" height="2" fill="#ffb238"/><rect x="11" y="11" width="2" height="2" fill="#ffb238"/></svg>
+        <h3>Gerado por IA</h3><p>Cenas de vídeo feitas por gerador.</p></div>
+      <div class="formato revela">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="1" y="12" width="14" height="2" fill="#1f4a56"/><rect x="2" y="9" width="3" height="3" fill="#ffb238"/><rect x="6" y="6" width="3" height="6" fill="#ffd84d"/><rect x="10" y="3" width="3" height="9" fill="#ff7a2f"/><rect x="12" y="1" width="3" height="1" fill="#e6f0f2"/><rect x="14" y="1" width="1" height="3" fill="#e6f0f2"/></svg>
+        <h3>Explicativo com motion</h3><p>Gráfico, número e texto animados.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Do tema ao vídeo pronto</h2>
+    <p class="chamada revela">Você aprende cada etapa, com os pedidos prontos pra usar com a IA.</p>
+    <div class="etapas" id="etapas">
+      <div class="linha-base"></div><div class="linha-viva"></div>
+      <div class="etapa revela"><div class="bola">1</div><h3>Roteiro</h3><p>Gancho que segura, pesquisa com fonte</p></div>
+      <div class="etapa revela"><div class="bola">2</div><h3>Voz</h3><p>Voz, tom e ritmo certos pro tema</p></div>
+      <div class="etapa revela"><div class="bola">3</div><h3>Imagens</h3><p>Livres, geradas ou animadas</p></div>
+      <div class="etapa revela"><div class="bola">4</div><h3>Montagem</h3><p>Num editor grátis, com legenda e trilha</p></div>
+    </div>
+  </section>
+
+  <section class="conversa">
+    <div class="revela">
+      <h2 class="tit" style="text-align:left">Você pede em português</h2>
+      <p>Sem programar nada. Você escreve do jeito que fala, a IA devolve pronto, e você revisa. O curso mostra o que pedir em cada etapa, e como conferir o que volta.</p>
+      <p class="pequeno">O exemplo da conversa é de uma aula: o tema é uma horta na varanda, qualquer assunto serve.</p>
+    </div>
+    <div class="janela revela">
+      <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>conversa com a IA</b></div>
+      <div class="mensagens" id="mensagens">
+        <div class="msg voce" data-texto="Escreva o roteiro de um vídeo de um minuto: como montar uma horta na varanda.">Escreva o roteiro de um vídeo de um minuto: como montar uma horta na varanda.</div>
+        <div class="msg ia" data-texto="Aqui está. Abri com a horta pronta, mostrei os 4 passos em 40 segundos e fechei com uma pergunta pro comentário.">Aqui está. Abri com a horta pronta, mostrei os 4 passos em 40 segundos e fechei com uma pergunta pro comentário.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Por dentro das aulas</h2>
+    <p class="chamada revela">Aulas curtas, de uns 2 minutos, direto ao ponto. É assim que elas são:</p>
+    <div class="dentro">
+      <div class="monitor grande revela" style="margin:0"><video src="midia/aulas.mp4" poster="midia/aulas.jpg" muted playsinline autoplay loop preload="metadata"></video></div>
+      <div class="quadros">
+        <figure class="quadro revela"><img src="midia/g02-0.55.jpg" alt="Aula de roteiro: o pedido de pesquisa com fonte" loading="lazy"><figcaption>ROTEIRO</figcaption></figure>
+        <figure class="quadro revela"><img src="midia/g04-0.3.jpg" alt="Aula de imagens: as licenças" loading="lazy"><figcaption>IMAGENS</figcaption></figure>
+        <figure class="quadro revela"><img src="midia/g07-0.55.jpg" alt="Aula de thumbnail: o teste A/B" loading="lazy"><figcaption>THUMBNAIL</figcaption></figure>
+        <figure class="quadro revela"><img src="midia/g10-0.3.jpg" alt="Aula de monetização: o que o YouTube pede" loading="lazy"><figcaption>MONETIZAR</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">As 11 aulas</h2>
+    <div class="modulo">
+      <h3 class="revela">MÓDULO 1: FAZER O VÍDEO</h3>
+      <ol class="aulas">
+        <li class="revela"><img src="midia/aula-00.jpg" alt="" loading="lazy"><div><b>AULA 00</b><strong>Boas-vindas</strong><span>O que dá pra fazer com IA hoje e como o curso funciona</span></div></li>
+        <li class="revela"><img src="midia/aula-01.jpg" alt="" loading="lazy"><div><b>AULA 01</b><strong>Escolher o formato e o nicho</strong><span>Os formatos de vídeo e como escolher o seu assunto</span></div></li>
+        <li class="revela"><img src="midia/aula-02.jpg" alt="" loading="lazy"><div><b>AULA 02</b><strong>Roteiro com IA</strong><span>Gancho, estrutura, pesquisa com fonte e revisão de fatos</span></div></li>
+        <li class="revela"><img src="midia/aula-03.jpg" alt="" loading="lazy"><div><b>AULA 03</b><strong>A voz com IA</strong><span>Voz, tom, ritmo e os cuidados com voz clonada</span></div></li>
+        <li class="revela"><img src="midia/aula-04.jpg" alt="" loading="lazy"><div><b>AULA 04</b><strong>As imagens</strong><span>Imagem livre, licenças, imagem gerada por IA e personagem igual em toda cena</span></div></li>
+        <li class="revela"><img src="midia/aula-05.jpg" alt="" loading="lazy"><div><b>AULA 05</b><strong>Vídeo gerado por IA e animação</strong><span>Geradores de vídeo, animação e motion pedidos à IA</span></div></li>
+        <li class="revela"><img src="midia/aula-06.jpg" alt="" loading="lazy"><div><b>AULA 06</b><strong>A montagem</strong><span>Editor grátis, corte, legenda, trilha e exportar</span></div></li>
+      </ol>
+    </div>
+    <div class="modulo">
+      <h3 class="revela">MÓDULO 2: PUBLICAR E MONETIZAR</h3>
+      <ol class="aulas">
+        <li class="revela"><img src="midia/aula-07.jpg" alt="" loading="lazy"><div><b>AULA 07</b><strong>Thumbnail e título</strong><span>A frase que dá vontade de clicar e o teste de thumbnail do YouTube</span></div></li>
+        <li class="revela"><img src="midia/aula-08.jpg" alt="" loading="lazy"><div><b>AULA 08</b><strong>Shorts e Reels</strong><span>Cortes que levam ao vídeo longo, no YouTube, no Instagram e no TikTok</span></div></li>
+        <li class="revela"><img src="midia/aula-09.jpg" alt="" loading="lazy"><div><b>AULA 09</b><strong>Publicar sem tomar strike</strong><span>Descrição, capítulos, direito autoral, rótulo de IA e conteúdo repetitivo</span></div></li>
+        <li class="revela"><img src="midia/aula-10.jpg" alt="" loading="lazy"><div><b>AULA 10</b><strong>Monetizar</strong><span>O Programa de Parcerias do YouTube e as outras formas de ganhar com vídeo</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">A parte que quase ninguém ensina</h2>
+    <p class="chamada revela">As regras foram conferidas nas páginas oficiais em novembro de 2026.</p>
+    <div class="regras">
+      <div class="regra verde revela"><h3>O que o YouTube pede</h3><p>Os requisitos do Programa de Parcerias e o que conta pra entrar.</p></div>
+      <div class="regra vermelha revela"><h3>O que derruba um canal</h3><p>Direito autoral, conteúdo repetitivo e o que vira strike.</p></div>
+      <div class="regra verde revela"><h3>O rótulo de IA</h3><p>Quando marcar que o vídeo foi feito com IA, e como.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">O que mudou</h2>
+    <div class="antesdepois">
+      <div class="lado antes revela"><div class="rot">ANTES</div><p>Câmera, estúdio e uma equipe inteira.</p></div>
+      <div class="seta revela">▶</div>
+      <div class="lado depois revela"><div class="rot">AGORA</div><p>Você sozinho, no computador de casa.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="numeros">
+      <div class="numero revela"><div class="valor" data-conta="11">11</div><div class="rot">aulas em vídeo</div></div>
+      <div class="numero revela"><div class="valor" data-conta="5">5</div><div class="rot">formatos de vídeo</div></div>
+      <div class="numero revela"><div class="valor" data-conta="7">7</div><div class="rot">dias de garantia</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Combinado honesto</h2>
+    <div class="honesto revela">
+      <p>Ninguém garante views nem dinheiro, e este curso também não. O que ele te dá é um jeito de fazer bons vídeos com constância e de publicar dentro das regras. O resultado depende do seu assunto, do seu ritmo e de você.</p>
+      <p class="pequeno">O curso ensina a usar ferramentas de IA que você mesmo escolhe. Não vem com o sistema nem com o jogo do Viral City.</p>
+    </div>
+  </section>
+
+  <section id="oferta">
+    <h2 class="tit revela">Garanta o seu acesso</h2>
+    <div class="oferta revela">
+      <div class="pequeno">Vídeos com IA: do zero à monetização</div>
+      <div class="preco">R$ 97</div>
+      <div class="pequeno">pagamento único</div>
+      <ul>
+        <li>11 aulas em vídeo, em 2 módulos</li>
+        <li>Qualquer tipo de vídeo, não só animação</li>
+        <li>Os pedidos prontos pra usar com a IA em cada etapa</li>
+        <li>As regras pra publicar e monetizar</li>
+      </ul>
+      <!-- O link do checkout: troque LINK_DO_CHECKOUT pelo link da oferta na Kirvano. -->
+      <a class="botao brilhar" href="LINK_DO_CHECKOUT?utm_source=instagram&utm_campaign=viralcity">Quero o curso</a>
+      <div class="garantia">
+        <svg viewBox="0 0 18 20" shape-rendering="crispEdges"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
+        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Não gostou, pede o reembolso e recebe o valor de volta.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Perguntas</h2>
+    <div class="faq">
+      <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Você usa ferramentas de IA conversando em português, e o curso mostra o que pedir em cada etapa.</p></details>
+      <details class="revela"><summary>Preciso pagar ferramentas?</summary><p>Dá pra começar com as opções grátis que o curso mostra. As pagas aparecem como alternativa, pra quando você quiser.</p></details>
+      <details class="revela"><summary>Serve pro meu assunto?</summary><p>O método serve pra qualquer assunto. Na primeira parte do curso você escolhe o formato e o nicho que combinam com você.</p></details>
+      <details class="revela"><summary>O curso vem com o sistema ou o jogo do Viral City?</summary><p>Não. O curso ensina o método de fazer vídeo com IA usando ferramentas que você mesmo escolhe.</p></details>
+      <details class="revela"><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. Pede o reembolso e recebe o valor de volta.</p></details>
+    </div>
+  </section>
+
+</main>
+
+<div class="barra-compra" id="barra">
+  <div class="txt">Vídeos com IA · <b>R$ 97</b> · 7 dias de garantia</div>
+  <a class="botao botao-pequeno" href="#oferta">Quero o curso</a>
+</div>
+
+<script>
+// roda depois dos scripts com defer (o GSAP), que carregam antes do DOMContentLoaded
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  // a VSL: começa muda; o botão do meio liga o som do começo
+  var vsl = document.getElementById("vsl"), som = document.getElementById("som");
+  vsl.play().catch(function () {});
+  som.addEventListener("click", function () { vsl.muted = false; vsl.loop = false; vsl.currentTime = 0; vsl.controls = true; som.hidden = true; vsl.play(); });
+
+  // a barra de compra aparece depois do herói e some em cima da oferta
+  var barra = document.getElementById("barra"), heroi = document.querySelector(".heroi"), oferta = document.getElementById("oferta");
+  function conferirBarra() {
+    var passou = heroi.getBoundingClientRect().bottom < 0;
+    var r = oferta.getBoundingClientRect(), naOferta = r.top < innerHeight && r.bottom > 0;
+    barra.classList.toggle("ver", passou && !naOferta);
+  }
+  addEventListener("scroll", conferirBarra, { passive: true }); conferirBarra();
+
+  var semMovimento = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (semMovimento) return;
+
+  // a conversa é digitada quando aparece
+  var msgs = document.querySelectorAll("#mensagens .msg"), conversaFeita = false;
+  msgs.forEach(function (m) { m.style.visibility = "hidden"; });
+  function digitar(el, texto, depois) {
+    el.style.visibility = "visible"; el.textContent = "";
+    var cur = document.createElement("span"); cur.className = "cursor"; el.appendChild(cur);
+    var i = 0;
+    (function passo() {
+      if (i <= texto.length) { el.firstChild && el.firstChild.nodeType === 3 ? el.firstChild.nodeValue = texto.slice(0, i) : el.insertBefore(document.createTextNode(texto.slice(0, i)), cur); i++; setTimeout(passo, 22); }
+      else { cur.remove(); depois && depois(); }
+    })();
+  }
+  function rodarConversa() {
+    if (conversaFeita) return; conversaFeita = true;
+    digitar(msgs[0], msgs[0].dataset.texto, function () {
+      var ia = msgs[1]; ia.style.visibility = "visible"; ia.innerHTML = '<span class="digitando"><i></i><i></i><i></i></span>';
+      setTimeout(function () { ia.innerHTML = ""; digitar(ia, ia.dataset.texto); }, 1300);
+    });
+  }
+  var obs = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { rodarConversa(); obs.disconnect(); } }); }, { threshold: 0.5 });
+  obs.observe(document.getElementById("mensagens"));
+
+  // o resto é do GSAP; sem ele, tudo já está visível
+  var gsap = window.gsap;
+  if (!gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(window.ScrollTrigger);
+  document.documentElement.classList.add("anima");
+
+  var heroiItens = gsap.utils.toArray(".heroi .revela");
+  gsap.to(heroiItens, { opacity: 1, y: 0, duration: 0.8, stagger: 0.12, ease: "power3.out", delay: 0.1 });
+  gsap.from(".heroi .monitor", { rotation: -2, scale: 0.94, duration: 1.1, ease: "back.out(1.6)", delay: 0.35 });
+
+  gsap.utils.toArray(".revela").forEach(function (el) {
+    if (el.closest(".heroi")) return;
+    gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } });
+  });
+
+  // os celulares sobem em ritmos diferentes
+  gsap.utils.toArray(".fone").forEach(function (f, i) {
+    gsap.to(f, { yPercent: [-6, -14, -4][i], ease: "none", scrollTrigger: { trigger: ".fabrica", start: "top bottom", end: "bottom top", scrub: true } });
+  });
+
+  // a linha das etapas se desenha e as bolas pulam em sequência
+  var viva = document.querySelector(".linha-viva");
+  if (viva && getComputedStyle(viva).display !== "none") {
+    gsap.fromTo(viva, { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { trigger: "#etapas", start: "top 80%", end: "top 35%", scrub: true } });
+  }
+  gsap.from(".etapa .bola", { scale: 0, rotation: -90, duration: 0.6, stagger: 0.18, ease: "back.out(2.5)", scrollTrigger: { trigger: "#etapas", start: "top 80%", once: true } });
+
+  // os números contam
+  gsap.utils.toArray("[data-conta]").forEach(function (el) {
+    var alvo = Number(el.dataset.conta), obj = { v: 0 };
+    gsap.to(obj, { v: alvo, duration: 1.4, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 88%", once: true }, onUpdate: function () { el.textContent = Math.round(obj.v); } });
+  });
+
+  // a seta do antes e depois anda
+  gsap.to(".seta", { x: 8, duration: 0.6, repeat: -1, yoyo: true, ease: "steps(2)" });
+
+  // a oferta entra com um pulo
+  gsap.from(".oferta", { scale: 0.9, rotation: 1.5, duration: 0.9, ease: "back.out(1.8)", scrollTrigger: { trigger: ".oferta", start: "top 85%", once: true } });
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+</body>
+</html>
