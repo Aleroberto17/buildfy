@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vídeos com IA</title>
-<meta name="description" content="Curso Vídeos com IA: do zero à monetização. Roteiro, voz, imagem, vídeo, montagem, thumbnail, Shorts e as regras pra monetizar, com ferramentas de IA que você mesmo usa.">
+<meta name="description" content="Faça vídeos com IA sem câmera, sem estúdio e sem aparecer. 11 aulas, do roteiro ao vídeo no ar, com os pedidos prontos e as regras pra monetizar. R$ 97, 7 dias de garantia.">
 <meta property="og:title" content="Vídeos com IA: do zero à monetização">
-<meta property="og:description" content="Aprenda a fazer qualquer tipo de vídeo com IA e as regras pra monetizar.">
+<meta property="og:description" content="Faça vídeos com IA sem câmera, sem estúdio e sem aparecer. 11 aulas e 3 bônus, do roteiro à monetização.">
 <meta property="og:image" content="midia/vsl.jpg">
 <meta name="theme-color" content="#0b1d24">
 <link rel="icon" href="../img/logo.png">
@@ -135,6 +135,16 @@
   .numero .valor { font-family: var(--pixel); font-size: clamp(26px, 6vw, 40px); color: var(--amarelo); }
   .numero .rot { font-size: 14px; color: var(--texto-suave); margin-top: 8px; }
 
+  /* ---------- os bônus ---------- */
+  .bonus { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .bonus .peca { background: var(--fundo-2); border: 3px solid var(--linha); padding: 18px 16px; text-align: center; transition: border-color .2s, transform .2s; }
+  .bonus .peca:hover { border-color: var(--ambar); transform: translateY(-4px); }
+  .bonus img { width: 62%; margin: 0 auto 14px; border: 3px solid #061218; box-shadow: 6px 6px 0 #05242c; transform: rotate(-2deg); }
+  .bonus .peca:nth-child(2) img { transform: rotate(2deg); }
+  .bonus b { font-family: var(--pixel); font-size: 9px; color: var(--ambar); display: block; margin-bottom: 8px; }
+  .bonus h3 { margin: 0 0 6px; font-size: 17px; color: var(--branco); }
+  .bonus p { margin: 0; font-size: 14px; color: var(--texto-suave); }
+
   .honesto { max-width: 760px; margin: 0 auto; padding: 18px 20px; border: 3px solid var(--ambar); background: var(--fundo-2); }
   .honesto p { margin: 0 0 10px; } .honesto p:last-child { margin: 0; }
 
@@ -172,7 +182,8 @@
     .formatos .formato:last-child { grid-column: 1 / -1; }
     .etapas { grid-template-columns: repeat(2, 1fr); row-gap: 28px; }
     .etapas .linha-base, .etapas .linha-viva { display: none; }
-    .regras { grid-template-columns: 1fr; }
+    .regras, .bonus { grid-template-columns: 1fr; }
+    .bonus img { width: 46%; }
     .antesdepois { grid-template-columns: 1fr; }
     .seta { transform: rotate(90deg); text-align: center; }
     .aulas li { grid-template-columns: 110px 1fr; gap: 12px; }
@@ -199,16 +210,16 @@
 
   <section class="heroi">
     <div class="brilho"></div>
-    <div class="selo revela">CURSO EM VÍDEO · 11 AULAS</div>
-    <h1 class="revela">Vídeos com IA: do zero à <em>monetização</em></h1>
-    <p class="lead revela">O método que eu uso pra fazer vídeo com IA, de qualquer tipo, do roteiro ao vídeo publicado. E as regras pra monetizar sem perder o canal.</p>
+    <div class="selo revela">CURSO EM VÍDEO · 11 AULAS + 3 BÔNUS</div>
+    <h1 class="revela">Faça vídeos com IA sem câmera, sem estúdio e sem <em>aparecer</em></h1>
+    <p class="lead revela">O método que eu uso pra criar vídeo com inteligência artificial, do roteiro ao vídeo no ar. Com os pedidos prontos de cada etapa e as regras que o YouTube cobra pra monetizar um canal.</p>
     <div class="monitor revela">
       <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl.jpg" muted playsinline autoplay loop preload="metadata"></video>
       <button class="som" id="som" type="button">▶ Toque pra ouvir</button>
     </div>
     <div class="acao revela">
       <a class="botao brilhar" href="LINK_DO_CHECKOUT?utm_source=instagram&utm_campaign=viralcity">Quero o curso</a>
-      <div class="confianca"><span>Pagamento único</span><span>7 dias de garantia</span><span>Ferramentas com opção grátis</span></div>
+      <div class="confianca"><span>Pagamento único de R$ 97</span><span>7 dias de garantia</span><span>Sem saber programar</span><span>Ferramentas com opção grátis</span></div>
     </div>
   </section>
 
@@ -219,11 +230,21 @@
     </div>
   </div>
 
+  <section>
+    <h2 class="tit revela">Esse curso é pra você se...</h2>
+    <p class="chamada revela">Você vê canal crescendo com vídeo feito por IA e pensa que também dava pra fazer. Dá. O que falta quase sempre é o caminho.</p>
+    <div class="regras">
+      <div class="regra revela"><h3>Quer um canal, mas não quer aparecer</h3><p>Sem mostrar o rosto, sem gravar a própria voz e sem comprar câmera. A IA narra e cria as imagens.</p></div>
+      <div class="regra revela"><h3>Já tentou e travou no meio</h3><p>No roteiro que não prende, na voz que soa robô ou na edição que não termina nunca.</p></div>
+      <div class="regra revela"><h3>Tem medo de perder o canal</h3><p>Strike, música que leva o dinheiro do vídeo, vídeo feito em massa que o YouTube não monetiza.</p></div>
+    </div>
+  </section>
+
   <section class="fabrica">
     <div class="texto revela">
-      <h2 class="tit">Feito por quem faz vídeo todo dia</h2>
-      <p>Esse é o meu escritório. Cada sala é um canal, e cada personagem é um agente de IA escrevendo, narrando e montando os vídeos.</p>
-      <p>Todo dia alguém me pergunta como eu faço. <strong>O sistema e o jogo não estão à venda.</strong> O método por trás de cada vídeo, sim: é ele que está no curso.</p>
+      <h2 class="tit">Aprenda com quem produz todo dia</h2>
+      <p>Esse é o meu escritório. Cada sala é um canal, e cada personagem é um agente de IA escrevendo, narrando e montando vídeo, todos os dias.</p>
+      <p>Todo dia alguém me pergunta como eu faço. <strong>O sistema e o jogo não estão à venda.</strong> O método que está por trás de cada vídeo, sim: eu organizei ele em 11 aulas, na ordem em que você faz.</p>
     </div>
     <div class="fones revela">
       <div class="fone"><video src="../img/clipes/escritorio.mp4" poster="../img/clipes/escritorio.jpg" muted playsinline autoplay loop preload="metadata"></video><div class="legenda">O ESCRITÓRIO</div></div>
@@ -233,8 +254,8 @@
   </section>
 
   <section>
-    <h2 class="tit revela">Qualquer tipo de vídeo</h2>
-    <p class="chamada revela">Não é só animação. O método é o mesmo pros cinco formatos, e você escolhe o que combina com você.</p>
+    <h2 class="tit revela">Cinco formatos, um método só</h2>
+    <p class="chamada revela">Não é curso de um tipo de vídeo. Você aprende os cinco formatos de vídeo longo e os cortes pra Shorts, Reels e TikTok, e escolhe o que combina com você.</p>
     <div class="formatos">
       <div class="formato revela">
         <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="1" y="3" width="14" height="10" fill="#1f4a56"/><rect x="2" y="4" width="12" height="8" fill="#0b1d24"/><rect x="3" y="9" width="3" height="2" fill="#ffb238"/><rect x="7" y="7" width="3" height="4" fill="#ffd84d"/><rect x="11" y="5" width="2" height="6" fill="#ff7a2f"/></svg>
@@ -255,21 +276,22 @@
   </section>
 
   <section>
-    <h2 class="tit revela">Do tema ao vídeo pronto</h2>
-    <p class="chamada revela">Você aprende cada etapa, com os pedidos prontos pra usar com a IA.</p>
+    <h2 class="tit revela">Do tema ao vídeo publicado</h2>
+    <p class="chamada revela">A IA faz o trabalho de roteirista, locutor, ilustrador e editor. O curso te ensina a dirigir os quatro, com o pedido pronto de cada etapa.</p>
     <div class="etapas" id="etapas">
       <div class="linha-base"></div><div class="linha-viva"></div>
-      <div class="etapa revela"><div class="bola">1</div><h3>Roteiro</h3><p>Gancho que segura, pesquisa com fonte</p></div>
-      <div class="etapa revela"><div class="bola">2</div><h3>Voz</h3><p>Voz, tom e ritmo certos pro tema</p></div>
-      <div class="etapa revela"><div class="bola">3</div><h3>Imagens</h3><p>Livres, geradas ou animadas</p></div>
-      <div class="etapa revela"><div class="bola">4</div><h3>Montagem</h3><p>Num editor grátis, com legenda e trilha</p></div>
+      <div class="etapa revela"><div class="bola">1</div><h3>Roteiro</h3><p>O gancho que segura, uma virada por minuto, todo número com fonte</p></div>
+      <div class="etapa revela"><div class="bola">2</div><h3>Voz</h3><p>A voz certa pro tema e a instrução que tira o tom de robô</p></div>
+      <div class="etapa revela"><div class="bola">3</div><h3>Imagens</h3><p>Livres, geradas ou animadas, com o mesmo personagem em toda cena</p></div>
+      <div class="etapa revela"><div class="bola">4</div><h3>Montagem</h3><p>Num editor grátis, com legenda, música sem reivindicação e o volume certo</p></div>
     </div>
   </section>
 
   <section class="conversa">
     <div class="revela">
-      <h2 class="tit" style="text-align:left">Você pede em português</h2>
-      <p>Sem programar nada. Você escreve do jeito que fala, a IA devolve pronto, e você revisa. O curso mostra o que pedir em cada etapa, e como conferir o que volta.</p>
+      <h2 class="tit" style="text-align:left">Você só pede, em português</h2>
+      <p>Sem programar e sem decorar comando. Você escreve do jeito que fala, a IA devolve pronto e você revisa. O curso mostra o que pedir em cada etapa e como conferir o que volta.</p>
+      <p>E você não precisa anotar nada: os 14 pedidos das aulas vêm prontos no PDF bônus. É copiar, trocar o tema e colar.</p>
       <p class="pequeno">O exemplo da conversa é de uma aula: o tema é uma horta na varanda, qualquer assunto serve.</p>
     </div>
     <div class="janela revela">
@@ -283,7 +305,7 @@
 
   <section>
     <h2 class="tit revela">Por dentro das aulas</h2>
-    <p class="chamada revela">Aulas curtas, de uns 2 minutos, direto ao ponto. É assim que elas são:</p>
+    <p class="chamada revela">Cada aula é uma etapa, em uns 2 minutos, sem enrolação: você assiste e aplica no mesmo dia. É assim que elas são:</p>
     <div class="dentro">
       <div class="monitor grande revela" style="margin:0"><video src="midia/aulas.mp4" poster="midia/aulas.jpg" muted playsinline autoplay loop preload="metadata"></video></div>
       <div class="quadros">
@@ -296,37 +318,47 @@
   </section>
 
   <section>
-    <h2 class="tit revela">As 11 aulas</h2>
+    <h2 class="tit revela">O que tem em cada aula</h2>
     <div class="modulo">
       <h3 class="revela">MÓDULO 1: FAZER O VÍDEO</h3>
       <ol class="aulas">
-        <li class="revela"><img src="midia/aula-00.jpg" alt="" loading="lazy"><div><b>AULA 00</b><strong>Boas-vindas</strong><span>O que dá pra fazer com IA hoje e como o curso funciona</span></div></li>
-        <li class="revela"><img src="midia/aula-01.jpg" alt="" loading="lazy"><div><b>AULA 01</b><strong>Escolher o formato e o nicho</strong><span>Os formatos de vídeo e como escolher o seu assunto</span></div></li>
-        <li class="revela"><img src="midia/aula-02.jpg" alt="" loading="lazy"><div><b>AULA 02</b><strong>Roteiro com IA</strong><span>Gancho, estrutura, pesquisa com fonte e revisão de fatos</span></div></li>
-        <li class="revela"><img src="midia/aula-03.jpg" alt="" loading="lazy"><div><b>AULA 03</b><strong>A voz com IA</strong><span>Voz, tom, ritmo e os cuidados com voz clonada</span></div></li>
-        <li class="revela"><img src="midia/aula-04.jpg" alt="" loading="lazy"><div><b>AULA 04</b><strong>As imagens</strong><span>Imagem livre, licenças, imagem gerada por IA e personagem igual em toda cena</span></div></li>
-        <li class="revela"><img src="midia/aula-05.jpg" alt="" loading="lazy"><div><b>AULA 05</b><strong>Vídeo gerado por IA e animação</strong><span>Geradores de vídeo, animação e motion pedidos à IA</span></div></li>
-        <li class="revela"><img src="midia/aula-06.jpg" alt="" loading="lazy"><div><b>AULA 06</b><strong>A montagem</strong><span>Editor grátis, corte, legenda, trilha e exportar</span></div></li>
+        <li class="revela"><img src="midia/aula-00.jpg" alt="" loading="lazy"><div><b>AULA 00</b><strong>Boas-vindas</strong><span>O que a IA já faz em cada etapa do vídeo e como o curso funciona</span></div></li>
+        <li class="revela"><img src="midia/aula-01.jpg" alt="" loading="lazy"><div><b>AULA 01</b><strong>Escolher o formato e o nicho</strong><span>Os formatos, como ver se o assunto tem busca e quais assuntos o anúncio paga mais</span></div></li>
+        <li class="revela"><img src="midia/aula-02.jpg" alt="" loading="lazy"><div><b>AULA 02</b><strong>Roteiro com IA</strong><span>O gancho que segura, a estrutura com viradas, a pesquisa com fonte e a revisão que pega número inventado</span></div></li>
+        <li class="revela"><img src="midia/aula-03.jpg" alt="" loading="lazy"><div><b>AULA 03</b><strong>A voz com IA</strong><span>A voz pra cada tema, a instrução de estilo, o ritmo certo e os cuidados com voz clonada</span></div></li>
+        <li class="revela"><img src="midia/aula-04.jpg" alt="" loading="lazy"><div><b>AULA 04</b><strong>As imagens</strong><span>Onde achar imagem livre, como ler a licença e o mesmo personagem em toda cena gerada</span></div></li>
+        <li class="revela"><img src="midia/aula-05.jpg" alt="" loading="lazy"><div><b>AULA 05</b><strong>Vídeo gerado por IA e animação</strong><span>Veo, Kling e Runway, como pedir a cena certa e a animação que a IA escreve pra você</span></div></li>
+        <li class="revela"><img src="midia/aula-06.jpg" alt="" loading="lazy"><div><b>AULA 06</b><strong>A montagem</strong><span>CapCut ou DaVinci, grátis: a ordem certa, legenda automática, música segura e o volume que o YouTube usa</span></div></li>
       </ol>
     </div>
     <div class="modulo">
       <h3 class="revela">MÓDULO 2: PUBLICAR E MONETIZAR</h3>
       <ol class="aulas">
-        <li class="revela"><img src="midia/aula-07.jpg" alt="" loading="lazy"><div><b>AULA 07</b><strong>Thumbnail e título</strong><span>A frase que dá vontade de clicar e o teste de thumbnail do YouTube</span></div></li>
-        <li class="revela"><img src="midia/aula-08.jpg" alt="" loading="lazy"><div><b>AULA 08</b><strong>Shorts e Reels</strong><span>Cortes que levam ao vídeo longo, no YouTube, no Instagram e no TikTok</span></div></li>
-        <li class="revela"><img src="midia/aula-09.jpg" alt="" loading="lazy"><div><b>AULA 09</b><strong>Publicar sem tomar strike</strong><span>Descrição, capítulos, direito autoral, rótulo de IA e conteúdo repetitivo</span></div></li>
-        <li class="revela"><img src="midia/aula-10.jpg" alt="" loading="lazy"><div><b>AULA 10</b><strong>Monetizar</strong><span>O Programa de Parcerias do YouTube e as outras formas de ganhar com vídeo</span></div></li>
+        <li class="revela"><img src="midia/aula-07.jpg" alt="" loading="lazy"><div><b>AULA 07</b><strong>Thumbnail e título</strong><span>A frase que dá vontade de clicar, o teste de thumbnail do YouTube e o título que o celular não corta</span></div></li>
+        <li class="revela"><img src="midia/aula-08.jpg" alt="" loading="lazy"><div><b>AULA 08</b><strong>Shorts e Reels</strong><span>Um vídeo vira vários cortes, o gancho de 2 segundos e a pegadinha do Short de mais de 1 minuto</span></div></li>
+        <li class="revela"><img src="midia/aula-09.jpg" alt="" loading="lazy"><div><b>AULA 09</b><strong>Publicar sem tomar strike</strong><span>Descrição, capítulos, rótulo de IA, direito autoral e a regra do conteúdo feito em massa</span></div></li>
+        <li class="revela"><img src="midia/aula-10.jpg" alt="" loading="lazy"><div><b>AULA 10</b><strong>Monetizar</strong><span>Os requisitos do Programa de Parcerias e 4 caminhos de renda além do anúncio, alguns que nem esperam a monetização</span></div></li>
       </ol>
     </div>
   </section>
 
   <section>
     <h2 class="tit revela">A parte que quase ninguém ensina</h2>
-    <p class="chamada revela">As regras foram conferidas nas páginas oficiais em novembro de 2026.</p>
+    <p class="chamada revela">Dá pra fazer um vídeo ótimo e perder o dinheiro dele por um detalhe. As regras do curso foram conferidas nas páginas oficiais do YouTube em novembro de 2026.</p>
     <div class="regras">
-      <div class="regra verde revela"><h3>O que o YouTube pede</h3><p>Os requisitos do Programa de Parcerias e o que conta pra entrar.</p></div>
-      <div class="regra vermelha revela"><h3>O que derruba um canal</h3><p>Direito autoral, conteúdo repetitivo e o que vira strike.</p></div>
-      <div class="regra verde revela"><h3>O rótulo de IA</h3><p>Quando marcar que o vídeo foi feito com IA, e como.</p></div>
+      <div class="regra verde revela"><h3>O que o YouTube pede</h3><p>Os números pra entrar no Programa de Parcerias e o detalhe que pouca gente sabe: hora vista no Short não conta.</p></div>
+      <div class="regra vermelha revela"><h3>O que derruba um canal</h3><p>Música com Content ID, trecho de outro canal e vídeo feito em massa, a regra que mais tira monetização.</p></div>
+      <div class="regra verde revela"><h3>O rótulo de IA</h3><p>Quando o vídeo precisa da marca de conteúdo sintético, e quando não precisa.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">E você ainda leva 3 bônus</h2>
+    <p class="chamada revela">O que as aulas ensinam, organizado pra consultar na hora de fazer o vídeo. Em PDF, pra deixar aberto do lado ou imprimir.</p>
+    <div class="bonus">
+      <div class="peca revela"><img src="midia/bonus-1.jpg" alt="Capa do bônus Os pedidos prontos" loading="lazy"><b>BÔNUS 1</b><h3>Os pedidos prontos</h3><p>Os 14 pedidos das aulas, da ideia do vídeo à mensagem pra vender vídeo como serviço. Copie, troque o tema e cole.</p></div>
+      <div class="peca revela"><img src="midia/bonus-2.jpg" alt="Capa do bônus Checklist antes de publicar" loading="lazy"><b>BÔNUS 2</b><h3>Checklist antes de publicar</h3><p>39 pontos pra conferir antes de subir, do roteiro ao envio. Erro pego aqui custa um minuto, não o vídeo.</p></div>
+      <div class="peca revela"><img src="midia/bonus-3.jpg" alt="Capa do bônus O guia das ferramentas" loading="lazy"><b>BÔNUS 3</b><h3>O guia das ferramentas</h3><p>Qual ferramenta usar em cada etapa, o que ela faz e quais têm opção grátis pra começar.</p></div>
     </div>
   </section>
 
@@ -335,43 +367,55 @@
     <div class="antesdepois">
       <div class="lado antes revela"><div class="rot">ANTES</div><p>Câmera, estúdio e uma equipe inteira.</p></div>
       <div class="seta revela">▶</div>
-      <div class="lado depois revela"><div class="rot">AGORA</div><p>Você sozinho, no computador de casa.</p></div>
+      <div class="lado depois revela"><div class="rot">AGORA</div><p>Você sozinho, no computador de casa, sem aparecer.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Faça a conta</h2>
+    <p class="chamada revela">Quanto custa ter um vídeo pronto sem saber fazer, e quanto custa aprender a fazer quantos quiser.</p>
+    <div class="regras">
+      <div class="regra vermelha revela"><h3>Pagar pra fazerem</h3><p>Você paga por vídeo, espera a entrega e depende de outra pessoa pra cada publicação. E no vídeo seguinte, paga de novo.</p></div>
+      <div class="regra vermelha revela"><h3>Aprender sozinho</h3><p>Semanas juntando tutorial solto, testando ferramenta e descobrindo a regra do YouTube só quando o vídeo perde a monetização.</p></div>
+      <div class="regra verde revela"><h3>Este curso</h3><p>R$ 97 uma vez só, pelas 11 aulas e os 3 bônus: menos de R$ 9 por aula. E as ferramentas que ele usa têm opção grátis pra começar.</p></div>
     </div>
   </section>
 
   <section>
     <div class="numeros">
       <div class="numero revela"><div class="valor" data-conta="11">11</div><div class="rot">aulas em vídeo</div></div>
-      <div class="numero revela"><div class="valor" data-conta="5">5</div><div class="rot">formatos de vídeo</div></div>
+      <div class="numero revela"><div class="valor" data-conta="3">3</div><div class="rot">bônus em PDF</div></div>
       <div class="numero revela"><div class="valor" data-conta="7">7</div><div class="rot">dias de garantia</div></div>
     </div>
   </section>
 
   <section>
-    <h2 class="tit revela">Combinado honesto</h2>
+    <h2 class="tit revela">Sem promessa milagrosa</h2>
     <div class="honesto revela">
-      <p>Ninguém garante views nem dinheiro, e este curso também não. O que ele te dá é um jeito de fazer bons vídeos com constância e de publicar dentro das regras. O resultado depende do seu assunto, do seu ritmo e de você.</p>
+      <p>Ninguém sério garante views nem dinheiro, e eu também não. O que você leva é um método pra fazer bons vídeos com constância e publicar dentro das regras, que é o que dá a um canal uma chance de verdade. O resto depende do seu assunto, do seu ritmo e de você.</p>
       <p class="pequeno">O curso ensina a usar ferramentas de IA que você mesmo escolhe. Não vem com o sistema nem com o jogo do Viral City.</p>
     </div>
   </section>
 
   <section id="oferta">
-    <h2 class="tit revela">Garanta o seu acesso</h2>
+    <h2 class="tit revela">Tudo o que você leva</h2>
     <div class="oferta revela">
       <div class="pequeno">Vídeos com IA: do zero à monetização</div>
       <div class="preco">R$ 97</div>
-      <div class="pequeno">pagamento único</div>
+      <div class="pequeno">pagamento único · menos de R$ 9 por aula</div>
       <ul>
-        <li>11 aulas em vídeo, em 2 módulos</li>
-        <li>Qualquer tipo de vídeo, não só animação</li>
-        <li>Os pedidos prontos pra usar com a IA em cada etapa</li>
-        <li>As regras pra publicar e monetizar</li>
+        <li><strong>11 aulas em vídeo</strong>, em 2 módulos: fazer o vídeo, e publicar e monetizar</li>
+        <li>5 formatos de vídeo longo e os cortes pra Shorts, Reels e TikTok</li>
+        <li>As regras de monetização conferidas nas páginas oficiais</li>
+        <li><strong>Bônus 1:</strong> os pedidos prontos de cada aula</li>
+        <li><strong>Bônus 2:</strong> o checklist antes de publicar</li>
+        <li><strong>Bônus 3:</strong> o guia das ferramentas, grátis e pagas</li>
       </ul>
       <!-- O link do checkout: troque LINK_DO_CHECKOUT pelo link da oferta na Kirvano. -->
       <a class="botao brilhar" href="LINK_DO_CHECKOUT?utm_source=instagram&utm_campaign=viralcity">Quero o curso</a>
       <div class="garantia">
         <svg viewBox="0 0 18 20" shape-rendering="crispEdges"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
-        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Não gostou, pede o reembolso e recebe o valor de volta.</span></div>
+        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Assista às aulas. Se não for pra você, pede o reembolso em até 7 dias e recebe o valor de volta. O risco fica comigo.</span></div>
       </div>
     </div>
   </section>
@@ -379,9 +423,11 @@
   <section>
     <h2 class="tit revela">Perguntas</h2>
     <div class="faq">
-      <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Você usa ferramentas de IA conversando em português, e o curso mostra o que pedir em cada etapa.</p></details>
-      <details class="revela"><summary>Preciso pagar ferramentas?</summary><p>Dá pra começar com as opções grátis que o curso mostra. As pagas aparecem como alternativa, pra quando você quiser.</p></details>
-      <details class="revela"><summary>Serve pro meu assunto?</summary><p>O método serve pra qualquer assunto. Na primeira parte do curso você escolhe o formato e o nicho que combinam com você.</p></details>
+      <details class="revela"><summary>Preciso aparecer no vídeo?</summary><p>Não. A voz é feita por IA e as imagens vêm de banco livre, de gerador ou de animação. Você não mostra o rosto nem grava a própria voz.</p></details>
+      <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Você usa ferramentas de IA conversando em português, e o curso mostra o que pedir em cada etapa. Os pedidos também vêm prontos no bônus 1.</p></details>
+      <details class="revela"><summary>Preciso pagar ferramentas?</summary><p>Dá pra começar com as opções grátis que o curso mostra. As pagas aparecem como alternativa, pra quando você quiser, e o bônus 3 diz qual é qual.</p></details>
+      <details class="revela"><summary>Serve pro meu assunto?</summary><p>O método serve pra qualquer assunto. Na aula 01 você escolhe o formato e o nicho, vendo se o assunto tem gente procurando e anunciante pagando.</p></details>
+      <details class="revela"><summary>Dá pra fazer pelo celular?</summary><p>As aulas você assiste no celular, e as ferramentas abrem no navegador. A montagem dá pra fazer no CapCut, que tem versão pro celular, mas no computador fica mais confortável.</p></details>
       <details class="revela"><summary>O curso vem com o sistema ou o jogo do Viral City?</summary><p>Não. O curso ensina o método de fazer vídeo com IA usando ferramentas que você mesmo escolhe.</p></details>
       <details class="revela"><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. Pede o reembolso e recebe o valor de volta.</p></details>
     </div>
@@ -390,7 +436,7 @@
 </main>
 
 <div class="barra-compra" id="barra">
-  <div class="txt">Vídeos com IA · <b>R$ 97</b> · 7 dias de garantia</div>
+  <div class="txt">11 aulas + 3 bônus · <b>R$ 97</b> · 7 dias de garantia</div>
   <a class="botao botao-pequeno" href="#oferta">Quero o curso</a>
 </div>
 
