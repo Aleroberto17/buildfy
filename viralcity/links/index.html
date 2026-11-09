@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Viral City · links</title>
+<meta name="description" content="Os links do Viral City: o curso de vídeos com IA, o apoio e o jogo.">
+<meta property="og:title" content="Viral City">
+<meta property="og:description" content="O curso de vídeos com IA, o apoio e o jogo, num lugar só.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b1d24">
+<link rel="icon" href="../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  /* As cores e as letras do site do Viral City (../estilo.css), numa página só de links. */
+  :root {
+    --fundo: #0b1d24;
+    --fundo-2: #0f2a33;
+    --fundo-3: #143843;
+    --linha: #1f4a56;
+    --laranja: #ff7a2f;
+    --ambar: #ffb238;
+    --amarelo: #ffd84d;
+    --branco: #ffffff;
+    --texto: #e6f0f2;
+    --texto-suave: #9fbcc3;
+    --pixel: "Press Start 2P", ui-monospace, monospace;
+    --corpo: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: var(--corpo);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; }
+
+  /* O céu do pôr do sol com o sol e a cidade em silhueta, atrás de tudo. */
+  .ceu {
+    position: fixed; inset: 0 0 auto; height: 340px; z-index: 0; pointer-events: none;
+    background: linear-gradient(180deg, #1d3c49 0%, #3a3f4a 38%, #a6533a 72%, #ff7a2f 100%);
+  }
+  .ceu::after {
+    content: ""; position: absolute; inset: auto 0 -1px; height: 60%;
+    background: linear-gradient(180deg, transparent, var(--fundo));
+  }
+  .sol {
+    position: absolute; left: 50%; bottom: 46px; width: 170px; height: 170px; margin-left: -85px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 45%, #fff3b0 0%, var(--amarelo) 40%, var(--ambar) 72%, var(--laranja) 100%);
+    box-shadow: 0 0 80px 20px rgba(255, 178, 56, .35);
+  }
+  .skyline { position: absolute; left: 0; right: 0; bottom: 34px; width: 100%; height: 110px; z-index: 1; }
+
+  main {
+    position: relative; z-index: 2;
+    max-width: 520px; margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: calc(150px + env(safe-area-inset-top, 0px)) calc(40px + env(safe-area-inset-bottom, 0px));
+    display: flex; flex-direction: column; align-items: center; gap: 28px;
+  }
+
+  .perfil { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+  .perfil img {
+    width: 104px; height: 104px; border-radius: 50%;
+    border: 4px solid var(--fundo); outline: 3px solid var(--amarelo);
+    image-rendering: pixelated; background: var(--fundo-2);
+  }
+  .perfil h1 {
+    margin: 4px 0 0; font-family: var(--pixel); font-weight: 400;
+    font-size: 22px; letter-spacing: .04em; color: var(--amarelo);
+    text-shadow: 3px 3px 0 #7a2f12;
+  }
+  .perfil p { margin: 0; max-width: 34ch; color: var(--texto-suave); font-size: 15px; line-height: 1.55; text-wrap: balance; }
+
+  .links { width: 100%; display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .link {
+    display: grid; grid-template-columns: 64px 1fr 22px; align-items: center; gap: 14px;
+    padding: 12px 16px 12px 12px; min-height: 88px;
+    background: var(--fundo-2); border: 2px solid var(--linha); border-radius: 14px;
+    color: var(--texto); text-decoration: none;
+    box-shadow: 0 4px 0 #061217;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .link:hover, .link:focus-visible { transform: translateY(-2px); border-color: var(--ambar); box-shadow: 0 6px 0 #061217; outline: none; }
+  .link:active { transform: translateY(2px); box-shadow: 0 1px 0 #061217; }
+  .link img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; image-rendering: pixelated; }
+  .link .texto { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .link strong { color: var(--branco); font-size: 17px; font-weight: 800; line-height: 1.25; }
+  .link span { color: var(--texto-suave); font-size: 14px; line-height: 1.4; }
+  .link svg { width: 22px; height: 22px; color: var(--ambar); }
+
+  /* O primeiro, o curso, em destaque. */
+  .link.destaque { background: linear-gradient(135deg, var(--laranja), var(--ambar)); border-color: var(--amarelo); box-shadow: 0 4px 0 #8a3a12; }
+  .link.destaque:hover, .link.destaque:focus-visible { border-color: var(--branco); box-shadow: 0 6px 0 #8a3a12; }
+  .link.destaque strong { color: #1a0d05; }
+  .link.destaque span { color: #3d1c08; }
+  .link.destaque svg { color: #1a0d05; }
+  .selo {
+    align-self: flex-start; display: inline-block; font-style: normal; margin-bottom: 2px; padding: 3px 8px; border-radius: 6px;
+    font-family: var(--pixel); font-size: 9px; letter-spacing: .04em; line-height: 1.4;
+    background: #1a0d05; color: var(--amarelo);
+  }
+
+  footer { color: var(--texto-suave); font-size: 13px; text-align: center; }
+  footer a { color: var(--amarelo); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (prefers-reduced-motion: reduce) { .link { transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="ceu" aria-hidden="true">
+  <div class="sol"></div>
+  <svg class="skyline" id="skyline" viewBox="0 0 320 60" preserveAspectRatio="xMidYMax slice"></svg>
+</div>
+
+<main>
+  <header class="perfil">
+    <img src="../img/logo.png" alt="Logo do Viral City" width="104" height="104">
+    <h1>VIRAL CITY</h1>
+    <p>Um jogo de construir um império na cidade enquanto agentes de IA produzem os vídeos das redes.</p>
+  </header>
+
+  <ul class="links">
+    <li>
+      <a class="link destaque" href="https://buildfy.tec.br/viralcity/curso/">
+        <img src="../img/clipes/agentes.jpg" alt="" width="64" height="64">
+        <div class="texto">
+          <em class="selo">CURSO</em>
+          <strong>Vídeos com IA: do zero à monetização</strong>
+          <span>11 aulas e 3 bônus, do roteiro à monetização</span>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </li>
+    <li>
+      <a class="link" href="https://buildfy.tec.br/viralcity/apoio/">
+        <img src="../img/clipes/cidade.jpg" alt="" width="64" height="64">
+        <div class="texto">
+          <strong>Ganhe um lugar na cidade</strong>
+          <span>Apoie o jogo e vire morador ou dono de loja</span>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </li>
+    <li>
+      <a class="link" href="https://buildfy.tec.br/viralcity/">
+        <img src="../img/clipes/escritorio.jpg" alt="" width="64" height="64">
+        <div class="texto">
+          <strong>Conheça o Viral City</strong>
+          <span>O jogo e o sistema, construídos em público</span>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </li>
+  </ul>
+
+  <footer>
+    <a href="https://www.instagram.com/viralcity.jogo/">@viralcity.jogo</a>
+  </footer>
+</main>
+
+<script>
+/* A cidade em silhueta, prédio por prédio, com janelas acesas, igual à do topo do site. */
+(function () {
+  var svg = document.getElementById("skyline");
+  if (!svg) return;
+  var ns = "http://www.w3.org/2000/svg", x = 0, s = 7;
+  function r(a) { s = (s * 9301 + 49297) % 233280; return a * s / 233280; }
+  var html = "";
+  while (x < 320) {
+    var w = 14 + Math.floor(r(18)), h = 16 + Math.floor(r(38));
+    html += '<rect x="' + x + '" y="' + (60 - h) + '" width="' + w + '" height="' + h + '" fill="#0b1d24"/>';
+    for (var jy = 60 - h + 4; jy < 56; jy += 6)
+      for (var jx = x + 3; jx < x + w - 3; jx += 5)
+        if (r(1) < 0.22) html += '<rect x="' + jx + '" y="' + jy + '" width="2" height="2" fill="#ffd84d" opacity=".75"/>';
+    x += w + 1;
+  }
+  svg.innerHTML = html;
+})();
+</script>
+</body>
+</html>
