@@ -43,9 +43,9 @@
   }
   img { display: block; max-width: 100%; }
 
-  /* O céu do pôr do sol com o sol e a cidade em silhueta, atrás de tudo. */
+  /* O céu do pôr do sol com o sol e a cidade em silhueta, atrás de tudo. Rola junto com a página: fixo, ficava atrás do texto. */
   .ceu {
-    position: fixed; inset: 0 0 auto; height: 340px; z-index: 0; pointer-events: none;
+    position: absolute; inset: 0 0 auto; height: 340px; z-index: 0; pointer-events: none;
     background: linear-gradient(180deg, #1d3c49 0%, #3a3f4a 38%, #a6533a 72%, #ff7a2f 100%);
   }
   .ceu::after {
