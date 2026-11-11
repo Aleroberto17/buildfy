@@ -29,7 +29,7 @@
 
   /* O COLETOR DA FÁBRICA (o painel do Viral City lê daqui): o resumo da visita a cada 10 s e na saída, e cada clique.
      Abrir uma página com ?eu=1 marca este navegador como do dono, e ele não é contado (?eu=0 desmarca). */
-  var COLETOR = "https://viralcity-metricas.ale-roberto-aragao2.workers.dev";
+  var COLETOR = "https://viralcity-metricas.viralcity-dados.workers.dev";
   try {
     if (q.get("eu") === "1") localStorage.setItem("vc_eu", "1");
     if (q.get("eu") === "0") localStorage.removeItem("vc_eu");
