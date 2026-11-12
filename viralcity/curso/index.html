@@ -196,6 +196,7 @@
   }
 </style>
 <script src="../medir.js" data-pagina="curso"></script>
+<script src="../vsl-player.js"></script>
 </head>
 <body>
 
@@ -452,9 +453,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
   // a VSL: começa muda; o botão do meio liga o som do começo
-  var vsl = document.getElementById("vsl"), som = document.getElementById("som");
-  vsl.play().catch(function () {});
-  som.addEventListener("click", function () { vsl.muted = false; vsl.loop = false; vsl.currentTime = 0; vsl.controls = true; som.hidden = true; vsl.play(); });
+  window.montarVSL(); // o player próprio (../vsl-player.js): pausar, velocidade até 1,5x e tela cheia, sem barra de tempo
 
   // a barra de compra aparece depois do herói e some em cima da oferta
   var barra = document.getElementById("barra"), heroi = document.querySelector(".heroi"), oferta = document.getElementById("oferta");

@@ -204,6 +204,7 @@
   }
 </style>
 <script src="../medir.js" data-pagina="fabrica"></script>
+<script src="../vsl-player.js"></script>
 </head>
 <body class="travada">
 
@@ -221,7 +222,7 @@
     <div class="brilho"></div>
     <div class="selo revela">FÁBRICA DE CONTEÚDO</div>
     <h1 class="revela">Seu canal com vídeo novo todo dia. <em>Sem gravar, sem editar, sem aparecer.</em></h1>
-    <p class="lead revela">É a fábrica que você vê no <b>@viralcity.jogo</b>, numa versão pra instalar no seu computador. Você escolhe o assunto. Ela pesquisa, escreve o roteiro, narra, monta, faz as thumbnails e deixa o vídeo pronto pro YouTube, pro Instagram e pro TikTok. Você só assiste e aprova.</p>
+    <p class="lead revela">Você escolhe o assunto. A Fábrica pesquisa, escreve, narra, monta e posta. <b>Você só aprova.</b></p>
     <div class="monitor revela">
       <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo de apresentação da Fábrica de Conteúdo"></video>
       <button class="som" id="som" type="button">▶ Toque pra ouvir</button>
@@ -230,7 +231,7 @@
     <div class="acao revela">
       <a class="botao brilhar comprar" href="#oferta" data-onde="heroi">Quero a Fábrica de Conteúdo</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_heroi">@viralcity.jogo</a> pra saber quando.</p>
-      <div class="confianca"><span>Preço de lançamento: R$ 397, em até 12x</span><span>2 canais do YouTube + 2 Instagram + 2 TikTok</span><span>7 dias de garantia</span><span>Nada vai pro ar sem o seu clique</span></div>
+      <div class="confianca"><span>R$ 397 em até 12x</span><span>YouTube, Instagram e TikTok</span><span>7 dias de garantia</span></div>
     </div>
   </section>
 
@@ -242,67 +243,55 @@
   </div>
 
   <section>
-    <h2 class="tit revela">O que mata um canal não é falta de ideia</h2>
-    <p class="chamada revela">É o trabalho. Pra sair <b>um</b> vídeo, alguém precisa pesquisar, escrever o roteiro, gravar a narração, caçar imagem que pode usar, editar, fazer a thumbnail, pensar no título, escrever a descrição e ainda cortar pro Reels e pro TikTok. Faz isso três vezes e o canal para. E canal parado não cresce.</p>
-    <div class="regras">
-      <div class="regra revela"><h3>Você tem o assunto</h3><p>Sabe sobre o que quer falar, mas não tem um dia inteiro livre pra cada vídeo.</p></div>
-      <div class="regra revela"><h3>Você não quer aparecer</h3><p>Nem a sua cara, nem a sua voz. Quer um canal que funcione sem depender de você na frente da câmera.</p></div>
-      <div class="regra revela"><h3>Você precisa de constância</h3><p>Um vídeo hoje, outro amanhã, e os cortes saindo nas redes todo dia, sem você viver dentro de um editor.</p></div>
-    </div>
-    <p class="chamada revela" style="margin-top:28px">A Fábrica de Conteúdo faz esse trabalho inteiro por você. <b>O seu trabalho passa a ser um só: assistir e aprovar.</b></p>
+    <h2 class="tit revela">Canal não morre por falta de ideia. Morre de cansaço.</h2>
+    <p class="chamada revela">Pesquisa, roteiro, narração, imagem, edição, thumbnail, título, corte pro Reels. Todo santo dia. Ninguém aguenta.</p>
+    <p class="chamada revela"><b>A Fábrica aguenta. Você só aprova.</b></p>
   </section>
 
   <section>
-    <h2 class="tit revela">Uma equipe inteira, dentro do seu computador</h2>
-    <p class="chamada revela">Cada etapa que um canal grande paga pra alguém fazer, a Fábrica faz sozinha. No YouTube, o formato é o documentário narrado: um vídeo longo, contado como uma história, com fonte pra cada fato.</p>
+    <h2 class="tit revela">Uma equipe inteira trabalhando no seu computador</h2>
     <ol class="etapas">
-      <li class="etapa revela"><div class="bola">1</div><h3>O pesquisador</h3><p>Procura o tema na web e guarda a fonte de cada fato.</p></li>
-      <li class="etapa revela"><div class="bola">2</div><h3>O roteirista</h3><p>Escreve a narração como uma história, com gancho no começo, no tom do seu canal.</p></li>
-      <li class="etapa revela"><div class="bola">3</div><h3>O revisor</h3><p>Confere cada frase contra a pesquisa. Fato inventado não passa.</p></li>
-      <li class="etapa revela"><div class="bola">4</div><h3>O narrador</h3><p>Grava a voz com o Gemini, do Google, na voz e no ritmo que você escolher. Você não fala nada.</p></li>
-      <li class="etapa revela"><div class="bola">5</div><h3>O pesquisador de imagens</h3><p>Escolhe, olhando uma por uma, imagens de licença livre, com o crédito certo na descrição.</p></li>
-      <li class="etapa revela"><div class="bola">6</div><h3>O editor</h3><p>Monta voz e imagem com movimento e legenda. Música de fundo, se você puser as suas na pasta de músicas.</p></li>
-      <li class="etapa revela"><div class="bola">7</div><h3>O designer e o social media</h3><p>5 thumbnails pra você escolher, opções de título, descrição com capítulos e as tags.</p></li>
-      <li class="etapa revela"><div class="bola">8</div><h3>O cortador</h3><p>3 cortes em pé de cada vídeo, com gancho e legenda grande, pros seus perfis de Instagram e TikTok.</p></li>
+      <li class="etapa revela"><div class="bola">1</div><h3>Pesquisador</h3><p>Acha os fatos.</p></li>
+      <li class="etapa revela"><div class="bola">2</div><h3>Roteirista</h3><p>Escreve a história que prende.</p></li>
+      <li class="etapa revela"><div class="bola">3</div><h3>Revisor</h3><p>Corta o que não é verdade.</p></li>
+      <li class="etapa revela"><div class="bola">4</div><h3>Narrador</h3><p>Grava a voz. Você não fala nada.</p></li>
+      <li class="etapa revela"><div class="bola">5</div><h3>Caçador de imagens</h3><p>Escolhe uma por uma.</p></li>
+      <li class="etapa revela"><div class="bola">6</div><h3>Editor</h3><p>Monta com movimento e legenda.</p></li>
+      <li class="etapa revela"><div class="bola">7</div><h3>Designer</h3><p>5 thumbnails e os títulos.</p></li>
+      <li class="etapa revela"><div class="bola">8</div><h3>Cortador</h3><p>3 cortes pro Reels e pro TikTok.</p></li>
     </ol>
   </section>
 
   <section>
-    <h2 class="tit revela">Um tema vira quatro posts</h2>
-    <p class="chamada revela">Você escreve uma frase. Sai um vídeo longo pro YouTube e três cortes em pé pro Instagram e pro TikTok, do mesmo roteiro, com a mesma voz.</p>
+    <h2 class="tit revela">Uma frase sua. Quatro posts prontos.</h2>
     <div class="sai">
       <div class="revela">
-        <div class="monitor"><video src="img/video-cafe.mp4" poster="img/video-cafe-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho do vídeo longo de teste sobre o café"></video></div>
+        <div class="monitor"><video src="img/video-cafe.mp4" poster="img/video-cafe-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho de um vídeo longo feito pela Fábrica"></video></div>
         <div class="legenda-pixel">O VÍDEO LONGO, PRO YOUTUBE</div>
       </div>
       <div class="revela">
-        <div class="fone"><video src="img/corte.mp4" poster="img/corte-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho de um corte em pé do vídeo de teste sobre o café"></video></div>
-        <div class="legenda-pixel">UM DOS 3 CORTES EM PÉ</div>
+        <div class="fone"><video src="img/corte.mp4" poster="img/corte-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho de um corte em pé feito pela Fábrica"></video></div>
+        <div class="legenda-pixel">+ 3 CORTES EM PÉ</div>
       </div>
     </div>
-    <p class="pequeno revela" style="text-align:center;margin:18px auto 0;max-width:640px">Trechos de um vídeo de teste sobre o café e de um dos cortes dele, sem som aqui na página. O assunto é seu: a Fábrica faz o vídeo do tema que você pedir.</p>
   </section>
 
   <section>
-    <h2 class="tit revela">E se você só quer Reels e TikTok?</h2>
-    <p class="chamada revela">Também dá. Cada perfil de Instagram e de TikTok pode ter a produção dele, com o assunto dele, ou receber os cortes de um dos seus canais do YouTube.</p>
+    <h2 class="tit revela">Só quer Reels e TikTok? Também faz.</h2>
     <div class="modos">
-      <div class="modo proprio revela"><h3>Sem vínculo: os vídeos curtos dele</h3><p>O perfil vira uma produção própria, com o assunto dele: um fato ou uma história que se sustenta sozinha, de 25 a 55 segundos, em pé. A Fábrica pesquisa, escreve com o gancho na primeira frase, confere contra a pesquisa, narra, escolhe as imagens, monta e escreve a legenda com hashtags. Você revisa e aprova.</p></div>
-      <div class="modo ligado revela"><h3>Com vínculo: os cortes de um canal</h3><p>Ligado a um canal do YouTube, o perfil não produz nada: recebe os 3 cortes em pé de cada vídeo aprovado do canal. Dois perfis podem receber os cortes do mesmo canal, por exemplo um Instagram e um TikTok.</p></div>
+      <div class="modo proprio revela"><h3>Produção própria</h3><p>Vídeos curtos de 25 a 55 segundos, do tema ao post pronto.</p></div>
+      <div class="modo ligado revela"><h3>Ligado ao seu canal</h3><p>Recebe os 3 cortes de cada vídeo do YouTube.</p></div>
     </div>
   </section>
 
   <section id="telas">
-    <h2 class="tit revela">Não é promessa. É o programa.</h2>
-    <p class="chamada revela">Essas são as telas de verdade. O programa roda no seu computador e abre no navegador, como um site: escrever o tema, clicar em Produzir e, depois, assistir e aprovar.</p>
+    <h2 class="tit revela">Não é promessa. É a tela.</h2>
     <div class="telas">
 
       <div class="tela-linha">
         <div class="tela-texto revela">
           <p class="etiqueta-tela">PRODUÇÃO DE UM CANAL</p>
           <h3>Uma frase e um clique</h3>
-          <p>Cada vídeo aparece aqui com a thumbnail e a situação dele. Sem ideia de tema? O botão Sugerir temas propõe assuntos pro seu canal.</p>
-          <ul><li>Se parar no meio, continua de onde parou</li><li>As 6 produções no menu da esquerda, cada uma com a sua lista</li></ul>
         </div>
         <a class="janela revela" href="img/producao.jpg" target="_blank" rel="noopener" data-medir="tela_producao">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Produção · canal do YouTube</b></div>
@@ -314,8 +303,6 @@
         <div class="tela-texto revela">
           <p class="etiqueta-tela">REVISÃO</p>
           <h3>Você assiste antes de tudo</h3>
-          <p>O vídeo pronto fica esperando a sua revisão. Você assiste, escolhe o horário e clica em Aprovar e agendar no YouTube. Não gostou? Rejeitar.</p>
-          <ul><li>Sobe privado e abre sozinho no horário escolhido</li><li>Os cortes vão pros perfis ligados ao canal</li></ul>
         </div>
         <a class="janela revela" href="img/revisao.jpg" target="_blank" rel="noopener" data-medir="tela_revisao">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Revisão do vídeo</b></div>
@@ -327,7 +314,6 @@
         <div class="tela-texto revela">
           <p class="etiqueta-tela">THUMBNAIL E TÍTULO</p>
           <h3>5 thumbnails e os títulos já prontos</h3>
-          <p>Marque a thumbnail que sobe com o vídeo e escolha um dos títulos, ou escreva o seu. A descrição já vem com capítulos, fontes e créditos das imagens, e as tags também.</p>
         </div>
         <a class="janela revela" href="img/thumbs-titulos.jpg" target="_blank" rel="noopener" data-medir="tela_thumbs">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Thumbnail e título</b></div>
@@ -339,7 +325,6 @@
         <div class="tela-texto revela">
           <p class="etiqueta-tela">CORTES EM PÉ</p>
           <h3>3 cortes por vídeo, prontos pras redes</h3>
-          <p>Ao aprovar o vídeo, os cortes entram na fila dos perfis ligados ao canal, um por dia em cada conta, no horário de cada perfil, a partir do dia em que o vídeo abre.</p>
         </div>
         <a class="janela revela" href="img/cortes.jpg" target="_blank" rel="noopener" data-medir="tela_cortes">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Cortes em pé</b></div>
@@ -351,7 +336,6 @@
         <div class="tela-texto revela">
           <p class="etiqueta-tela">PRODUÇÃO DE UM PERFIL</p>
           <h3>Os vídeos curtos de um perfil</h3>
-          <p>No perfil sem vínculo, você escreve o fato do vídeo numa frase, ou pede sugestões, e a Fábrica faz o vídeo curto em pé, de 25 a 55 segundos.</p>
         </div>
         <a class="janela revela" href="img/perfil-producao.jpg" target="_blank" rel="noopener" data-medir="tela_perfil">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Produção · perfil do Instagram</b></div>
@@ -363,7 +347,6 @@
         <div class="tela-texto revela">
           <p class="etiqueta-tela">REVISÃO DO CURTO</p>
           <h3>Assista, ajuste a legenda e aprove</h3>
-          <p>O vídeo curto vem com a legenda do post e as hashtags, que você pode mudar. Aprovar põe o vídeo na fila do perfil, no horário que você escolher.</p>
         </div>
         <a class="janela revela" href="img/curto.jpg" target="_blank" rel="noopener" data-medir="tela_curto">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Revisão do vídeo curto</b></div>
@@ -375,7 +358,6 @@
         <div class="tela-texto revela">
           <p class="etiqueta-tela">VÍNCULO</p>
           <h3>Você decide o que cada perfil faz</h3>
-          <p>Na Configuração do perfil, o Vínculo diz se ele é uma produção própria ou se recebe os cortes de um canal. E ali ficam o assunto, o público, o tom do narrador, a voz, os dias e a hora de postar, e o maestro.</p>
         </div>
         <a class="janela revela" href="img/vinculo.jpg" target="_blank" rel="noopener" data-medir="tela_vinculo">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Configuração · Vínculo</b></div>
@@ -387,7 +369,6 @@
         <div class="tela-texto revela">
           <p class="etiqueta-tela">CONTAS</p>
           <h3>As 6 produções numa tela só</h3>
-          <p>A conta de cada canal e de cada perfil, o vínculo dos perfis e a chave da voz, tudo no mesmo lugar.</p>
         </div>
         <a class="janela revela" href="img/contas.jpg" target="_blank" rel="noopener" data-medir="tela_contas">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Contas</b></div>
@@ -399,26 +380,18 @@
   </section>
 
   <section>
-    <h2 class="tit revela">Você aprova. Ela agenda e posta.</h2>
-    <p class="chamada revela">O controle é seu: nada sai do seu computador sem o seu clique. Depois dele, você não precisa abrir o YouTube, o Instagram nem o TikTok pra postar.</p>
-    <ol class="fluxo">
-      <li class="revela"><b>1</b><strong>Produz</strong><span>Você pede, ou o maestro produz no horário dele.</span></li>
-      <li class="revela"><b>2</b><strong>Você revisa</strong><span>Assiste, escolhe a thumbnail, o título e o horário.</span></li>
-      <li class="revela vira"><b>3</b><strong>Você aprova</strong><span>Só aqui algo sai do seu computador.</span></li>
-      <li class="revela"><b>4</b><strong>Ela agenda</strong><span>O vídeo no YouTube, e os curtos e os cortes na fila de cada perfil.</span></li>
-    </ol>
+    <h2 class="tit revela">Você aprova. Ela posta.</h2>
     <div class="redes">
-      <div class="rede yt revela"><h3>YouTube</h3><p>O vídeo sobe privado, com o título e a thumbnail marcados, e abre sozinho no horário escolhido.</p></div>
-      <div class="rede ig revela"><h3>Instagram</h3><p>Um post por dia em cada perfil. O vídeo sai sozinho na hora marcada, com o programa aberto no seu computador.</p></div>
-      <div class="rede tt revela"><h3>TikTok</h3><p>Um por dia em cada perfil. O vídeo chega como rascunho na caixa de entrada do app, e você publica pelo celular.</p></div>
+      <div class="rede yt revela"><h3>YouTube</h3><p>Agendado, com título e thumbnail.</p></div>
+      <div class="rede ig revela"><h3>Instagram</h3><p>Posta sozinha na hora marcada, com o PC ligado.</p></div>
+      <div class="rede tt revela"><h3>TikTok</h3><p>Cai no seu app, pronto pra postar.</p></div>
     </div>
   </section>
 
   <section class="escritorio">
     <div class="texto revela">
-      <h2 class="tit" style="text-align:left">E você vê a sua equipe trabalhando</h2>
-      <p>A Fábrica tem um escritório em pixel art, o mesmo que aparece nos meus vídeos. Cada produção tem a sua sala e o seu agente, e você vê, ao vivo, quem está pesquisando, escrevendo, gravando a voz ou montando o seu vídeo.</p>
-      <p>O agente anda até o posto da etapa que está fazendo. Quando não tem vídeo pra fazer, vai pra sala de jogos ou de descanso. Você dá zoom, arrasta, clica pra seguir um agente e, no modo construção, muda, tira e põe móveis.</p>
+      <h2 class="tit" style="text-align:left">E você vê eles trabalhando.</h2>
+      <p>Cada produção tem a sua sala e o seu agente. Você acompanha ao vivo.</p>
       <ul class="postos">
         <li><b>PESQUISA</b>na estante</li>
         <li><b>ROTEIRO</b>na mesa</li>
@@ -430,64 +403,40 @@
       <div class="monitor">
         <video src="img/escritorio.mp4" poster="img/escritorio-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O escritório dos agentes da Fábrica de Conteúdo"></video>
       </div>
-      <div class="legenda-pixel">O ESCRITÓRIO, COM AS 6 SALAS DE TRABALHO</div>
+      <div class="legenda-pixel">O SEU ESCRITÓRIO</div>
     </div>
   </section>
 
   <section>
-    <h2 class="tit revela">Uma compra, seis produções</h2>
+    <h2 class="tit revela">6 produções numa compra só</h2>
     <div class="numeros-licenca">
       <div class="numero revela"><div class="valor">2</div><div class="rot">canais do YouTube</div></div>
       <div class="numero revela"><div class="valor">2</div><div class="rot">perfis do Instagram</div></div>
       <div class="numero revela"><div class="valor">2</div><div class="rot">perfis do TikTok</div></div>
     </div>
-    <p class="nota-licenca revela">Dois canais do YouTube de assuntos diferentes, e quatro perfis nas redes, cada um com o assunto, a voz, o horário e o agente dele. Comece com um só e ligue os outros quando quiser.</p>
-  </section>
-
-  <section id="precisa">
-    <h2 class="tit revela">O que você precisa</h2>
-    <p class="chamada revela">A Fábrica roda com as suas contas, no seu computador: os canais e os vídeos são seus, e ninguém fica no meio. Antes de comprar, confira se você tem, ou pode ter, tudo isso.</p>
-    <ul class="precisa">
-      <li class="revela"><div class="ic">PC</div><div><strong>Um computador com Windows 10 ou 11</strong><span>O programa é pra Windows. Não roda no Mac nem no celular.</span></div></li>
-      <li class="revela"><div class="ic">IA</div><div><strong>A assinatura do Claude, com o Claude Code instalado</strong><span>É ela que pesquisa e escreve, com o seu login. O plano Pro serve pra começar; quanto mais vídeos por dia, maior o plano que você vai precisar.</span><br><span class="custo">PAGA À PARTE, DIRETO NA ANTHROPIC</span></div></li>
-      <li class="revela"><div class="ic">VOZ</div><div><strong>Uma chave grátis do Gemini</strong><span>Tirada no Google AI Studio, pra narração. A cota grátis tem limite por dia, e você pode colar mais de uma chave.</span><br><span class="custo">GRÁTIS</span></div></li>
-      <li class="revela"><div class="ic">NET</div><div><strong>Internet e o programa aberto</strong><span>Pra produzir, publicar a fila do Instagram e conferir a licença.</span></div></li>
-    </ul>
-  </section>
-
-  <section>
-    <h2 class="tit revela">O que eu não vou te prometer</h2>
-    <div class="honesto revela">
-      <p>Eu não vou te prometer views, inscritos nem dinheiro. Quem promete isso está mentindo: depende do seu assunto, do seu canal e do algoritmo. O que eu te entrego é o que trava quase todo mundo: <b>o vídeo pronto, todo dia, sem você gastar o dia nele.</b></p>
-      <p>Você revisa cada vídeo antes de aprovar, e a decisão do que vai pro ar é sua.</p>
-      <p class="pequeno">A licença é pessoal e intransferível. A sua cópia do programa é pessoal, ligada à sua licença e ao seu computador. Trocar de computador ou de conta é pelo suporte.</p>
-    </div>
   </section>
 
   <section id="oferta">
-    <h2 class="tit revela">Tudo o que você leva hoje</h2>
+    <h2 class="tit revela">Tudo isso por R$ 1,09 por dia</h2>
     <div class="oferta revela">
-      <div class="pequeno">Fábrica de Conteúdo · preço de lançamento</div>
+      <div class="pequeno">preço de lançamento</div>
       <div class="preco">R$ 397</div>
       <div class="pequeno">em até 12x no cartão · 1 ano de acesso</div>
-      <p class="pequeno" style="margin:10px auto 0;max-width:480px">Um ano inteiro com um programa que pesquisa, escreve, narra, monta e agenda os seus vídeos todos os dias. Sem pagar editor, roteirista nem narrador por vídeo.</p>
       <ul>
-        <li><strong>O programa Fábrica de Conteúdo</strong>, pra Windows, num arquivo só, baixado do seu link pessoal</li>
-        <li><strong>Licença pra 6 produções</strong>: 2 canais do YouTube, 2 perfis do Instagram e 2 do TikTok</li>
-        <li>No YouTube: o vídeo longo, com 5 thumbnails, títulos, descrição, tags e 3 cortes em pé</li>
-        <li>No Instagram e no TikTok: os vídeos curtos de cada perfil, ou os cortes de um canal</li>
-        <li>O maestro, que produz um vídeo por dia sozinho, se você ligar</li>
+        <li><strong>A Fábrica de Conteúdo</strong>, com 6 produções</li>
+        <li>Vídeo longo pro YouTube, com thumbnails, títulos e tags</li>
+        <li>Cortes e vídeos curtos pro Instagram e pro TikTok</li>
+        <li>O maestro: um vídeo por dia, sozinho</li>
         <li>O escritório dos agentes</li>
-        <li>O curso da Fábrica: instalar, configurar as contas e usar no dia a dia, passo a passo</li>
-        <li><strong>1 ano de acesso</strong>, com todas as atualizações desse período, baixadas pelo mesmo link, sem perder os vídeos nem as contas</li>
-        <li>Suporte pra trocar de computador ou de conta</li>
+        <li>O curso da Fábrica, passo a passo</li>
+        <li>1 ano de acesso, com todas as atualizações</li>
       </ul>
       <a class="botao brilhar comprar" href="#oferta" data-onde="oferta">Quero a Fábrica de Conteúdo</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_oferta">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:12px 0 0">Não inclui a assinatura do Claude, que é paga à parte. <a href="#precisa" data-medir="ver_requisitos">Ver o que você precisa</a></p>
+      <p class="pequeno" style="margin:12px 0 0">Pra Windows. Usa a sua assinatura do Claude.</p>
       <div class="garantia">
         <svg viewBox="0 0 18 20" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
-        <div><strong>7 dias de garantia. O risco é meu.</strong><br><span class="pequeno">Mudou de ideia? Pede o reembolso em até 7 dias e recebe todo o valor de volta. A licença é desligada no reembolso.</span></div>
+        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Mudou de ideia, devolvo o seu dinheiro.</span></div>
       </div>
     </div>
   </section>
@@ -495,28 +444,22 @@
   <section>
     <h2 class="tit revela">Perguntas</h2>
     <div class="faq">
-      <details class="revela"><summary>Preciso aparecer no vídeo ou gravar a minha voz?</summary><p>Não. A narração é feita com a voz do Gemini, do Google, e as imagens vêm do Wikimedia Commons, com licença livre.</p></details>
-      <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Você usa o painel no navegador: escreve o tema, clica em Produzir, revisa e aprova. A parte de conectar as contas é feita uma vez, seguindo o curso da Fábrica, que mostra cada tela.</p></details>
-      <details class="revela"><summary>Quanto custa pra manter rodando?</summary><p>A Fábrica sai por R$ 397 no preço de lançamento, em até 12x no cartão, com 1 ano de acesso. À parte, você paga a sua assinatura do Claude. A voz do Gemini tem uso grátis, com um limite por dia.</p></details>
-      <details class="revela"><summary>Serve pro meu assunto?</summary><p>Os vídeos longos e os curtos são narrados com imagens de licença livre, então funcionam melhor em assuntos que têm imagem no Wikimedia Commons: curiosidades, como as coisas funcionam, lugares, natureza e invenções. Assunto sem imagem livre rende vídeos mais fracos.</p></details>
-      <details class="revela"><summary>Ela publica sozinha?</summary><p>Só o que você aprovou. O vídeo longo vai agendado pro YouTube. No Instagram, o vídeo curto ou o corte sai na hora marcada, com o programa aberto no seu computador. No TikTok, ele chega como rascunho na caixa de entrada do app, e você publica pelo celular. É um post por dia em cada conta.</p></details>
-      <details class="revela"><summary>Preciso usar as 6 produções?</summary><p>Não. Você usa só as que quiser: um canal do YouTube sozinho, por exemplo, ou só perfis com vídeos curtos. Cada perfil faz os vídeos curtos dele ou recebe os cortes de um canal, e isso se troca na Configuração.</p></details>
-      <details class="revela"><summary>Quantos vídeos por dia?</summary><p>Você produz quando quiser, e o maestro pode fazer um por dia em cada canal e em cada perfil com vídeos curtos. O ritmo de verdade depende dos limites do seu plano do Claude e da cota do Gemini: com várias produções ligadas todo dia, você vai precisar de um plano maior do Claude.</p></details>
-      <details class="revela"><summary>Funciona no Mac ou no celular?</summary><p>Não. O programa é pra Windows 10 ou 11.</p></details>
-      <details class="revela"><summary>Como recebo o programa e as atualizações?</summary><p>Você baixa um arquivo só, o FabricaDeConteudo.exe, pelo seu link pessoal de download. Quando sai uma versão nova durante o seu ano de acesso, você baixa de novo pelo mesmo link, sem pagar nada, e os seus vídeos e as suas contas continuam lá. A versão antiga para de funcionar alguns dias depois de sair a nova, então vale baixar logo.</p></details>
-      <details class="revela"><summary>O acesso é pra sempre?</summary><p>Não. O acesso é de 1 ano a partir da compra, com todas as atualizações desse período. Perto do fim, o programa avisa, e você renova pelo mesmo link da compra pra continuar, com os seus vídeos e contas guardados.</p></details>
-      <details class="revela"><summary>Posso usar em dois computadores ou passar pra outra pessoa?</summary><p>Não. A licença é pessoal e intransferível, e a sua cópia do programa é ligada à sua licença e ao seu computador. Se você trocar de computador, o suporte solta a licença pra você ativar no novo.</p></details>
-      <details class="revela"><summary>Vem com o jogo do Viral City?</summary><p>Não. Vem a Fábrica de Conteúdo, com o painel e o escritório dos agentes.</p></details>
-      <details class="revela"><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. Pede o reembolso e recebe o valor de volta.</p></details>
+      <details class="revela"><summary>Preciso aparecer ou gravar a minha voz?</summary><p>Não. Quem narra é a Fábrica.</p></details>
+      <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Escreve o tema e clica. O curso mostra o resto.</p></details>
+      <details class="revela"><summary>Tem algum outro custo?</summary><p>Só a sua assinatura do Claude. A voz é grátis.</p></details>
+      <details class="revela"><summary>Serve pro meu assunto?</summary><p>Curiosidades, como as coisas funcionam, lugares, natureza, invenções. Se tem imagem, ela faz.</p></details>
+      <details class="revela"><summary>Funciona no Mac ou no celular?</summary><p>Não. Só Windows.</p></details>
+      <details class="revela"><summary>O acesso é pra sempre?</summary><p>É de 1 ano, com todas as atualizações. Depois, é só renovar.</p></details>
+      <details class="revela"><summary>E se eu não gostar?</summary><p>7 dias de garantia. Devolvo o seu dinheiro.</p></details>
     </div>
   </section>
+
   <section>
-    <h2 class="tit revela">Daqui a um mês, onde você quer estar?</h2>
-    <p class="chamada revela">Você pode continuar adiando o canal porque não tem tempo de fazer vídeo. Ou pode ter uma fábrica trabalhando por você todo dia, e passar o seu tempo só escolhendo assunto e aprovando.</p>
+    <h2 class="tit revela">Daqui a 30 dias, você pode ter 30 vídeos no ar. Ou continuar sem nenhum.</h2>
     <div class="acao revela" style="text-align:center">
-      <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica de Conteúdo</a>
+      <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_fecho">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:10px 0 0">Preço de lançamento: R$ 397, em até 12x · 1 ano de acesso · 7 dias de garantia</p>
+      <p class="pequeno" style="margin:10px 0 0">R$ 397 em até 12x · 7 dias de garantia</p>
     </div>
   </section>
 </main>
@@ -583,9 +526,6 @@ document.addEventListener("DOMContentLoaded", function () {
     vids.forEach(function (v) { ov.observe(v); });
   }
   // a VSL: começa muda; o botão do meio liga o som do começo
-  var vsl = document.getElementById("vsl"), som = document.getElementById("som");
-  vsl.play().catch(function () {});
-  som.addEventListener("click", function () { vsl.muted = false; vsl.loop = false; vsl.currentTime = 0; vsl.controls = true; som.hidden = true; vsl.play(); });
 
   // A TRAVA: o resto da página e os botões só aparecem quando a VSL, com som, chega na oferta. Quem já chegou uma vez (guardado
   // no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
@@ -600,7 +540,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.ScrollTrigger) window.ScrollTrigger.refresh();
   }
   if (!OFERTA_EM || jaViu() || /[?&]tudo=1/.test(location.search)) liberar(false);
-  vsl.addEventListener("timeupdate", function () { if (OFERTA_EM && !vsl.muted && vsl.currentTime >= OFERTA_EM) liberar(true); });
+  // o player próprio (../vsl-player.js): sem barra de tempo e sem avançar; libera quando a pessoa chega na oferta assistindo com som
+  window.montarVSL({ aoChegar: OFERTA_EM, quandoChegar: function () { liberar(true); } });
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
