@@ -21,6 +21,12 @@
     ".vsl-tela-cheia:fullscreen .vsl-barra { left: 0; right: 0; bottom: 0; }",
     ".vsl-tela-cheia:fullscreen::before { display: none; }",
     "@media (hover: none) { .vsl-ligada .vsl-barra { opacity: 1; } }",
+    // a tela cheia "da página", pro iPhone, que só tem a tela cheia do próprio vídeo (com os controles e o tempo dele)
+    ".vsl-cheia-pagina { position: fixed !important; inset: 0 !important; z-index: 9999 !important; max-width: none !important; width: 100vw !important; height: 100vh !important; height: 100dvh !important;",
+    "  margin: 0 !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; background: #000 !important; display: flex !important; align-items: center; justify-content: center; }",
+    ".vsl-cheia-pagina video { width: 100% !important; height: 100% !important; aspect-ratio: auto !important; object-fit: contain !important; }",
+    ".vsl-cheia-pagina .vsl-barra { left: 0; right: 0; bottom: env(safe-area-inset-bottom, 0px); }",
+    "html.vsl-travado, html.vsl-travado body { overflow: hidden !important; }",
   ].join("\n");
   var estilo = document.createElement("style");
   estilo.textContent = css;
@@ -69,13 +75,32 @@
       vsl.playbackRate = VELOCIDADES[i];
       bVel.textContent = String(VELOCIDADES[i]).replace(".", ",") + "x";
     });
+    // Tela cheia: a do navegador quando ele deixa pôr a caixa inteira (com os nossos botões); senão (iPhone), a caixa cobre a tela,
+    // e a tela cheia do próprio vídeo nunca é usada, porque ela traz de volta o tempo e a barra de avançar.
+    function cheiaDaPagina(ligar) {
+      caixa.classList.toggle("vsl-cheia-pagina", ligar);
+      document.documentElement.classList.toggle("vsl-travado", ligar);
+      bCheia.textContent = ligar ? "✕" : "⛶";
+    }
     bCheia.addEventListener("click", function () {
       var doc = document;
+      if (caixa.classList.contains("vsl-cheia-pagina")) { cheiaDaPagina(false); return; }
       if (doc.fullscreenElement || doc.webkitFullscreenElement) { (doc.exitFullscreen || doc.webkitExitFullscreen).call(doc); return; }
-      if (caixa.requestFullscreen) caixa.requestFullscreen().catch(function () {});
-      else if (caixa.webkitRequestFullscreen) caixa.webkitRequestFullscreen();
-      else if (vsl.webkitEnterFullscreen) vsl.webkitEnterFullscreen(); // iPhone: tela cheia do próprio vídeo (o avanço continua bloqueado abaixo)
+      // no celular, sempre a tela cheia da página: a do sistema pode trazer de volta os controles do próprio vídeo
+      var celular = window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+      var pedir = !celular && (caixa.requestFullscreen || caixa.webkitRequestFullscreen);
+      if (pedir) {
+        try {
+          var r = pedir.call(caixa);
+          if (r && r.catch) r.catch(function () { cheiaDaPagina(true); });
+          return;
+        } catch (e) { /* cai na tela cheia da página */ }
+      }
+      cheiaDaPagina(true);
     });
+    // se o aparelho ainda assim abrir a tela cheia do próprio vídeo, sai dela na hora
+    vsl.addEventListener("webkitbeginfullscreen", function () { try { vsl.webkitExitFullscreen(); } catch (e) {} cheiaDaPagina(true); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && caixa.classList.contains("vsl-cheia-pagina")) cheiaDaPagina(false); });
 
     // sem avançar: o vídeo nunca passa do ponto mais longe que já tocou de verdade
     vsl.addEventListener("timeupdate", function () {
