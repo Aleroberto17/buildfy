@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fábrica de Conteúdo</title>
+<meta name="description" content="A Fábrica de Conteúdo pesquisa, escreve, narra e monta, no seu computador, os vídeos de 2 canais do YouTube e de 2 perfis do Instagram e 2 do TikTok. Você revisa e aprova, ela agenda. R$ 397, pagamento único.">
+<meta property="og:title" content="Fábrica de Conteúdo">
+<meta property="og:description" content="Vídeos pro YouTube, Instagram e TikTok, feitos no seu computador. Você revisa e aprova, ela faz o resto.">
+<meta property="og:image" content="img/revisao.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b1d24">
+<link rel="icon" href="../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  /* A página da Fábrica de Conteúdo: o mesmo jeito da página do curso (../curso/), com as telas do programa. */
+  .pagina { max-width: var(--largura); margin: 0 auto; padding: 0 16px 120px; }
+  section { padding: 56px 0 0; scroll-margin-top: 70px; }
+  .selo { display: inline-block; font-family: var(--pixel); font-size: 10px; color: #1a0f05; background: var(--ambar); border: 0; padding: 6px 10px; margin-bottom: 18px; }
+  h2.tit { font-family: var(--pixel); font-weight: 400; font-size: clamp(15px, 3.4vw, 22px); color: var(--amarelo); text-align: center; margin: 0 0 12px; line-height: 1.5; }
+  .chamada { text-align: center; max-width: 680px; margin: 0 auto 28px; color: var(--texto-suave); display: block; }
+  .pequeno { font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- herói ---------- */
+  .heroi { text-align: center; padding: 40px 0 0; position: relative; overflow: visible; }
+  .heroi h1 { font-family: var(--pixel); font-weight: 400; font-size: clamp(20px, 4.8vw, 36px); line-height: 1.45; color: var(--amarelo); margin: 0 auto 18px; max-width: 900px; text-shadow: 4px 4px 0 #3a1a07; }
+  .heroi h1 em { font-style: normal; color: var(--laranja); }
+  .heroi .lead { max-width: 720px; margin: 0 auto 26px; font-size: 18px; }
+  .brilho { position: absolute; inset: -40px 0 auto; height: 520px; z-index: -1; pointer-events: none;
+    background: radial-gradient(60% 55% at 50% 30%, rgba(255,122,47,.20), transparent 70%); }
+  .monitor { position: relative; max-width: 860px; margin: 0 auto; padding: 14px; background: #061218; border: 4px solid var(--linha); box-shadow: 10px 10px 0 #05242c, 0 0 80px rgba(255,178,56,.12); }
+  .monitor::before { content: ""; position: absolute; left: 50%; bottom: -26px; transform: translateX(-50%); width: 160px; height: 22px; background: var(--linha); }
+  .monitor video { width: 100%; aspect-ratio: 16 / 9; background: #000; object-fit: cover; }
+  .monitor .rotulo-monitor { position: absolute; left: 24px; top: 24px; font-family: var(--pixel); font-size: 8px; line-height: 1.5; color: #1a0f05; background: var(--amarelo); padding: 5px 7px; }
+  .acao { margin-top: 46px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .acao .botao { font-size: 13px; padding: 18px 26px; }
+  .confianca { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font-size: 14px; color: var(--texto-suave); }
+  .confianca span::before { content: "■ "; color: var(--ambar); }
+  .aviso-breve { font-size: 14px; color: var(--texto-suave); max-width: 46ch; margin: 0; }
+  .aviso-breve[hidden] { display: none; }
+  .botao.breve { background: var(--fundo-3); color: var(--texto-suave); border-color: var(--linha); box-shadow: 4px 4px 0 #05242c; cursor: default; }
+  .botao.breve:hover, .botao.breve:active { transform: none; box-shadow: 4px 4px 0 #05242c; }
+
+  /* ---------- faixa que corre ---------- */
+  .faixa { margin: 56px -16px 0; background: var(--ambar); color: #1a0f05; overflow: hidden; border-top: 3px solid #1a0f05; border-bottom: 3px solid #1a0f05; transform: rotate(-1.2deg); }
+  .faixa .trilho { display: flex; gap: 40px; width: max-content; padding: 12px 0; font-family: var(--pixel); font-size: 12px; animation: correr 30s linear infinite; }
+  .faixa .trilho span::after { content: "✦"; margin-left: 40px; }
+  @keyframes correr { to { transform: translateX(-50%); } }
+
+  /* ---------- cartões de três ---------- */
+  .regras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .regra { background: var(--fundo-2); border: 3px solid var(--linha); border-top-width: 8px; border-top-color: var(--ambar); padding: 18px; }
+  .regra h3 { margin: 0 0 6px; font-size: 16px; color: var(--branco); }
+  .regra p { margin: 0; font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- as etapas ---------- */
+  .etapas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: etapa; list-style: none; padding: 0; margin: 0; }
+  .etapa { background: var(--fundo-2); border: 3px solid var(--linha); padding: 16px 14px; position: relative; transition: border-color .2s, transform .2s; }
+  .etapa:hover { border-color: var(--ambar); transform: translateY(-4px); }
+  .etapa .bola { width: 46px; height: 46px; display: grid; place-items: center; font-family: var(--pixel); font-size: 14px; margin-bottom: 12px;
+    color: #1a0f05; background: var(--amarelo); border: 3px solid #1a0f05; box-shadow: 3px 3px 0 var(--laranja); }
+  .etapa h3 { font-size: 16px; margin: 0 0 4px; color: var(--branco); }
+  .etapa p { margin: 0; font-size: 14px; color: var(--texto-suave); line-height: 1.5; }
+
+  /* ---------- o que sai: o vídeo e o corte ---------- */
+  .sai { display: grid; grid-template-columns: 1.7fr 1fr; gap: 24px; align-items: center; }
+  .sai .monitor { margin: 0; }
+  .sai .monitor::before { display: none; }
+  .fone { width: 100%; max-width: 230px; margin: 0 auto; padding: 6px; background: #061218; border: 3px solid var(--ambar); border-radius: 18px; box-shadow: 6px 6px 0 #05242c; }
+  .fone video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 12px; background: #000; }
+  .legenda-pixel { font-family: var(--pixel); font-size: 8px; color: var(--texto-suave); text-align: center; padding: 10px 0 2px; line-height: 1.6; }
+
+  /* ---------- as telas do programa ---------- */
+  .telas { display: grid; gap: 44px; }
+  .tela-linha { display: grid; grid-template-columns: 1fr 1.6fr; gap: 28px; align-items: center; }
+  .tela-linha:nth-child(even) .tela-texto { order: 2; }
+  .tela-texto .etiqueta-tela { font-family: var(--pixel); font-size: 10px; color: var(--laranja); margin: 0 0 10px; }
+  .tela-texto h3 { margin: 0 0 8px; font-size: 21px; color: var(--branco); line-height: 1.3; }
+  .tela-texto p { margin: 0 0 10px; color: var(--texto); }
+  .tela-texto ul { margin: 0; padding: 0; list-style: none; }
+  .tela-texto li { padding: 4px 0 4px 22px; position: relative; font-size: 15px; color: var(--texto-suave); }
+  .tela-texto li::before { content: ""; position: absolute; left: 0; top: 12px; width: 10px; height: 10px; background: var(--ambar); }
+  .janela { display: block; margin: 0; background: #0a1419; border: 3px solid var(--linha); box-shadow: 8px 8px 0 #05242c; overflow: hidden; text-decoration: none; transition: border-color .2s; }
+  .janela:hover { border-color: var(--ambar); }
+  .janela .barra { display: flex; gap: 7px; align-items: center; padding: 9px 12px; background: var(--fundo-3); }
+  .janela .barra i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .janela .barra b { margin-left: 8px; font-size: 12px; font-weight: 500; color: var(--texto-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .janela img { width: 100%; height: auto; }
+
+  /* ---------- o fluxo da aprovação ---------- */
+  .fluxo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 980px; margin: 0 auto; list-style: none; padding: 0; }
+  .fluxo li { background: var(--fundo-2); border: 3px solid var(--linha); padding: 16px; position: relative; }
+  .fluxo li b { display: block; font-family: var(--pixel); font-size: 10px; color: var(--ambar); margin-bottom: 8px; }
+  .fluxo li strong { display: block; margin-bottom: 4px; }
+  .fluxo li span { font-size: 14px; color: var(--texto-suave); }
+  .fluxo li.vira { border-color: #3f9a52; }
+  .redes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 980px; margin: 18px auto 0; }
+  .rede { background: var(--fundo-2); border: 3px solid var(--linha); border-left-width: 8px; padding: 14px 16px; }
+  .rede.yt { border-left-color: #ff5a4a; } .rede.ig { border-left-color: #d36ac2; } .rede.tt { border-left-color: #5fd4d8; }
+  .rede h3 { margin: 0 0 4px; font-size: 16px; color: var(--branco); }
+  .rede p { margin: 0; font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- o escritório ---------- */
+  .escritorio { display: grid; grid-template-columns: 1fr 1.5fr; gap: 28px; align-items: center; }
+  .escritorio .texto p { margin: 0 0 12px; }
+  .postos { list-style: none; padding: 0; margin: 16px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .postos li { background: var(--fundo-2); border: 2px solid var(--linha); padding: 10px 12px; font-size: 14px; color: var(--texto-suave); }
+  .postos li b { display: block; font-family: var(--pixel); font-size: 9px; color: var(--amarelo); margin-bottom: 4px; line-height: 1.5; }
+  .escritorio .monitor::before { display: none; }
+
+  /* ---------- números da licença ---------- */
+  .modos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 860px; margin: 0 auto; }
+  .modo { background: var(--fundo-2); border: 3px solid var(--linha); border-top-width: 8px; padding: 18px; }
+  .modo.proprio { border-top-color: var(--ambar); } .modo.ligado { border-top-color: #5fd4d8; }
+  .modo h3 { margin: 0 0 6px; font-size: 17px; color: var(--branco); }
+  .modo p { margin: 0; font-size: 15px; color: var(--texto-suave); }
+  .numeros-licenca { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 860px; margin: 0 auto; }
+  .numero { text-align: center; padding: 22px 10px; background: var(--fundo-2); border: 3px solid var(--linha); }
+  .numero .valor { font-family: var(--pixel); font-size: clamp(26px, 6vw, 40px); color: var(--amarelo); }
+  .numero .rot { font-size: 14px; color: var(--texto-suave); margin-top: 8px; }
+  .nota-licenca { max-width: 760px; margin: 18px auto 0; text-align: center; color: var(--texto-suave); font-size: 15px; }
+
+  /* ---------- o que você precisa ---------- */
+  .precisa { list-style: none; padding: 0; margin: 0 auto; max-width: 860px; display: grid; gap: 10px; }
+  .precisa li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; padding: 14px; background: var(--fundo-2); border: 2px solid var(--linha); }
+  .precisa .ic { width: 44px; height: 44px; display: grid; place-items: center; font-family: var(--pixel); font-size: 12px; color: #1a0f05; background: var(--ambar); border: 2px solid #1a0f05; }
+  .precisa strong { display: block; font-size: 16px; margin-bottom: 2px; }
+  .precisa span { color: var(--texto-suave); font-size: 15px; }
+  .precisa .custo { display: inline-block; margin-top: 6px; font-family: var(--pixel); font-size: 8px; line-height: 1.6; padding: 3px 6px; border: 1px solid var(--linha); color: var(--ambar); }
+
+  .honesto { max-width: 760px; margin: 0 auto; padding: 18px 20px; border: 3px solid var(--ambar); background: var(--fundo-2); }
+  .honesto p { margin: 0 0 10px; } .honesto p:last-child { margin: 0; }
+
+  /* ---------- a oferta ---------- */
+  .oferta { position: relative; max-width: 560px; margin: 0 auto; text-align: center; background: var(--fundo-2); border: 3px solid var(--laranja); box-shadow: 8px 8px 0 var(--laranja); padding: 32px 24px 28px; }
+  .oferta .preco { font-family: var(--pixel); font-size: 42px; color: var(--amarelo); margin: 12px 0 6px; text-shadow: 4px 4px 0 #3a1a07; }
+  .oferta ul { text-align: left; margin: 20px 0; padding-left: 0; list-style: none; }
+  .oferta li { padding: 6px 0 6px 28px; position: relative; }
+  .oferta li::before { content: ""; position: absolute; left: 0; top: 12px; width: 14px; height: 14px; background: var(--ambar); box-shadow: 2px 2px 0 var(--laranja); }
+  .oferta .botao { width: 100%; font-size: 13px; padding: 18px; }
+  .oferta .aviso-breve { margin: 12px auto 0; }
+  .garantia { display: flex; gap: 14px; align-items: center; text-align: left; margin-top: 20px; padding-top: 18px; border-top: 2px dashed var(--linha); }
+  .garantia svg { flex: none; width: 54px; height: 60px; }
+  .brilhar { animation: brilho 2.4s ease-in-out infinite; }
+  @keyframes brilho { 50% { box-shadow: 4px 4px 0 var(--laranja), 0 0 28px rgba(255,216,77,.55); } }
+
+  .faq { max-width: 760px; margin: 0 auto; }
+  .faq details { background: var(--fundo-2); border: 2px solid var(--linha); margin: 8px 0; padding: 12px 16px; }
+  .faq summary { cursor: pointer; font-weight: 700; color: var(--branco); }
+  .faq p { margin: 10px 0 0; color: var(--texto-suave); }
+
+  /* ---------- barra fixa de compra ---------- */
+  .barra-compra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: center; gap: 14px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(6,18,24,.96); border-top: 3px solid var(--ambar);
+    transform: translateY(110%); transition: transform .35s ease; }
+  .barra-compra.ver { transform: none; }
+  .barra-compra .txt { font-size: 14px; } .barra-compra .txt b { font-family: var(--pixel); font-size: 12px; color: var(--amarelo); }
+
+  /* A fonte de pixel não tem as maiúsculas acentuadas (o "É" sai minúsculo): os rótulos com acento vão na Inter. */
+  .selo, .etiqueta-tela, .legenda-pixel, .rotulo-monitor, .precisa .custo { font-family: var(--corpo) !important; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+  .selo { font-size: 13px; } .etiqueta-tela { font-size: 13px !important; } .legenda-pixel { font-size: 11px !important; }
+  .rotulo-monitor { font-size: 11px !important; } .precisa .custo { font-size: 10px !important; letter-spacing: 1px; }
+
+  /* só com as animações carregadas */
+  .anima .revela { opacity: 0; transform: translateY(28px); }
+
+  @media (max-width: 860px) {
+    .regras, .redes, .modos { grid-template-columns: 1fr; }
+    .etapas { grid-template-columns: repeat(2, 1fr); }
+    .sai, .escritorio, .tela-linha { grid-template-columns: 1fr; }
+    .tela-linha:nth-child(even) .tela-texto { order: 0; }
+    .fluxo { grid-template-columns: repeat(2, 1fr); }
+    .barra-compra .txt { display: none; }
+    .fone { max-width: 210px; }
+  }
+  @media (max-width: 480px) {
+    .etapa { padding: 14px 12px; }
+    .etapa .bola { width: 40px; height: 40px; font-size: 12px; }
+    .etapa h3 { font-size: 15px; }
+    .postos { grid-template-columns: 1fr; }
+    .numeros-licenca { gap: 8px; }
+    .numero { padding: 16px 6px; }
+    .numero .rot { font-size: 13px; }
+  }
+  @media (max-width: 380px) { .etapas, .fluxo { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) {
+    .faixa .trilho, .brilhar { animation: none; }
+  }
+</style>
+<script src="../medir.js" data-pagina="fabrica"></script>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="../">
+    <img src="../img/logo.png" alt="" width="40" height="40">
+    <span>VIRAL CITY</span>
+  </a>
+  <a class="botao botao-pequeno" href="#oferta" data-medir="ver_oferta">Quero a Fábrica</a>
+</header>
+
+<main class="pagina">
+
+  <section class="heroi">
+    <div class="brilho"></div>
+    <div class="selo revela">FÁBRICA DE CONTEÚDO</div>
+    <h1 class="revela">Vídeos pro YouTube, Instagram e TikTok, feitos <em>no seu computador</em></h1>
+    <p class="lead revela">Você escolhe o assunto. A Fábrica de Conteúdo pesquisa, escreve, narra, escolhe as imagens e monta os vídeos dos seus canais do YouTube e dos seus perfis de Instagram e TikTok. Você revisa e aprova. Nada é publicado sem o seu clique.</p>
+    <div class="monitor revela">
+      <video src="img/video-exemplo.mp4" poster="img/video-exemplo-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Trecho de um vídeo de teste feito pela Fábrica de Conteúdo"></video>
+      <span class="rotulo-monitor">FEITO PELA FÁBRICA</span>
+    </div>
+    <div class="acao revela">
+      <a class="botao brilhar comprar" href="#oferta" data-onde="heroi">Quero a Fábrica de Conteúdo</a>
+      <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_heroi">@viralcity.jogo</a> pra saber quando.</p>
+      <div class="confianca"><span>Pagamento único de R$ 397</span><span>2 canais do YouTube, 2 perfis do Instagram e 2 do TikTok</span><span>Roda no seu PC com Windows</span><span>Nada sai sem você aprovar</span></div>
+      <p class="pequeno" style="margin:0">Acima, um trecho de um vídeo de teste feito pelo programa.</p>
+    </div>
+  </section>
+
+  <div class="faixa" aria-hidden="true">
+    <div class="trilho">
+      <span>PESQUISA</span><span>ROTEIRO</span><span>VOZ</span><span>IMAGENS</span><span>MONTAGEM</span><span>THUMBNAILS</span><span>REELS E TIKTOK</span><span>AGENDAMENTO</span>
+      <span>PESQUISA</span><span>ROTEIRO</span><span>VOZ</span><span>IMAGENS</span><span>MONTAGEM</span><span>THUMBNAILS</span><span>REELS E TIKTOK</span><span>AGENDAMENTO</span>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="tit revela">Isso é pra você se...</h2>
+    <p class="chamada revela">Você tem um assunto pra um canal ou um perfil, mas não tem tempo de pesquisar, gravar, editar e publicar um vídeo atrás do outro.</p>
+    <div class="regras">
+      <div class="regra revela"><h3>Quer um canal sem aparecer</h3><p>Sem mostrar o rosto e sem gravar a própria voz. A narração é feita pela voz do Gemini, do Google.</p></div>
+      <div class="regra revela"><h3>Não quer passar o dia editando</h3><p>A pesquisa, o roteiro, a montagem e o pacote de publicação ficam com o programa. O seu trabalho é revisar e decidir.</p></div>
+      <div class="regra revela"><h3>Quer constância</h3><p>Você pede um vídeo quando quiser, ou liga o maestro: ele produz um por dia, no horário que você escolher, e deixa esperando a sua revisão.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">O que a Fábrica faz em cada vídeo do YouTube</h2>
+    <p class="chamada revela">No YouTube, o formato é o documentário narrado com imagens: um vídeo longo, contado como uma história, com fonte pra cada fato.</p>
+    <ol class="etapas">
+      <li class="etapa revela"><div class="bola">1</div><h3>Pesquisa</h3><p>Procura o tema na web e guarda as fontes.</p></li>
+      <li class="etapa revela"><div class="bola">2</div><h3>Roteiro</h3><p>Escreve a narração contada como história, no tom do seu canal.</p></li>
+      <li class="etapa revela"><div class="bola">3</div><h3>Revisão</h3><p>Confere o roteiro contra a pesquisa, pra não sair fato inventado.</p></li>
+      <li class="etapa revela"><div class="bola">4</div><h3>Narração</h3><p>Grava a voz com o Gemini, do Google, na voz e na velocidade que você escolher.</p></li>
+      <li class="etapa revela"><div class="bola">5</div><h3>Imagens</h3><p>Escolhe, olhando cada uma, imagens de licença livre do Wikimedia Commons, com o crédito na descrição.</p></li>
+      <li class="etapa revela"><div class="bola">6</div><h3>Montagem</h3><p>Junta a voz e as imagens, com legenda se você quiser. Música de fundo, se você puser as suas na pasta de músicas do programa.</p></li>
+      <li class="etapa revela"><div class="bola">7</div><h3>Pacote</h3><p>5 thumbnails, opções de título, descrição com capítulos, fontes e créditos, e as tags.</p></li>
+      <li class="etapa revela"><div class="bola">8</div><h3>Cortes em pé</h3><p>3 cortes de 30 a 55 segundos, com gancho e legenda, pros perfis de Instagram e TikTok ligados ao canal.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2 class="tit revela">O que sai do outro lado</h2>
+    <p class="chamada revela">Um vídeo longo pro YouTube e três cortes em pé, feitos do mesmo roteiro, com a mesma voz e as mesmas imagens.</p>
+    <div class="sai">
+      <div class="revela">
+        <div class="monitor"><video src="img/video-cafe.mp4" poster="img/video-cafe-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho do vídeo longo de teste sobre o café"></video></div>
+        <div class="legenda-pixel">O VÍDEO LONGO, PRO YOUTUBE</div>
+      </div>
+      <div class="revela">
+        <div class="fone"><video src="img/corte.mp4" poster="img/corte-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho de um corte em pé do vídeo de teste sobre o café"></video></div>
+        <div class="legenda-pixel">UM DOS 3 CORTES EM PÉ</div>
+      </div>
+    </div>
+    <p class="pequeno revela" style="text-align:center;margin:18px auto 0;max-width:640px">Trechos de um vídeo de teste sobre o café e de um dos cortes dele, sem som aqui na página. O assunto é seu: a Fábrica faz o vídeo do tema que você pedir.</p>
+  </section>
+
+  <section>
+    <h2 class="tit revela">E os perfis do Instagram e do TikTok</h2>
+    <p class="chamada revela">Cada perfil escolhe o que faz: os vídeos curtos dele, ou os cortes de um dos seus canais do YouTube.</p>
+    <div class="modos">
+      <div class="modo proprio revela"><h3>Sem vínculo: os vídeos curtos dele</h3><p>O perfil vira uma produção própria, com o assunto dele: um fato ou uma história que se sustenta sozinha, de 25 a 55 segundos, em pé. A Fábrica pesquisa, escreve com o gancho na primeira frase, confere contra a pesquisa, narra, escolhe as imagens, monta e escreve a legenda com hashtags. Você revisa e aprova.</p></div>
+      <div class="modo ligado revela"><h3>Com vínculo: os cortes de um canal</h3><p>Ligado a um canal do YouTube, o perfil não produz nada: recebe os 3 cortes em pé de cada vídeo aprovado do canal. Dois perfis podem receber os cortes do mesmo canal, por exemplo um Instagram e um TikTok.</p></div>
+    </div>
+  </section>
+
+  <section id="telas">
+    <h2 class="tit revela">Por dentro do programa</h2>
+    <p class="chamada revela">O programa roda no seu computador e abre no navegador, como um site. Essas são as telas de verdade.</p>
+    <div class="telas">
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">PRODUÇÃO DE UM CANAL</p>
+          <h3>Escreva o tema numa frase e clique em Produzir</h3>
+          <p>Cada vídeo aparece aqui com a thumbnail e a situação dele. Sem ideia de tema? O botão Sugerir temas propõe assuntos pro seu canal.</p>
+          <ul><li>Se parar no meio, continua de onde parou</li><li>As 6 produções no menu da esquerda, cada uma com a sua lista</li></ul>
+        </div>
+        <a class="janela revela" href="img/producao.jpg" target="_blank" rel="noopener" data-medir="tela_producao">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Produção · canal do YouTube</b></div>
+          <picture><source srcset="img/producao.webp" type="image/webp"><img src="img/producao.jpg" alt="Tela de Produção de um canal do YouTube na Fábrica de Conteúdo, com o campo do tema e um vídeo esperando revisão" width="1600" height="756" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">REVISÃO</p>
+          <h3>Assista, e só então decida</h3>
+          <p>O vídeo pronto fica esperando a sua revisão. Você assiste, escolhe o horário e clica em Aprovar e agendar no YouTube. Não gostou? Rejeitar.</p>
+          <ul><li>Sobe privado e abre sozinho no horário escolhido</li><li>Os cortes vão pros perfis ligados ao canal</li></ul>
+        </div>
+        <a class="janela revela" href="img/revisao.jpg" target="_blank" rel="noopener" data-medir="tela_revisao">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Revisão do vídeo</b></div>
+          <picture><source srcset="img/revisao.webp" type="image/webp"><img src="img/revisao.jpg" alt="Tela de revisão de um vídeo do YouTube, com o player, o horário de publicação e os botões de aprovar e rejeitar" width="1600" height="856" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">THUMBNAIL E TÍTULO</p>
+          <h3>5 thumbnails e várias opções de título</h3>
+          <p>Marque a thumbnail que sobe com o vídeo e escolha um dos títulos, ou escreva o seu. A descrição já vem com capítulos, fontes e créditos das imagens, e as tags também.</p>
+        </div>
+        <a class="janela revela" href="img/thumbs-titulos.jpg" target="_blank" rel="noopener" data-medir="tela_thumbs">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Thumbnail e título</b></div>
+          <picture><source srcset="img/thumbs-titulos.webp" type="image/webp"><img src="img/thumbs-titulos.jpg" alt="As 5 opções de thumbnail e as opções de título de um vídeo" width="1320" height="945" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">CORTES EM PÉ</p>
+          <h3>3 cortes por vídeo, prontos pras redes</h3>
+          <p>Ao aprovar o vídeo, os cortes entram na fila dos perfis ligados ao canal, um por dia em cada conta, no horário de cada perfil, a partir do dia em que o vídeo abre.</p>
+        </div>
+        <a class="janela revela" href="img/cortes.jpg" target="_blank" rel="noopener" data-medir="tela_cortes">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Cortes em pé</b></div>
+          <picture><source srcset="img/cortes.webp" type="image/webp"><img src="img/cortes.jpg" alt="Os três cortes em pé de um vídeo de teste sobre o café, com o gancho no alto" width="1073" height="652" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">PRODUÇÃO DE UM PERFIL</p>
+          <h3>Os vídeos curtos de um perfil</h3>
+          <p>No perfil sem vínculo, você escreve o fato do vídeo numa frase, ou pede sugestões, e a Fábrica faz o vídeo curto em pé, de 25 a 55 segundos.</p>
+        </div>
+        <a class="janela revela" href="img/perfil-producao.jpg" target="_blank" rel="noopener" data-medir="tela_perfil">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Produção · perfil do Instagram</b></div>
+          <picture><source srcset="img/perfil-producao.webp" type="image/webp"><img src="img/perfil-producao.jpg" alt="Tela de Produção de um perfil do Instagram, com o campo do fato e um vídeo curto esperando revisão" width="1600" height="911" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">REVISÃO DO CURTO</p>
+          <h3>Assista, ajuste a legenda e aprove</h3>
+          <p>O vídeo curto vem com a legenda do post e as hashtags, que você pode mudar. Aprovar põe o vídeo na fila do perfil, no horário que você escolher.</p>
+        </div>
+        <a class="janela revela" href="img/curto.jpg" target="_blank" rel="noopener" data-medir="tela_curto">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Revisão do vídeo curto</b></div>
+          <picture><source srcset="img/curto.webp" type="image/webp"><img src="img/curto.jpg" alt="Tela de revisão de um vídeo curto, com o vídeo em pé, a legenda do post e os botões de aprovar e rejeitar" width="1600" height="1056" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">VÍNCULO</p>
+          <h3>Você decide o que cada perfil faz</h3>
+          <p>Na Configuração do perfil, o Vínculo diz se ele é uma produção própria ou se recebe os cortes de um canal. E ali ficam o assunto, o público, o tom do narrador, a voz, os dias e a hora de postar, e o maestro.</p>
+        </div>
+        <a class="janela revela" href="img/vinculo.jpg" target="_blank" rel="noopener" data-medir="tela_vinculo">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Configuração · Vínculo</b></div>
+          <picture><source srcset="img/vinculo.webp" type="image/webp"><img src="img/vinculo.jpg" alt="Configuração de um perfil do Instagram, com o Vínculo escolhido pra receber os cortes de um canal" width="1600" height="800" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">CONTAS</p>
+          <h3>As 6 produções numa tela só</h3>
+          <p>A conta de cada canal e de cada perfil, o vínculo dos perfis e a chave da voz, tudo no mesmo lugar.</p>
+        </div>
+        <a class="janela revela" href="img/contas.jpg" target="_blank" rel="noopener" data-medir="tela_contas">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Contas</b></div>
+          <picture><source srcset="img/contas.webp" type="image/webp"><img src="img/contas.jpg" alt="Tela de Contas, com os 2 canais do YouTube, os 2 perfis do Instagram e os 2 do TikTok e o vínculo de cada perfil" width="1600" height="1000" loading="lazy"></picture>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Você aprova, ela agenda</h2>
+    <p class="chamada revela">O clique que publica é sempre seu. Depois dele, cada rede recebe o que é dela.</p>
+    <ol class="fluxo">
+      <li class="revela"><b>1</b><strong>Produz</strong><span>Você pede, ou o maestro produz no horário dele.</span></li>
+      <li class="revela"><b>2</b><strong>Você revisa</strong><span>Assiste, escolhe a thumbnail, o título e o horário.</span></li>
+      <li class="revela vira"><b>3</b><strong>Você aprova</strong><span>Só aqui algo sai do seu computador.</span></li>
+      <li class="revela"><b>4</b><strong>Ela agenda</strong><span>O vídeo no YouTube, e os curtos e os cortes na fila de cada perfil.</span></li>
+    </ol>
+    <div class="redes">
+      <div class="rede yt revela"><h3>YouTube</h3><p>O vídeo sobe privado, com o título e a thumbnail marcados, e abre sozinho no horário escolhido.</p></div>
+      <div class="rede ig revela"><h3>Instagram</h3><p>Um post por dia em cada perfil. O vídeo sai sozinho na hora marcada, com o programa aberto no seu computador.</p></div>
+      <div class="rede tt revela"><h3>TikTok</h3><p>Um por dia em cada perfil. O vídeo chega como rascunho na caixa de entrada do app, e você publica pelo celular.</p></div>
+    </div>
+  </section>
+
+  <section class="escritorio">
+    <div class="texto revela">
+      <h2 class="tit" style="text-align:left">O escritório dos agentes</h2>
+      <p>Além do painel, a Fábrica tem um escritório em pixel art. Cada uma das 6 produções tem a sua sala e o seu agente, e você vê quem está fazendo o quê, agora.</p>
+      <p>O agente anda até o posto da etapa que está fazendo. Quando não tem vídeo pra fazer, vai pra sala de jogos ou de descanso. Você dá zoom, arrasta, clica pra seguir um agente e, no modo construção, muda, tira e põe móveis.</p>
+      <ul class="postos">
+        <li><b>PESQUISA</b>na estante</li>
+        <li><b>ROTEIRO</b>na mesa</li>
+        <li><b>VOZ</b>na cabine</li>
+        <li><b>THUMBNAIL</b>no cavalete</li>
+      </ul>
+    </div>
+    <div class="revela">
+      <div class="monitor">
+        <video src="img/escritorio.mp4" poster="img/escritorio-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O escritório dos agentes da Fábrica de Conteúdo"></video>
+      </div>
+      <div class="legenda-pixel">O ESCRITÓRIO, COM AS 6 SALAS DE TRABALHO</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Uma licença, 6 produções</h2>
+    <div class="numeros-licenca">
+      <div class="numero revela"><div class="valor">2</div><div class="rot">canais do YouTube</div></div>
+      <div class="numero revela"><div class="valor">2</div><div class="rot">perfis do Instagram</div></div>
+      <div class="numero revela"><div class="valor">2</div><div class="rot">perfis do TikTok</div></div>
+    </div>
+    <p class="nota-licenca revela">Cada produção tem a sua configuração, a sua conta, a sua lista de vídeos, a sua fila, a sua sala e o seu agente. Cada perfil faz os vídeos curtos dele ou recebe os cortes de um canal, e posta um por dia. Use só as que quiser.</p>
+  </section>
+
+  <section id="precisa">
+    <h2 class="tit revela">O que você precisa</h2>
+    <p class="chamada revela">A Fábrica roda com as suas contas, no seu computador. Antes de comprar, confira se você tem ou pode ter tudo isso.</p>
+    <ul class="precisa">
+      <li class="revela"><div class="ic">PC</div><div><strong>Um computador com Windows 10 ou 11</strong><span>O programa é pra Windows. Não roda no Mac nem no celular.</span></div></li>
+      <li class="revela"><div class="ic">IA</div><div><strong>A assinatura do Claude, com o Claude Code instalado</strong><span>É ela que pesquisa e escreve, com o seu login. O plano Pro serve pra começar; quanto mais vídeos por dia, maior o plano que você vai precisar.</span><br><span class="custo">PAGA À PARTE, DIRETO NA ANTHROPIC</span></div></li>
+      <li class="revela"><div class="ic">VOZ</div><div><strong>Uma chave grátis do Gemini</strong><span>Tirada no Google AI Studio, pra narração. A cota grátis tem limite por dia, e você pode colar mais de uma chave.</span><br><span class="custo">GRÁTIS</span></div></li>
+      <li class="revela"><div class="ic">YT</div><div><strong>Um projeto seu no Google Cloud, com a API do YouTube</strong><span>É o que liga o seu canal ao programa. O curso da Fábrica mostra o passo a passo. Pra subir thumbnail personalizada, o YouTube pede o canal com telefone verificado.</span><br><span class="custo">GRÁTIS</span></div></li>
+      <li class="revela"><div class="ic">IG</div><div><strong>Pros perfis do Instagram: conta profissional e um app seu na Meta</strong><span>Só se você for usar o Instagram. O acesso de cada perfil é colado no programa, e o curso da Fábrica mostra como tirar.</span></div></li>
+      <li class="revela"><div class="ic">TT</div><div><strong>Pros perfis do TikTok: um app seu no TikTok for Developers</strong><span>Só se você for usar o TikTok. Os vídeos chegam como rascunho na caixa de entrada do app, e você publica pelo celular.</span></div></li>
+      <li class="revela"><div class="ic">NET</div><div><strong>Internet e o programa aberto</strong><span>Pra produzir, publicar a fila do Instagram e conferir a licença.</span></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Sem promessa milagrosa</h2>
+    <div class="honesto revela">
+      <p>A Fábrica de Conteúdo produz e agenda os vídeos. Ela não garante views, inscritos nem monetização: isso depende do seu assunto, do seu canal, da sua constância e do YouTube.</p>
+      <p>Você revisa cada vídeo antes de aprovar, e a decisão do que vai pro ar é sua.</p>
+      <p class="pequeno">A licença é pessoal e intransferível. A sua cópia do programa é pessoal, ligada à sua licença e ao seu computador. Trocar de computador ou de conta é pelo suporte.</p>
+    </div>
+  </section>
+
+  <section id="oferta">
+    <h2 class="tit revela">Tudo o que você leva</h2>
+    <div class="oferta revela">
+      <div class="pequeno">Fábrica de Conteúdo</div>
+      <div class="preco">R$ 397</div>
+      <div class="pequeno">pagamento único</div>
+      <ul>
+        <li><strong>O programa Fábrica de Conteúdo</strong>, pra Windows, num arquivo só, baixado do seu link pessoal</li>
+        <li><strong>Licença pra 6 produções</strong>: 2 canais do YouTube, 2 perfis do Instagram e 2 do TikTok</li>
+        <li>No YouTube: o vídeo longo, com 5 thumbnails, títulos, descrição, tags e 3 cortes em pé</li>
+        <li>No Instagram e no TikTok: os vídeos curtos de cada perfil, ou os cortes de um canal</li>
+        <li>O maestro, que produz um vídeo por dia sozinho, se você ligar</li>
+        <li>O escritório dos agentes</li>
+        <li>O curso da Fábrica: instalar, configurar as contas e usar no dia a dia, passo a passo</li>
+        <li>Atualizações grátis, baixadas pelo mesmo link, sem perder os vídeos nem as contas</li>
+        <li>Suporte pra trocar de computador ou de conta</li>
+      </ul>
+      <a class="botao brilhar comprar" href="#oferta" data-onde="oferta">Quero a Fábrica de Conteúdo</a>
+      <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_oferta">@viralcity.jogo</a> pra saber quando.</p>
+      <p class="pequeno" style="margin:12px 0 0">Não inclui a assinatura do Claude, que é paga à parte. <a href="#precisa" data-medir="ver_requisitos">Ver o que você precisa</a></p>
+      <div class="garantia">
+        <svg viewBox="0 0 18 20" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
+        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Se não for pra você, pede o reembolso em até 7 dias e recebe o valor de volta. A licença é desligada no reembolso.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Perguntas</h2>
+    <div class="faq">
+      <details class="revela"><summary>Preciso aparecer no vídeo ou gravar a minha voz?</summary><p>Não. A narração é feita com a voz do Gemini, do Google, e as imagens vêm do Wikimedia Commons, com licença livre.</p></details>
+      <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Você usa o painel no navegador: escreve o tema, clica em Produzir, revisa e aprova. A parte de conectar as contas é feita uma vez, seguindo o curso da Fábrica, que mostra cada tela.</p></details>
+      <details class="revela"><summary>Quanto custa pra manter rodando?</summary><p>O programa é pagamento único. À parte, você paga a sua assinatura do Claude. A chave do Gemini e o projeto do Google Cloud pro YouTube têm uso grátis, com os limites de cada um.</p></details>
+      <details class="revela"><summary>Serve pro meu assunto?</summary><p>Os vídeos longos e os curtos são narrados com imagens de licença livre, então funcionam melhor em assuntos que têm imagem no Wikimedia Commons: curiosidades, como as coisas funcionam, lugares, natureza e invenções. Assunto sem imagem livre rende vídeos mais fracos.</p></details>
+      <details class="revela"><summary>Ela publica sozinha?</summary><p>Só o que você aprovou. O vídeo longo vai agendado pro YouTube. No Instagram, o vídeo curto ou o corte sai na hora marcada, com o programa aberto no seu computador. No TikTok, ele chega como rascunho na caixa de entrada do app, e você publica pelo celular. É um post por dia em cada conta.</p></details>
+      <details class="revela"><summary>Preciso usar as 6 produções?</summary><p>Não. Você usa só as que quiser: um canal do YouTube sozinho, por exemplo, ou só perfis com vídeos curtos. Cada perfil faz os vídeos curtos dele ou recebe os cortes de um canal, e isso se troca na Configuração.</p></details>
+      <details class="revela"><summary>Quantos vídeos por dia?</summary><p>Você produz quando quiser, e o maestro pode fazer um por dia em cada canal e em cada perfil com vídeos curtos. O ritmo de verdade depende dos limites do seu plano do Claude e da cota do Gemini: com várias produções ligadas todo dia, você vai precisar de um plano maior do Claude.</p></details>
+      <details class="revela"><summary>Funciona no Mac ou no celular?</summary><p>Não. O programa é pra Windows 10 ou 11.</p></details>
+      <details class="revela"><summary>Como recebo o programa e as atualizações?</summary><p>Você baixa um arquivo só, o FabricaDeConteudo.exe, pelo seu link pessoal de download. Quando sai uma versão nova, você baixa de novo pelo mesmo link, sem pagar nada, e os seus vídeos e as suas contas continuam lá. A versão antiga para de funcionar alguns dias depois de sair a nova, então vale baixar logo.</p></details>
+      <details class="revela"><summary>Posso usar em dois computadores ou passar pra outra pessoa?</summary><p>Não. A licença é pessoal e intransferível, e a sua cópia do programa é ligada à sua licença e ao seu computador. Se você trocar de computador, o suporte solta a licença pra você ativar no novo.</p></details>
+      <details class="revela"><summary>Vem com o jogo do Viral City?</summary><p>Não. Vem a Fábrica de Conteúdo, com o painel e o escritório dos agentes.</p></details>
+      <details class="revela"><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. Pede o reembolso e recebe o valor de volta.</p></details>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <p>Viral City · construindo em público</p>
+  <p><a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_rodape">instagram.com/viralcity.jogo</a></p>
+</footer>
+
+<div class="barra-compra" id="barra">
+  <div class="txt">Fábrica de Conteúdo · 6 produções · <b>R$ 397</b></div>
+  <a class="botao botao-pequeno comprar" href="#oferta" data-onde="barra">Quero a Fábrica</a>
+</div>
+
+<script>
+// O LINK DO CHECKOUT NA KIRVANO. Vazio, os botões de compra dizem "Em breve" e não levam a lugar nenhum.
+// Com o link, eles vão pra Kirvano com a origem do Instagram, e o medir.js marca "foi_pro_checkout".
+var CHECKOUT_URL = "";
+
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  var temCheckout = /^https:\/\//.test(CHECKOUT_URL);
+  var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + "utm_source=instagram&utm_campaign=viralcity" : "";
+
+  document.querySelectorAll(".comprar").forEach(function (b) {
+    var onde = b.dataset.onde || "pagina";
+    if (temCheckout) {
+      b.href = destino;
+      b.dataset.medir = "comprar_fabrica_" + onde;
+    } else {
+      b.textContent = "Em breve";
+      b.classList.add("breve");
+      b.classList.remove("brilhar");
+      b.setAttribute("aria-disabled", "true");
+      b.dataset.medir = "em_breve_fabrica_" + onde;
+      b.removeAttribute("href");
+      b.setAttribute("role", "link");
+      b.tabIndex = 0;
+      var aviso = b.parentElement.querySelector(".aviso-breve");
+      if (aviso) aviso.hidden = false;
+    }
+  });
+
+  // a barra de compra aparece depois do herói e some em cima da oferta
+  var barra = document.getElementById("barra"), heroi = document.querySelector(".heroi"), oferta = document.getElementById("oferta");
+  function conferirBarra() {
+    var passou = heroi.getBoundingClientRect().bottom < 0;
+    var r = oferta.getBoundingClientRect(), naOferta = r.top < innerHeight && r.bottom > 0;
+    barra.classList.toggle("ver", passou && !naOferta);
+  }
+  addEventListener("scroll", conferirBarra, { passive: true }); conferirBarra();
+  // sem checkout, a barra leva até a oferta (onde está o aviso)
+  if (!temCheckout) {
+    var b = barra.querySelector(".comprar");
+    b.addEventListener("click", function () { oferta.scrollIntoView({ behavior: "smooth" }); });
+  }
+
+  // os vídeos de baixo só tocam quando aparecem na tela (economiza dados no celular)
+  var vids = document.querySelectorAll("video[data-quando-aparecer]");
+  if ("IntersectionObserver" in window) {
+    var ov = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) e.target.play().catch(function () {}); else e.target.pause(); });
+    }, { threshold: 0.35 });
+    vids.forEach(function (v) { ov.observe(v); });
+  }
+  var hero = document.querySelector(".heroi video"); if (hero) hero.play().catch(function () {});
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // o resto é do GSAP; sem ele, tudo já está visível
+  var gsap = window.gsap;
+  if (!gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(window.ScrollTrigger);
+  document.documentElement.classList.add("anima");
+  gsap.to(gsap.utils.toArray(".heroi .revela"), { opacity: 1, y: 0, duration: 0.8, stagger: 0.12, ease: "power3.out", delay: 0.1 });
+  gsap.from(".heroi .monitor", { rotation: -2, scale: 0.94, duration: 1.1, ease: "back.out(1.6)", delay: 0.35 });
+  gsap.utils.toArray(".revela").forEach(function (el) {
+    if (el.closest(".heroi")) return;
+    gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+  });
+  gsap.from(".etapa .bola", { scale: 0, rotation: -90, duration: 0.6, stagger: 0.12, ease: "back.out(2.5)", scrollTrigger: { trigger: ".etapas", start: "top 82%", once: true } });
+  gsap.from(".oferta", { scale: 0.9, rotation: 1.5, duration: 0.9, ease: "back.out(1.8)", scrollTrigger: { trigger: ".oferta", start: "top 85%", once: true } });
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+</body>
+</html>
