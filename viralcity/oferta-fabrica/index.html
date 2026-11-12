@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fábrica de Conteúdo · oportunidade</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b1d24">
+<link rel="icon" href="../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../estilo.css">
+<!--
+  O UPSELL DA FÁBRICA DE CONTEÚDO, depois da compra do curso "Vídeos com IA: do zero à monetização" (12/11/2026).
+  A Kirvano abre esta página depois do pagamento aprovado ("Ir para outra página após aprovado", na oferta do curso).
+  O script dela, lá embaixo, liga o botão com a classe "kirvano-payment-trigger" (aceitar) e o com
+  "kirvano-refuse-trigger" (recusar). Os outros botões só repetem o clique nesses dois.
+-->
+<style>
+  .pagina { max-width: 860px; margin: 0 auto; padding: 0 16px 130px; }
+  section { padding: 52px 0 0; }
+  .confirmado { background: #12392a; color: #bff3cf; text-align: center; font-size: 14px; padding: 10px 16px; border-bottom: 2px solid #2f7a4a; }
+  .confirmado b { color: #fff; }
+  .passos-compra { display: flex; justify-content: center; gap: 22px; padding: 16px 0 0; font-size: 13px; color: var(--texto-suave); }
+  .passos-compra span b { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 6px; background: var(--fundo-3); border: 2px solid var(--linha); font-size: 11px; }
+  .passos-compra .feita b { background: #2f7a4a; border-color: #5fcf75; color: #fff; }
+  .passos-compra .agora { color: var(--amarelo); font-weight: 700; }
+  .passos-compra .agora b { background: var(--amarelo); border-color: var(--amarelo); color: #1a0f05; }
+
+  .heroi { text-align: center; padding-top: 30px; }
+  .rotulo { display: inline-block; font-family: var(--pixel); font-size: 10px; line-height: 1.6; color: #1a0f05; background: var(--laranja); padding: 7px 10px; margin-bottom: 18px; animation: piscar 1.2s steps(2) infinite; }
+  @keyframes piscar { 50% { opacity: .55; } }
+  .heroi h1 { font-family: var(--pixel); font-weight: 400; font-size: clamp(18px, 4.4vw, 32px); line-height: 1.5; color: var(--amarelo); margin: 0 auto 16px; max-width: 820px; text-shadow: 4px 4px 0 #3a1a07; }
+  .heroi h1 em { font-style: normal; color: var(--laranja); }
+  .heroi .lead { max-width: 640px; margin: 0 auto 24px; font-size: 18px; }
+  .monitor { position: relative; max-width: 760px; margin: 0 auto; padding: 12px; background: #061218; border: 4px solid var(--linha); box-shadow: 10px 10px 0 #05242c, 0 0 80px rgba(255,178,56,.12); }
+  .monitor video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; object-fit: cover; }
+  .legenda-pixel { font-family: var(--pixel); font-size: 8px; color: var(--texto-suave); text-align: center; padding: 10px 0 2px; line-height: 1.6; }
+
+  .decisao { margin: 30px auto 0; display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: 520px; }
+  .decisao .botao { width: 100%; font-size: 13px; padding: 18px 20px; line-height: 1.5; }
+  .decisao .botao small { display: block; font-family: var(--corpo, Inter, sans-serif); font-size: 13px; font-weight: 700; margin-top: 6px; opacity: .8; }
+  .recusa { background: none; border: 0; color: var(--texto-suave); font: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; padding: 6px; }
+  .recusa:hover { color: var(--texto); }
+  .seguro { font-size: 13px; color: var(--texto-suave); text-align: center; margin: 0; }
+
+  h2.tit { font-family: var(--pixel); font-weight: 400; font-size: clamp(14px, 3.2vw, 20px); color: var(--amarelo); text-align: center; margin: 0 0 14px; line-height: 1.5; }
+  .chamada { text-align: center; max-width: 620px; margin: 0 auto 24px; color: var(--texto-suave); }
+  .compara { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .compara div { background: var(--fundo-2); border: 2px solid var(--linha); padding: 18px; }
+  .compara div.sim { border-color: var(--ambar); box-shadow: 6px 6px 0 var(--laranja); }
+  .compara h3 { font-family: var(--pixel); font-weight: 400; font-size: 11px; line-height: 1.6; margin: 0 0 10px; color: var(--texto-suave); }
+  .compara .sim h3 { color: var(--amarelo); }
+  .compara p { margin: 0; color: var(--texto-suave); }
+  .compara .sim p { color: var(--texto); }
+
+  .sai { display: grid; grid-template-columns: 1.7fr 1fr; gap: 24px; align-items: center; }
+  .sai .monitor { margin: 0; }
+  .fone { width: 100%; max-width: 220px; margin: 0 auto; padding: 6px; background: #061218; border: 3px solid var(--ambar); border-radius: 18px; box-shadow: 6px 6px 0 #05242c; }
+  .fone video { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 12px; background: #000; }
+
+  .oferta { position: relative; max-width: 540px; margin: 0 auto; text-align: center; background: var(--fundo-2); border: 3px solid var(--laranja); box-shadow: 8px 8px 0 var(--laranja); padding: 30px 22px 26px; }
+  .oferta .de { color: var(--texto-suave); text-decoration: line-through; font-size: 18px; }
+  .oferta .preco { font-family: var(--pixel); font-size: 40px; color: var(--amarelo); margin: 8px 0 6px; text-shadow: 4px 4px 0 #3a1a07; }
+  .oferta .pequeno { font-size: 14px; color: var(--texto-suave); }
+  .oferta ul { text-align: left; margin: 20px 0; padding: 0; list-style: none; }
+  .oferta li { padding: 6px 0 6px 28px; position: relative; }
+  .oferta li::before { content: ""; position: absolute; left: 0; top: 12px; width: 14px; height: 14px; background: var(--ambar); box-shadow: 2px 2px 0 var(--laranja); }
+  .oferta .botao { width: 100%; font-size: 13px; padding: 18px; }
+  .garantia { display: flex; gap: 14px; align-items: center; text-align: left; margin-top: 20px; padding-top: 18px; border-top: 2px dashed var(--linha); }
+  .garantia svg { flex: none; width: 54px; height: 60px; }
+
+  .faq { max-width: 700px; margin: 0 auto; }
+  .faq details { background: var(--fundo-2); border: 2px solid var(--linha); margin: 8px 0; padding: 12px 16px; }
+  .faq summary { cursor: pointer; font-weight: 700; color: var(--branco); }
+  .faq p { margin: 10px 0 0; color: var(--texto-suave); }
+
+  .fixo { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: rgba(11,29,36,.96); border-top: 2px solid var(--linha); transform: translateY(110%); transition: transform .25s; display: flex; justify-content: center; }
+  .fixo.visivel { transform: none; }
+  .fixo .botao { width: 100%; max-width: 520px; font-size: 12px; }
+
+  @media (max-width: 640px) {
+    .compara, .sai { grid-template-columns: 1fr; }
+    .passos-compra { gap: 12px; font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .rotulo { animation: none; } .fixo { transition: none; } }
+</style>
+<script src="../medir.js" data-pagina="oferta-fabrica"></script>
+</head>
+<body>
+
+<div class="confirmado">✔ <b>Seu curso está confirmado.</b> O acesso chega no seu e-mail.</div>
+<nav class="passos-compra" aria-label="Etapas da compra">
+  <span class="feita"><b>1</b>Compra</span>
+  <span class="agora"><b>2</b>Oportunidade</span>
+  <span><b>3</b>Acesso</span>
+</nav>
+
+<main class="pagina">
+  <section class="heroi">
+    <div class="rotulo">ESPERE! NÃO FECHE ESTA PÁGINA</div>
+    <h1>Você aprendeu a fazer. <em>Agora deixa a Fábrica fazer por você.</em></h1>
+    <p class="lead">A Fábrica de Conteúdo pesquisa, escreve, narra, monta e agenda os vídeos do seu canal. <b>Você só aprova.</b> E só nesta página ela sai por menos.</p>
+    <div class="monitor">
+      <video src="../fabrica/img/escritorio.mp4" poster="../fabrica/img/escritorio-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="O escritório dos agentes da Fábrica de Conteúdo trabalhando"></video>
+    </div>
+    <div class="legenda-pixel">OS AGENTES TRABALHANDO NO SEU COMPUTADOR</div>
+
+    <div class="decisao">
+      <!-- o botão de ACEITAR da Kirvano: só este tem a classe kirvano-payment-trigger -->
+      <button type="button" class="botao brilhar kirvano-payment-trigger" id="aceitar">Sim, quero a Fábrica<small>entra junto com o seu curso</small></button>
+      <!-- o botão de RECUSAR da Kirvano: só este tem a classe kirvano-refuse-trigger -->
+      <button type="button" class="recusa kirvano-refuse-trigger" id="recusar">Não, obrigado. Quero só o curso.</button>
+      <p class="seguro">O curso que você comprou já está garantido, aceitando ou não · 7 dias de garantia</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit">O curso ensina. A Fábrica faz.</h2>
+    <div class="compara">
+      <div>
+        <h3>SÓ O CURSO</h3>
+        <p>Você faz cada vídeo: pesquisa, roteiro, voz, imagens, montagem, thumbnail. Todo dia.</p>
+      </div>
+      <div class="sim">
+        <h3>CURSO + FÁBRICA</h3>
+        <p>Você escreve o tema e clica. O vídeo chega pronto pra você assistir e aprovar. Ou liga o maestro e ela escolhe o tema sozinha.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit">Uma frase sua. Quatro posts prontos.</h2>
+    <p class="chamada">O vídeo longo pro YouTube, com 5 thumbnails e os títulos, e 3 cortes em pé pro Instagram e pro TikTok.</p>
+    <div class="sai">
+      <div>
+        <div class="monitor"><video src="../fabrica/img/video-cafe.mp4" poster="../fabrica/img/video-cafe-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Trecho de um vídeo longo feito pela Fábrica"></video></div>
+        <div class="legenda-pixel">O VÍDEO LONGO</div>
+      </div>
+      <div>
+        <div class="fone"><video src="../fabrica/img/corte.mp4" poster="../fabrica/img/corte-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Trecho de um corte em pé feito pela Fábrica"></video></div>
+        <div class="legenda-pixel">+ 3 CORTES EM PÉ</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit">Só pra quem acabou de comprar</h2>
+    <div class="oferta">
+      <div class="de">R$ 397</div>
+      <div class="preco">R$ 297</div>
+      <div class="pequeno">1 ano de acesso · preço que só aparece nesta página</div>
+      <ul>
+        <li><strong>A Fábrica de Conteúdo</strong>, com 6 produções: 2 canais do YouTube, 2 perfis do Instagram e 2 do TikTok</li>
+        <li>Vídeo longo pro YouTube, com thumbnails, títulos e tags</li>
+        <li>Cortes e vídeos curtos pro Instagram e pro TikTok</li>
+        <li>O maestro: um vídeo por dia, sozinho</li>
+        <li>O escritório dos agentes</li>
+        <li>O curso da Fábrica, passo a passo</li>
+        <li>1 ano de acesso, com todas as atualizações</li>
+      </ul>
+      <button type="button" class="botao brilhar aceitar">Sim, quero a Fábrica</button>
+      <p class="pequeno" style="margin:12px 0 0">Pra Windows. Usa a sua assinatura do Claude.</p>
+      <div class="garantia">
+        <svg viewBox="0 0 18 20" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
+        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Mudou de ideia, devolvo o seu dinheiro.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit">Perguntas</h2>
+    <div class="faq">
+      <details><summary>Preciso aparecer ou gravar a minha voz?</summary><p>Não. Quem narra é a Fábrica.</p></details>
+      <details><summary>Preciso saber programar?</summary><p>Não. Escreve o tema e clica. O curso da Fábrica mostra o resto.</p></details>
+      <details><summary>Tem algum outro custo?</summary><p>Só a sua assinatura do Claude. A voz é grátis.</p></details>
+      <details><summary>Funciona no Mac ou no celular?</summary><p>Não. Só Windows.</p></details>
+    </div>
+  </section>
+
+  <section style="text-align:center">
+    <div class="decisao">
+      <button type="button" class="botao brilhar aceitar">Sim, quero a Fábrica</button>
+      <button type="button" class="recusa recusar">Não, obrigado. Quero só o curso.</button>
+    </div>
+  </section>
+</main>
+
+<div class="fixo" id="fixo"><button type="button" class="botao aceitar">Sim, quero a Fábrica</button></div>
+
+<script>
+  // os outros botões só repetem o clique nos dois ligados à Kirvano (os do topo)
+  var aceitar = document.getElementById("aceitar"), recusar = document.getElementById("recusar");
+  document.querySelectorAll("button.aceitar").forEach(function (b) { b.addEventListener("click", function () { aceitar.click(); }); });
+  document.querySelectorAll("button.recusar").forEach(function (b) { b.addEventListener("click", function () { recusar.click(); }); });
+  // o botão fixo aparece quando nenhum botão de aceitar está à vista
+  var fixo = document.getElementById("fixo"), vistos = new Set();
+  var olho = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) vistos.add(e.target); else vistos.delete(e.target); });
+    fixo.classList.toggle("visivel", vistos.size === 0);
+  });
+  document.querySelectorAll("main .botao").forEach(function (b) { olho.observe(b); });
+</script>
+
+<!-- ===================== SCRIPT DA KIRVANO =====================
+     O upsell "Fábrica R$ 297 (upsell do curso)" da oferta do curso. -->
+<script>
+  var offer = "4096b747-5e97-4fd7-ab81-3c423089fb27";
+  var nextPageURL = null;
+  var refusePageURL = null;
+</script>
+<script src="https://snippets.kirvano.com/upsell.min.js"></script>
+
+</body>
+</html>
