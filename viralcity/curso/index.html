@@ -32,7 +32,7 @@
 
   /* ---------- o monitor da VSL ---------- */
   .monitor { position: relative; max-width: 860px; margin: 0 auto; padding: 14px; background: #061218; border: 4px solid var(--linha); box-shadow: 10px 10px 0 #05242c, 0 0 80px rgba(255,178,56,.12); }
-  .monitor::before { content: ""; position: absolute; left: 50%; bottom: -26px; transform: translateX(-50%); width: 160px; height: 22px; background: var(--linha); }
+  .monitor::before { content: none; } /* sem o pé do monitor embaixo do vídeo (12/11/2026, pedido do dono) */
   .monitor video { width: 100%; aspect-ratio: 16 / 9; background: #000; object-fit: cover; }
   .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--pixel); font-size: 12px; line-height: 1.4;
     color: #1a0f05; background: var(--amarelo); border: 3px solid #1a0f05; box-shadow: 4px 4px 0 var(--laranja); padding: 16px 20px; cursor: pointer; animation: pulsar 1.4s ease-in-out infinite; }
