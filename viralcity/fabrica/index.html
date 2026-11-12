@@ -7,7 +7,7 @@
 <meta name="description" content="Seu canal com vídeo novo todo dia, sem gravar, sem editar e sem aparecer. A Fábrica de Conteúdo pesquisa, escreve, narra, monta e agenda os seus vídeos do YouTube, Instagram e TikTok. Você só aprova.">
 <meta property="og:title" content="Fábrica de Conteúdo">
 <meta property="og:description" content="Seu canal com vídeo novo todo dia. Sem gravar, sem editar, sem aparecer.">
-<meta property="og:image" content="img/revisao.jpg">
+<meta property="og:image" content="midia/vsl.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0b1d24">
 <link rel="icon" href="../img/logo.png">
@@ -35,6 +35,12 @@
   .monitor::before { content: ""; position: absolute; left: 50%; bottom: -26px; transform: translateX(-50%); width: 160px; height: 22px; background: var(--linha); }
   .monitor video { width: 100%; aspect-ratio: 16 / 9; background: #000; object-fit: cover; }
   .monitor .rotulo-monitor { position: absolute; left: 24px; top: 24px; font-family: var(--pixel); font-size: 8px; line-height: 1.5; color: #1a0f05; background: var(--amarelo); padding: 5px 7px; }
+  /* o botão do meio da VSL (o mesmo da página do curso): começa muda; o toque liga o som do começo */
+  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--pixel); font-size: 12px; line-height: 1.4;
+    color: #1a0f05; background: var(--amarelo); border: 3px solid #1a0f05; box-shadow: 4px 4px 0 var(--laranja); padding: 16px 20px; cursor: pointer; animation: pulsar 1.4s ease-in-out infinite; }
+  .som[hidden] { display: none; }
+  @keyframes pulsar { 50% { transform: translate(-50%, -50%) scale(1.06); } }
+  @media (prefers-reduced-motion: reduce) { .som { animation: none; } }
   .acao { margin-top: 46px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
   .acao .botao { font-size: 13px; padding: 18px 26px; }
   .confianca { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font-size: 14px; color: var(--texto-suave); }
@@ -210,14 +216,13 @@
     <h1 class="revela">Seu canal com vídeo novo todo dia. <em>Sem gravar, sem editar, sem aparecer.</em></h1>
     <p class="lead revela">É a fábrica que você vê no <b>@viralcity.jogo</b>, numa versão pra instalar no seu computador. Você escolhe o assunto. Ela pesquisa, escreve o roteiro, narra, monta, faz as thumbnails e deixa o vídeo pronto pro YouTube, pro Instagram e pro TikTok. Você só assiste e aprova.</p>
     <div class="monitor revela">
-      <video src="img/video-exemplo.mp4" poster="img/video-exemplo-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Trecho de um vídeo de teste feito pela Fábrica de Conteúdo"></video>
-      <span class="rotulo-monitor">FEITO PELA FÁBRICA</span>
+      <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo de apresentação da Fábrica de Conteúdo"></video>
+      <button class="som" id="som" type="button">▶ Toque pra ouvir</button>
     </div>
     <div class="acao revela">
       <a class="botao brilhar comprar" href="#oferta" data-onde="heroi">Quero a Fábrica de Conteúdo</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_heroi">@viralcity.jogo</a> pra saber quando.</p>
       <div class="confianca"><span>Pagamento único, sem mensalidade da Fábrica</span><span>2 canais do YouTube + 2 Instagram + 2 TikTok</span><span>7 dias de garantia</span><span>Nada vai pro ar sem o seu clique</span></div>
-      <p class="pequeno" style="margin:0">Acima, um trecho de um vídeo de teste feito pelo programa.</p>
     </div>
   </section>
 
@@ -568,7 +573,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }, { threshold: 0.35 });
     vids.forEach(function (v) { ov.observe(v); });
   }
-  var hero = document.querySelector(".heroi video"); if (hero) hero.play().catch(function () {});
+  // a VSL: começa muda; o botão do meio liga o som do começo
+  var vsl = document.getElementById("vsl"), som = document.getElementById("som");
+  vsl.play().catch(function () {});
+  som.addEventListener("click", function () { vsl.muted = false; vsl.loop = false; vsl.currentTime = 0; vsl.controls = true; som.hidden = true; vsl.play(); });
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
