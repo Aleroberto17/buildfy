@@ -163,6 +163,13 @@
     padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(6,18,24,.96); border-top: 3px solid var(--ambar);
     transform: translateY(110%); transition: transform .35s ease; }
   .barra-compra.ver { transform: none; }
+  /* A PÁGINA TRAVADA (12/11/2026, pedido do dono): até a VSL chegar na oferta, só aparecem o título e o vídeo. */
+  body.travada .topo .botao, body.travada .heroi .acao, body.travada .pagina > :not(.heroi), body.travada .rodape, body.travada .barra-compra { display: none !important; }
+  .trava-aviso { display: none; text-align: center; margin: 18px auto 0; max-width: 520px; color: var(--texto-suave); font-size: 15px; }
+  body.travada .trava-aviso { display: block; }
+  .liberou { animation: liberou .9s ease-out both; }
+  @keyframes liberou { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .liberou { animation: none; } }
   .barra-compra .txt { font-size: 14px; } .barra-compra .txt b { font-family: var(--pixel); font-size: 12px; color: var(--amarelo); }
 
   /* A fonte de pixel não tem as maiúsculas acentuadas (o "É" sai minúsculo): os rótulos com acento vão na Inter. */
@@ -198,7 +205,7 @@
 </style>
 <script src="../medir.js" data-pagina="fabrica"></script>
 </head>
-<body>
+<body class="travada">
 
 <header class="topo">
   <a class="marca" href="../">
@@ -219,10 +226,11 @@
       <video id="vsl" src="midia/vsl.mp4" poster="midia/vsl.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo de apresentação da Fábrica de Conteúdo"></video>
       <button class="som" id="som" type="button">▶ Toque pra ouvir</button>
     </div>
+    <p class="trava-aviso">Toque em <b>"Toque pra ouvir"</b> e assista: a oferta aparece aqui embaixo, na hora certa do vídeo.</p>
     <div class="acao revela">
       <a class="botao brilhar comprar" href="#oferta" data-onde="heroi">Quero a Fábrica de Conteúdo</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_heroi">@viralcity.jogo</a> pra saber quando.</p>
-      <div class="confianca"><span>Pagamento único, sem mensalidade da Fábrica</span><span>2 canais do YouTube + 2 Instagram + 2 TikTok</span><span>7 dias de garantia</span><span>Nada vai pro ar sem o seu clique</span></div>
+      <div class="confianca"><span>Preço de lançamento: R$ 397, em até 12x</span><span>2 canais do YouTube + 2 Instagram + 2 TikTok</span><span>7 dias de garantia</span><span>Nada vai pro ar sem o seu clique</span></div>
     </div>
   </section>
 
@@ -459,10 +467,10 @@
   <section id="oferta">
     <h2 class="tit revela">Tudo o que você leva hoje</h2>
     <div class="oferta revela">
-      <div class="pequeno">Fábrica de Conteúdo</div>
+      <div class="pequeno">Fábrica de Conteúdo · preço de lançamento</div>
       <div class="preco">R$ 397</div>
-      <div class="pequeno">pagamento único, sem mensalidade da Fábrica</div>
-      <p class="pequeno" style="margin:10px auto 0;max-width:480px">Uma vez só, por um programa que pesquisa, escreve, narra, monta e agenda os seus vídeos todos os dias. Sem pagar editor, roteirista nem narrador por vídeo.</p>
+      <div class="pequeno">em até 12x no cartão · 1 ano de acesso</div>
+      <p class="pequeno" style="margin:10px auto 0;max-width:480px">Um ano inteiro com um programa que pesquisa, escreve, narra, monta e agenda os seus vídeos todos os dias. Sem pagar editor, roteirista nem narrador por vídeo.</p>
       <ul>
         <li><strong>O programa Fábrica de Conteúdo</strong>, pra Windows, num arquivo só, baixado do seu link pessoal</li>
         <li><strong>Licença pra 6 produções</strong>: 2 canais do YouTube, 2 perfis do Instagram e 2 do TikTok</li>
@@ -471,7 +479,7 @@
         <li>O maestro, que produz um vídeo por dia sozinho, se você ligar</li>
         <li>O escritório dos agentes</li>
         <li>O curso da Fábrica: instalar, configurar as contas e usar no dia a dia, passo a passo</li>
-        <li>Atualizações grátis, baixadas pelo mesmo link, sem perder os vídeos nem as contas</li>
+        <li><strong>1 ano de acesso</strong>, com todas as atualizações desse período, baixadas pelo mesmo link, sem perder os vídeos nem as contas</li>
         <li>Suporte pra trocar de computador ou de conta</li>
       </ul>
       <a class="botao brilhar comprar" href="#oferta" data-onde="oferta">Quero a Fábrica de Conteúdo</a>
@@ -479,7 +487,7 @@
       <p class="pequeno" style="margin:12px 0 0">Não inclui a assinatura do Claude, que é paga à parte. <a href="#precisa" data-medir="ver_requisitos">Ver o que você precisa</a></p>
       <div class="garantia">
         <svg viewBox="0 0 18 20" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
-        <div><strong>Teste por 7 dias. O risco é meu.</strong><br><span class="pequeno">Instale, produza os seus vídeos e veja funcionando. Se não for pra você, pede o reembolso em até 7 dias e recebe todo o valor de volta. A licença é desligada no reembolso.</span></div>
+        <div><strong>7 dias de garantia. O risco é meu.</strong><br><span class="pequeno">Mudou de ideia? Pede o reembolso em até 7 dias e recebe todo o valor de volta. A licença é desligada no reembolso.</span></div>
       </div>
     </div>
   </section>
@@ -489,13 +497,14 @@
     <div class="faq">
       <details class="revela"><summary>Preciso aparecer no vídeo ou gravar a minha voz?</summary><p>Não. A narração é feita com a voz do Gemini, do Google, e as imagens vêm do Wikimedia Commons, com licença livre.</p></details>
       <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Você usa o painel no navegador: escreve o tema, clica em Produzir, revisa e aprova. A parte de conectar as contas é feita uma vez, seguindo o curso da Fábrica, que mostra cada tela.</p></details>
-      <details class="revela"><summary>Quanto custa pra manter rodando?</summary><p>O programa é pagamento único. À parte, você paga a sua assinatura do Claude. A voz do Gemini tem uso grátis, com um limite por dia.</p></details>
+      <details class="revela"><summary>Quanto custa pra manter rodando?</summary><p>A Fábrica sai por R$ 397 no preço de lançamento, em até 12x no cartão, com 1 ano de acesso. À parte, você paga a sua assinatura do Claude. A voz do Gemini tem uso grátis, com um limite por dia.</p></details>
       <details class="revela"><summary>Serve pro meu assunto?</summary><p>Os vídeos longos e os curtos são narrados com imagens de licença livre, então funcionam melhor em assuntos que têm imagem no Wikimedia Commons: curiosidades, como as coisas funcionam, lugares, natureza e invenções. Assunto sem imagem livre rende vídeos mais fracos.</p></details>
       <details class="revela"><summary>Ela publica sozinha?</summary><p>Só o que você aprovou. O vídeo longo vai agendado pro YouTube. No Instagram, o vídeo curto ou o corte sai na hora marcada, com o programa aberto no seu computador. No TikTok, ele chega como rascunho na caixa de entrada do app, e você publica pelo celular. É um post por dia em cada conta.</p></details>
       <details class="revela"><summary>Preciso usar as 6 produções?</summary><p>Não. Você usa só as que quiser: um canal do YouTube sozinho, por exemplo, ou só perfis com vídeos curtos. Cada perfil faz os vídeos curtos dele ou recebe os cortes de um canal, e isso se troca na Configuração.</p></details>
       <details class="revela"><summary>Quantos vídeos por dia?</summary><p>Você produz quando quiser, e o maestro pode fazer um por dia em cada canal e em cada perfil com vídeos curtos. O ritmo de verdade depende dos limites do seu plano do Claude e da cota do Gemini: com várias produções ligadas todo dia, você vai precisar de um plano maior do Claude.</p></details>
       <details class="revela"><summary>Funciona no Mac ou no celular?</summary><p>Não. O programa é pra Windows 10 ou 11.</p></details>
-      <details class="revela"><summary>Como recebo o programa e as atualizações?</summary><p>Você baixa um arquivo só, o FabricaDeConteudo.exe, pelo seu link pessoal de download. Quando sai uma versão nova, você baixa de novo pelo mesmo link, sem pagar nada, e os seus vídeos e as suas contas continuam lá. A versão antiga para de funcionar alguns dias depois de sair a nova, então vale baixar logo.</p></details>
+      <details class="revela"><summary>Como recebo o programa e as atualizações?</summary><p>Você baixa um arquivo só, o FabricaDeConteudo.exe, pelo seu link pessoal de download. Quando sai uma versão nova durante o seu ano de acesso, você baixa de novo pelo mesmo link, sem pagar nada, e os seus vídeos e as suas contas continuam lá. A versão antiga para de funcionar alguns dias depois de sair a nova, então vale baixar logo.</p></details>
+      <details class="revela"><summary>O acesso é pra sempre?</summary><p>Não. O acesso é de 1 ano a partir da compra, com todas as atualizações desse período. Perto do fim, o programa avisa, e você renova pelo mesmo link da compra pra continuar, com os seus vídeos e contas guardados.</p></details>
       <details class="revela"><summary>Posso usar em dois computadores ou passar pra outra pessoa?</summary><p>Não. A licença é pessoal e intransferível, e a sua cópia do programa é ligada à sua licença e ao seu computador. Se você trocar de computador, o suporte solta a licença pra você ativar no novo.</p></details>
       <details class="revela"><summary>Vem com o jogo do Viral City?</summary><p>Não. Vem a Fábrica de Conteúdo, com o painel e o escritório dos agentes.</p></details>
       <details class="revela"><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. Pede o reembolso e recebe o valor de volta.</p></details>
@@ -507,7 +516,7 @@
     <div class="acao revela" style="text-align:center">
       <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica de Conteúdo</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_fecho">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:10px 0 0">R$ 397, pagamento único · 7 dias de garantia</p>
+      <p class="pequeno" style="margin:10px 0 0">Preço de lançamento: R$ 397, em até 12x · 1 ano de acesso · 7 dias de garantia</p>
     </div>
   </section>
 </main>
@@ -577,6 +586,21 @@ document.addEventListener("DOMContentLoaded", function () {
   var vsl = document.getElementById("vsl"), som = document.getElementById("som");
   vsl.play().catch(function () {});
   som.addEventListener("click", function () { vsl.muted = false; vsl.loop = false; vsl.currentTime = 0; vsl.controls = true; som.hidden = true; vsl.play(); });
+
+  // A TRAVA: o resto da página e os botões só aparecem quando a VSL, com som, chega na oferta. Quem já chegou uma vez (guardado
+  // no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
+  var OFERTA_EM = 237; // segundo da VSL em que a oferta começa (o preço, aos 3:58)
+  var CHAVE_DA_TRAVA = "fabrica:viu-oferta";
+  function jaViu() { try { return localStorage.getItem(CHAVE_DA_TRAVA) === "1"; } catch (e) { return false; } }
+  function liberar(marcar) {
+    if (!document.body.classList.contains("travada")) return;
+    document.body.classList.remove("travada");
+    document.querySelectorAll(".heroi .acao, .pagina > :not(.heroi)").forEach(function (el) { el.classList.add("liberou"); });
+    if (marcar) { try { localStorage.setItem(CHAVE_DA_TRAVA, "1"); } catch (e) {} if (window.clarity) window.clarity("event", "liberou_oferta"); }
+    if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+  }
+  if (!OFERTA_EM || jaViu() || /[?&]tudo=1/.test(location.search)) liberar(false);
+  vsl.addEventListener("timeupdate", function () { if (OFERTA_EM && !vsl.muted && vsl.currentTime >= OFERTA_EM) liberar(true); });
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
