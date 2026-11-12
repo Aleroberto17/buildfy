@@ -47,7 +47,7 @@
   /* O topo */
   .topo { position: relative; padding: 64px 0 72px; overflow: hidden; }
   #globo { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-  .topo .faixa { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+  .topo .faixa { position: relative; z-index: 1; display: grid; grid-template-columns: .95fr 1.05fr; gap: 48px; align-items: center; }
   .topo h1 { font-family: "Instrument Serif", serif; font-weight: 400; font-size: clamp(44px, 6.6vw, 84px); line-height: 1.02; letter-spacing: -.01em; margin: 18px 0 18px; }
   .topo h1 .p { display: inline-block; }
   .gira { font-family: "Instrument Serif", serif; font-size: clamp(24px, 2.8vw, 32px); color: var(--apagado); margin-bottom: 22px; min-height: 1.3em; }
@@ -58,6 +58,9 @@
 
   .celular { position: relative; aspect-ratio: 9 / 16; width: min(330px, 100%); margin: 0 auto; border-radius: 34px; border: 8px solid #1b1b1d; overflow: hidden; background: #000; box-shadow: 0 30px 90px rgba(232, 72, 72, .18); }
   .celular video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* a VSL do topo (11/11/2026): deitada, na moldura escura do celular */
+  .vsl { position: relative; aspect-ratio: 16 / 9; width: 100%; border-radius: 18px; border: 8px solid #1b1b1d; overflow: hidden; background: #000; box-shadow: 0 30px 90px rgba(232, 72, 72, .18); }
+  .vsl video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .selo { position: absolute; left: 12px; top: 12px; background: rgba(0,0,0,.7); border: 1px solid rgba(255,255,255,.18); padding: 5px 10px; border-radius: 999px; font: 700 11px "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
   .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, .72); border: 1px solid rgba(255, 255, 255, .25); color: #fff; padding: 12px 18px; border-radius: 999px; font: 700 14px Inter, sans-serif; cursor: pointer; white-space: nowrap; }
   .som[hidden] { display: none; }
@@ -215,9 +218,8 @@
         <small>Sem aparecer, sem câmera, sem saber programar.</small>
       </div>
     </div>
-    <div class="celular rv" id="celular-topo">
-      <video id="video-topo" src="assets/demo-ucrania.mp4" poster="assets/ucrania-5.6.jpg" autoplay muted loop playsinline></video>
-      <span class="selo">Feito com IA</span>
+    <div class="vsl rv" id="celular-topo">
+      <video id="video-topo" src="assets/vsl.mp4" poster="assets/vsl.jpg" autoplay muted loop playsinline preload="metadata"></video>
       <button class="som" data-video="video-topo">🔊 Toque pra ouvir</button>
     </div>
   </div>
@@ -427,7 +429,9 @@
       const v = document.getElementById(b.dataset.video);
       document.querySelectorAll("video").forEach((o) => { if (o !== v) o.muted = true; });
       v.muted = false; v.currentTime = 0; v.play(); b.hidden = true;
-      v.addEventListener("click", () => { v.muted = !v.muted; });
+      // a VSL toca do começo ao fim uma vez, com os controles
+      if (v.id === "video-topo") { v.loop = false; v.controls = true; }
+      if (v.id !== "video-topo") v.addEventListener("click", () => { v.muted = !v.muted; });
     });
   });
 
