@@ -203,6 +203,7 @@
     .faixa .trilho, .brilhar { animation: none; }
   }
   .oferta .de { color: var(--texto-suave); text-decoration: line-through; font-size: 18px; }
+  .oferta .ancora { color: var(--texto-suave); font-size: 18px; margin-top: 8px; } .oferta .ancora s { text-decoration-thickness: 2px; }
 </style>
 <script src="../medir.js" data-pagina="fabrica"></script>
 <script src="../vsl-player.js"></script>
@@ -418,10 +419,11 @@
   </section>
 
   <section id="oferta">
-    <h2 class="tit revela">Tudo isso por R$ 0,81 por dia</h2>
+    <h2 class="tit revela">Tudo isso por R$ 0,40 por dia</h2>
     <div class="oferta revela">
       <div class="pequeno">preço de lançamento até 19 de novembro, o dia do GTA 6</div>
-      <div class="preco">R$ 297</div>
+      <div class="ancora">de <s>R$ 297</s> por</div>
+      <div class="preco">R$ 147</div>
       <div class="pequeno">depois do dia 19, o preço sobe</div>
       <div class="pequeno">em até 12x no cartão · 1 ano de acesso</div>
       <ul>
@@ -462,7 +464,7 @@
     <div class="acao revela" style="text-align:center">
       <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_fecho">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:10px 0 0">R$ 297 até 19 de novembro, em até 12x · 7 dias de garantia</p>
+      <p class="pequeno" style="margin:10px 0 0">De R$ 297 por R$ 147 até 19 de novembro, em até 12x · 7 dias de garantia</p>
     </div>
   </section>
 </main>
@@ -532,7 +534,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // A TRAVA: o resto da página e os botões só aparecem quando a VSL, com som, chega na oferta. Quem já chegou uma vez (guardado
   // no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
-  var OFERTA_EM = 237; // segundo da VSL em que a oferta começa (o preço, aos 3:58)
+  var OFERTA_EM = 238; // segundo da VSL em que a oferta começa (o preço, aos 3:58; refeito em 14/11/2026 com R$ 147)
   var CHAVE_DA_TRAVA = "fabrica:viu-oferta";
   function jaViu() { try { return localStorage.getItem(CHAVE_DA_TRAVA) === "1"; } catch (e) { return false; } }
   function liberar(marcar) {
