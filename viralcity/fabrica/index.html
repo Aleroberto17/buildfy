@@ -534,7 +534,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // A TRAVA: o resto da página e os botões só aparecem quando a VSL, com som, chega na oferta. Quem já chegou uma vez (guardado
   // no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
-  var OFERTA_EM = 238; // segundo da VSL em que a oferta começa (o preço, aos 3:58; refeito em 14/11/2026 com R$ 147)
+  var OFERTA_EM = 207; // segundo da VSL em que a oferta começa (o preço; desde 14/11/2026 com R$ 147 e o vídeo a 1,15x, pedido do dono)
   var CHAVE_DA_TRAVA = "fabrica:viu-oferta";
   function jaViu() { try { return localStorage.getItem(CHAVE_DA_TRAVA) === "1"; } catch (e) { return false; } }
   function liberar(marcar) {
