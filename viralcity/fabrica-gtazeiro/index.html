@@ -387,6 +387,13 @@
      pra a mais comprida ("SEM VOCÊ EDITAR NADA.", uns 8,9 vezes a altura da letra) caber */
   .heroi h1 { font-size: min(92px, calc((100vw - 40px) / 9.4)); }
   .heroi h1 .linha > span { white-space: nowrap; text-wrap: nowrap; }
+
+  /* DOIS DEFEITOS NO IPHONE (16/11/2026, o dono, com prints): (1) as imagens das telas têm width e height no HTML, e no celular a
+     largura encolhia e a altura não, esticando a imagem; (2) a borda girando da oferta vazava pelo canto arredondado no Safari,
+     que solta o corte do overflow durante a animação. O clip-path com o raio prende o corte. */
+  .janela img, .janela picture, .telas img { width: 100%; height: auto; }
+  .oferta-moldura { clip-path: inset(0 round 30px); -webkit-mask-image: -webkit-radial-gradient(white, black); isolation: isolate; }
+  .oferta { clip-path: inset(0 round 27px); }
 </style>
 
 <script>(function(){var m=/[?&]paleta=(\w+)/.exec(location.search);if(m)document.documentElement.dataset.paleta=m[1];})();</script>
