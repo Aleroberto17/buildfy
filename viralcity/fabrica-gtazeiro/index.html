@@ -360,6 +360,23 @@
     .tira-fotos img { width: 220px; height: 124px; }
   }
   @media (prefers-reduced-motion: reduce) { .tira-fotos .rolo { animation: none; } }
+
+  /* LEITURA EM PRIMEIRO LUGAR (16/11/2026, o dono: "continua ruim pra ler com essa imagem no fundo e esse degradê horroroso
+     no texto"): a foto atrás do título fica desfocada e bem escura, e nenhum texto tem degradê, só cor chapada. */
+  [data-paleta="vi"] .heroi::before { background: url("img/vi/heroi.jpg") center 35% / cover no-repeat; filter: blur(7px) brightness(.4) saturate(1.1); transform: scale(1.06); }
+  [data-paleta="vi"] .heroi::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(16,14,28,.35) 0%, rgba(16,14,28,.45) 50%, var(--noite) 92%); }
+  [data-paleta="vi"] .heroi { overflow: hidden; }
+  [data-paleta="vi"] h2 .neon, [data-paleta="vi"] h1 .neon { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: var(--rosa); }
+  [data-paleta="vi"] h1 .ciano { color: #fff; }
+  [data-paleta="vi"] .heroi h1 .neon { color: #ff6fb2; }
+  [data-paleta="vi"] .numero .valor { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #fff; }
+  [data-paleta="vi"] .oferta .preco { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #fff; }
+  [data-paleta="vi"] .com-foto::before { filter: blur(4px) brightness(.55); transform: scale(1.05); }
+  [data-paleta="vi"] .com-foto::after { background: linear-gradient(180deg, rgba(16,14,28,.62), rgba(16,14,28,.8)); }
+  @media (max-width: 760px) {
+    [data-paleta="vi"] .heroi::before { background: url("img/vi/heroi-celular.jpg") center top / cover no-repeat; }
+    [data-paleta="vi"] .heroi::after { background: linear-gradient(180deg, rgba(16,14,28,.4) 0%, rgba(16,14,28,.5) 50%, var(--noite) 90%); }
+  }
 </style>
 
 <script>(function(){var m=/[?&]paleta=(\w+)/.exec(location.search);if(m)document.documentElement.dataset.paleta=m[1];})();</script>
