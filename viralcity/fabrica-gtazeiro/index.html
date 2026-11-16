@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" data-paleta="logo">
+<html lang="pt-BR" data-paleta="vi">
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex">
@@ -10,7 +10,7 @@
 <meta property="og:description" content="Um canal de GTA 6 com vídeo novo todo dia. Sem você editar nada.">
 <meta property="og:image" content="midia/vsl-gtazeiro.jpg">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#02222e">
+<meta name="theme-color" content="#100e1c">
 <link rel="icon" href="img/logo-gtazeiro-novo-240.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -117,7 +117,7 @@
   /* ---------- o herói ---------- */
   .heroi { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 110px 16px 60px; max-width: var(--largura); margin: 0 auto; }
   .heroi h1 { margin-top: 22px; font-size: clamp(40px, 8.2vw, 92px); line-height: .98; text-shadow: 0 6px 30px rgba(10,2,20,.7); }
-  .heroi h1 .linha { display: block; overflow: hidden; padding: .14em 0 .04em; margin-top: -.14em; }
+  .heroi h1 .linha { display: block; }
   .heroi h1 .linha > span { display: inline-block; }
   .heroi .lead { max-width: 760px; margin: 22px auto 0; font-size: clamp(16px, 2.2vw, 20px); color: var(--texto); text-shadow: 0 2px 12px rgba(0,0,0,.6); }
   .monitor { position: relative; width: 100%; max-width: 900px; margin: 36px auto 0; padding: 10px; border-radius: 26px;
@@ -278,6 +278,88 @@
     .faixa .trilho, .botao::after, .oferta-moldura::before, .som, .grao, .selo i, .rolar-pista i { animation: none; }
     .anima .revela { opacity: 1; transform: none; }
   }
+
+  /* A VERSÃO INSPIRADA NA PÁGINA DO GTA VI (16/11/2026, pedido do dono: "ficou ruim de ler e não gostei desse fundo com essa
+     animação, nem das cores; faz uma versão inspirada na rockstargames.com/VI, com as mesmas cores, imagens e cenas do GTA 6,
+     sem mudar a estrutura"). Mesmas seções e textos; sai o fundo 3D, entram os prints oficiais em fundo e em cartão
+     arredondado, o índigo escuro e o degradê roxo, rosa e laranja do VI, e o topo sólido (o texto não passa mais por baixo dele). */
+  [data-paleta="vi"] {
+    --noite: #100e1c; --noite-2: #19162b; --noite-3: #241f3d; --horizonte: #5a2a6e;
+    --rosa: #ff4fa0; --laranja: #ff9a55; --amarelo: #ffd38a; --ciano: #ffb3c8; --roxo: #8a63ff; --suave: #c3bed9; --texto: #f6f3ff;
+    --rosa-rgb: 255,79,160; --ciano-rgb: 255,179,200; --laranja-rgb: 255,154,85; --amarelo-rgb: 255,211,138; --noite-rgb: 16,14,28; --noite3-rgb: 36,31,61;
+    --vi: linear-gradient(180deg, #8a63ff 0%, #ff4fa0 50%, #ffa957 100%);
+    --vi-lado: linear-gradient(90deg, #ff4fa0, #ff8a5c 60%, #ffb057);
+  }
+  [data-paleta="vi"] body { background: var(--noite); }
+  [data-paleta="vi"] .topo { background: rgba(16,14,28,.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.07); padding-top: 10px; padding-bottom: 10px; }
+  [data-paleta="vi"] .marca img { border: 0; box-shadow: none; border-radius: 12px; }
+  [data-paleta="vi"] h1, [data-paleta="vi"] h2 { letter-spacing: 1px; }
+  [data-paleta="vi"] h2 .neon, [data-paleta="vi"] h1 .neon { background: var(--vi-lado); -webkit-background-clip: text; background-clip: text; filter: none; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  [data-paleta="vi"] h2 .ciano, [data-paleta="vi"] h1 .ciano { color: var(--ciano); text-shadow: none; }
+  [data-paleta="vi"] .script { font-family: Anton, Impact, sans-serif; text-transform: uppercase; font-size: 1em; color: var(--ciano); text-shadow: none; letter-spacing: 1px; }
+  [data-paleta="vi"] .chamada { color: #ddd8ee; }
+  [data-paleta="vi"] .vidro { background: var(--noite-2); border: 1px solid rgba(255,255,255,.07); backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  [data-paleta="vi"] .selo { background: rgba(16,14,28,.55); border-color: rgba(255,255,255,.25); box-shadow: none; }
+  [data-paleta="vi"] .selo i { background: var(--rosa); box-shadow: none; }
+  /* os botões: o de compra no degradê do VI; o do topo, o da barra e o "Toque pra ouvir" brancos, como o "Tocar" da Rockstar */
+  [data-paleta="vi"] .botao { background: var(--vi-lado); box-shadow: 0 12px 34px rgba(var(--rosa-rgb),.35); }
+  [data-paleta="vi"] .botao:hover { box-shadow: 0 16px 44px rgba(var(--rosa-rgb),.5); }
+  [data-paleta="vi"] .topo .botao, [data-paleta="vi"] .barra-compra .botao { background: #fff; color: #15122a; box-shadow: none; }
+  [data-paleta="vi"] .topo .botao::after, [data-paleta="vi"] .barra-compra .botao::after { display: none; }
+  [data-paleta="vi"] .som { background: #fff; color: #15122a; border: 0; box-shadow: 0 10px 40px rgba(0,0,0,.45); }
+  /* o herói: Vice City à noite, de ponta a ponta, escurecendo embaixo pro texto ler */
+  [data-paleta="vi"] .heroi { position: relative; isolation: isolate; max-width: none; }
+  [data-paleta="vi"] .heroi::before { content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(16,14,28,.55) 0%, rgba(16,14,28,.35) 28%, rgba(16,14,28,.8) 60%, var(--noite) 86%), url("img/vi/heroi.jpg") center 35% / cover no-repeat; }
+  [data-paleta="vi"] .heroi h1 { text-shadow: 0 4px 24px rgba(10,6,24,.8); }
+  [data-paleta="vi"] .monitor { background: var(--vi); box-shadow: 0 30px 80px rgba(0,0,0,.55); padding: 6px; }
+  [data-paleta="vi"] .rolar-pista i { background: linear-gradient(var(--rosa), transparent); }
+  [data-paleta="vi"] .confianca span::before { color: var(--rosa); }
+  /* a faixa e a tira de fotos */
+  [data-paleta="vi"] .faixa { background: var(--vi-lado); box-shadow: none; }
+  [data-paleta="vi"] .faixa .trilho span::after { color: #15122a; }
+  .tira-fotos { position: relative; z-index: 3; overflow: hidden; margin-top: 46px; }
+  .tira-fotos .rolo { display: flex; gap: 14px; width: max-content; animation: corre 70s linear infinite; }
+  .tira-fotos img { width: 300px; height: 170px; object-fit: cover; border-radius: 16px; box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+  /* as seções com foto: um cartão arredondado grande, como os da página do GTA VI */
+  [data-paleta="vi"] .com-foto { position: relative; isolation: isolate; max-width: 1200px; margin: 110px auto 0; padding: 90px 28px 80px; border-radius: 32px; overflow: hidden; }
+  [data-paleta="vi"] .com-foto::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--foto) center / cover no-repeat; }
+  [data-paleta="vi"] .com-foto::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(16,14,28,.62), rgba(16,14,28,.82)); }
+  [data-paleta="vi"] .foto-cidade { --foto: url("img/vi/cidade.jpg"); }
+  [data-paleta="vi"] .foto-acao { --foto: url("img/vi/acao.jpg"); }
+  [data-paleta="vi"] .foto-oferta { --foto: url("img/vi/oferta.jpg"); }
+  [data-paleta="vi"] .foto-fecho { --foto: url("img/vi/fecho.jpg"); }
+  [data-paleta="vi"] .foto-oferta::after { background: linear-gradient(180deg, rgba(16,14,28,.45), rgba(16,14,28,.88)); }
+  /* os detalhes no degradê do VI, sem o brilho neon */
+  [data-paleta="vi"] .contagem b { text-shadow: none; }
+  [data-paleta="vi"] .contagem .vidro, [data-paleta="vi"] .cartao.vidro { background: rgba(16,14,28,.74); }
+  [data-paleta="vi"] .quadro { border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+  [data-paleta="vi"] .quadro.rosa { border: 2px solid var(--rosa); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+  [data-paleta="vi"] .quadro .tag { background: #fff; color: #15122a; }
+  [data-paleta="vi"] .quadro.rosa .tag { background: var(--rosa); color: #fff; }
+  [data-paleta="vi"] .seta-neon { color: var(--rosa); text-shadow: none; }
+  [data-paleta="vi"] .fone { background: var(--vi); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+  [data-paleta="vi"] .lista-check li::before { background: radial-gradient(circle, var(--rosa) 35%, transparent 38%), rgba(var(--rosa-rgb),.16); box-shadow: none; }
+  [data-paleta="vi"] .cartao svg { color: var(--ciano); filter: none; }
+  [data-paleta="vi"] .cartao:hover { border-color: rgba(var(--rosa-rgb),.6); }
+  [data-paleta="vi"] .agente .rosto, [data-paleta="vi"] .agente:nth-child(even) .rosto { background: var(--vi); box-shadow: none; }
+  [data-paleta="vi"] .postos b { color: var(--ciano); }
+  [data-paleta="vi"] .janela:hover { box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+  [data-paleta="vi"] .numero .valor { background: var(--vi); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; }
+  [data-paleta="vi"] .oferta-moldura::before { background: conic-gradient(#8a63ff, #ff4fa0, #ffa957, #ff4fa0, #8a63ff); }
+  [data-paleta="vi"] .oferta { background: rgba(16,14,28,.92); }
+  [data-paleta="vi"] .so-aqui { background: var(--rosa); color: #fff; box-shadow: none; }
+  [data-paleta="vi"] .oferta .preco { background: linear-gradient(180deg, #fff, #ffd38a 40%, #ff8a5c); -webkit-background-clip: text; background-clip: text; filter: none; }
+  [data-paleta="vi"] .oferta li::before { color: var(--rosa); text-shadow: none; }
+  [data-paleta="vi"] .garantia svg { filter: none; }
+  [data-paleta="vi"] .faq summary::after { color: var(--rosa); }
+  [data-paleta="vi"] .barra-compra { border-top-color: rgba(255,255,255,.1); }
+  @media (max-width: 760px) {
+    [data-paleta="vi"] .heroi::before { background: linear-gradient(180deg, rgba(16,14,28,.62) 0%, rgba(16,14,28,.5) 28%, rgba(16,14,28,.84) 56%, var(--noite) 84%), url("img/vi/heroi-celular.jpg") center top / cover no-repeat; }
+    [data-paleta="vi"] .com-foto { margin: 80px 10px 0; padding: 64px 14px 56px; border-radius: 22px; }
+    .tira-fotos img { width: 220px; height: 124px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tira-fotos .rolo { animation: none; } }
 </style>
 
 <script>(function(){var m=/[?&]paleta=(\w+)/.exec(location.search);if(m)document.documentElement.dataset.paleta=m[1];})();</script>
@@ -285,10 +367,6 @@
 <script src="../vsl-player.js"></script>
 </head>
 <body class="travada">
-<div class="ceu-css" aria-hidden="true"></div>
-<canvas id="cena" aria-hidden="true"></canvas>
-<div class="veu" aria-hidden="true"></div>
-<div class="grao" aria-hidden="true"></div>
 
 <header class="topo">
   <a class="marca" href="https://www.youtube.com/@gtazeiro6" target="_blank" rel="noopener" data-medir="youtube_topo">
@@ -320,7 +398,7 @@
       <p class="aviso-breve" hidden>A venda abre em breve. Fique de olho no <a href="https://www.youtube.com/@gtazeiro6" target="_blank" rel="noopener">@gtazeiro6</a>.</p>
       <div class="confianca"><span>YouTube, Instagram e TikTok</span><span>7 dias de garantia</span><span>No seu computador</span></div>
     </div>
-    <div class="rolar-pista">Role pra Vice City<i></i></div>
+    <div class="rolar-pista">Role pra baixo<i></i></div>
   </section>
 
   <div class="faixa" aria-hidden="true">
@@ -330,7 +408,9 @@
     </div>
   </div>
 
-  <section class="bloco">
+  <div class="tira-fotos" aria-hidden="true"><div class="rolo"><img src="img/vi/tira-0.jpg" alt="" loading="lazy"><img src="img/vi/tira-1.jpg" alt="" loading="lazy"><img src="img/vi/tira-2.jpg" alt="" loading="lazy"><img src="img/vi/tira-3.jpg" alt="" loading="lazy"><img src="img/vi/tira-4.jpg" alt="" loading="lazy"><img src="img/vi/tira-5.jpg" alt="" loading="lazy"><img src="img/vi/tira-6.jpg" alt="" loading="lazy"><img src="img/vi/tira-7.jpg" alt="" loading="lazy"><img src="img/vi/tira-8.jpg" alt="" loading="lazy"><img src="img/vi/tira-9.jpg" alt="" loading="lazy"><img src="img/vi/tira-0.jpg" alt="" loading="lazy"><img src="img/vi/tira-1.jpg" alt="" loading="lazy"><img src="img/vi/tira-2.jpg" alt="" loading="lazy"><img src="img/vi/tira-3.jpg" alt="" loading="lazy"><img src="img/vi/tira-4.jpg" alt="" loading="lazy"><img src="img/vi/tira-5.jpg" alt="" loading="lazy"><img src="img/vi/tira-6.jpg" alt="" loading="lazy"><img src="img/vi/tira-7.jpg" alt="" loading="lazy"><img src="img/vi/tira-8.jpg" alt="" loading="lazy"><img src="img/vi/tira-9.jpg" alt="" loading="lazy"></div></div>
+
+  <section class="bloco com-foto foto-cidade">
     <h2 class="revela">O GTA 6 chega <span class="script">dia 19</span></h2>
     <div class="contagem" id="contagem" aria-live="polite">
       <div class="vidro"><b data-c="d">0</b><span>dias</span></div>
@@ -371,7 +451,7 @@
     </div>
   </section>
 
-  <section class="bloco">
+  <section class="bloco com-foto foto-acao">
     <h2 class="revela">Vai jogar? <span class="neon">Ela edita</span> a sua gameplay</h2>
     <p class="chamada revela">Você joga. A Fábrica pega a gravação crua e devolve pronta pra postar.</p>
     <div class="cartoes">
@@ -452,7 +532,7 @@
     </div>
   </section>
 
-  <section class="bloco" id="oferta">
+  <section class="bloco com-foto foto-oferta" id="oferta">
     <h2 class="revela">Menos que um <span class="script">chiclete</span> por dia</h2>
     <div class="oferta-moldura revela">
       <div class="oferta">
@@ -497,7 +577,7 @@
     </div>
   </section>
 
-  <section class="bloco fecho">
+  <section class="bloco fecho com-foto foto-fecho">
     <h2 class="revela">O GTA 6 sai dia 19. <span class="neon">O seu canal pode sair antes.</span></h2>
     <div class="acao revela">
       <a class="botao comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica</a>
@@ -604,12 +684,12 @@ document.addEventListener("DOMContentLoaded", function () {
   gsap.registerPlugin(window.ScrollTrigger);
   document.documentElement.classList.add("anima");
   // o título do herói sobe linha por linha, de dentro da máscara
-  gsap.from(".heroi h1 .linha > span", { yPercent: 110, rotate: 4, duration: 1, stagger: 0.12, ease: "power4.out", delay: 0.15 });
+  gsap.from(".heroi h1 .linha > span", { y: 40, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out", delay: 0.15 });
   gsap.to(gsap.utils.toArray(".heroi .revela"), { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: "power3.out", delay: 0.45 });
   gsap.from(".heroi .monitor", { scale: 0.86, rotateX: 18, duration: 1.3, ease: "power3.out", delay: 0.5, transformPerspective: 900 });
   // o resto entra quando aparece
   gsap.utils.toArray(".revela").forEach(function (el) {
-    if (el.closest(".heroi")) return;
+    if (el.closest(".heroi") || el.matches(".cartao, .janela")) return;
     gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } });
   });
   gsap.utils.toArray(".contagem .vidro").forEach(function (el, i) {
@@ -619,8 +699,8 @@ document.addEventListener("DOMContentLoaded", function () {
   gsap.from(".seta-neon", { x: -40, opacity: 0, duration: 0.6, ease: "power2.out", repeat: -1, repeatDelay: 1.2, scrollTrigger: { trigger: ".linha-producao", start: "top 80%" } });
   gsap.from(".fone", { y: 120, rotate: 16, opacity: 0, duration: 1.1, ease: "back.out(1.5)", scrollTrigger: { trigger: ".resultado", start: "top 80%", once: true } });
   gsap.from(".lista-check li", { x: -30, opacity: 0, duration: 0.5, stagger: 0.1, ease: "power2.out", scrollTrigger: { trigger: ".lista-check", start: "top 85%", once: true } });
-  gsap.from(".cartao", { y: 70, opacity: 0, rotateY: -25, duration: 0.8, stagger: 0.12, ease: "power3.out", transformPerspective: 800, scrollTrigger: { trigger: ".cartoes", start: "top 85%", once: true } });
-  gsap.from(".janela", { y: 80, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: ".telas", start: "top 85%", once: true } });
+  gsap.fromTo(".cartao", { y: 70, opacity: 0, rotateY: -25 }, { y: 0, opacity: 1, rotateY: 0, duration: 0.8, stagger: 0.12, ease: "power3.out", transformPerspective: 800, scrollTrigger: { trigger: ".cartoes", start: "top 85%", once: true } });
+  gsap.fromTo(".janela", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: ".telas", start: "top 85%", once: true } });
   // a equipe: no computador, a fileira anda de lado enquanto a página rola (fixa na tela); no celular, cartões em grade
   var mm = gsap.matchMedia();
   mm.add("(min-width: 901px)", function () {
@@ -651,6 +731,5 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script type="module" src="vice-city.js"></script>
 </body>
 </html>
