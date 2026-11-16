@@ -438,7 +438,7 @@
   <section id="oferta">
     <h2 class="tit revela">Tudo isso por R$ 0,40 por dia</h2>
     <div class="oferta revela">
-      <div class="pequeno">preço de lançamento até 19 de novembro, o dia do GTA 6</div>
+      <div class="pequeno">preço de lançamento, por tempo limitado</div>
       <div class="ancora">de <s>R$ 297</s> por</div>
       <div class="preco">R$ 147</div>
       <div class="pequeno">depois do dia 19, o preço sobe</div>
@@ -482,7 +482,7 @@
     <div class="acao revela" style="text-align:center">
       <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_fecho">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:10px 0 0">De R$ 297 por R$ 147 até 19 de novembro, em até 12x · 7 dias de garantia</p>
+      <p class="pequeno" style="margin:10px 0 0">De R$ 297 por R$ 147 por tempo limitado, em até 12x · 7 dias de garantia</p>
     </div>
   </section>
 
@@ -522,7 +522,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // O CUPOM (16/11/2026, o presente dos 1.000 seguidores): `?cupom=CODIGO` na página vai pro checkout como `coupon=CODIGO`, que a Kirvano
   // aplica sozinha, e mostra a página inteira, sem a trava da VSL. O cupom em si é criado no painel da Kirvano.
   var CUPOM = ((location.search.match(/[?&]cupom=([A-Za-z0-9]{3,20})/) || [])[1] || "").toUpperCase();
-  var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + "utm_source=instagram&utm_campaign=" + (CUPOM ? "cupom-" + CUPOM.toLowerCase() : "viralcity") + (CUPOM ? "&coupon=" + CUPOM : "") : "";
+  // A UTM DE QUEM CHEGOU VAI PRO CHECKOUT (16/11/2026, pro tráfego pago): o link do anúncio traz utm_source=meta e o nome da campanha,
+  // do conjunto e do anúncio, e a Kirvano devolve isso na venda (a aba Ads do painel junta o gasto e a venda por ela). Sem UTM na
+  // chegada, segue a de sempre (instagram, viralcity, ou o cupom).
+  var aqui = new URLSearchParams(location.search), utm = new URLSearchParams();
+  ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { var v = aqui.get(k); if (v) utm.set(k, v.slice(0, 120)); });
+  if (!utm.get("utm_source")) { utm = new URLSearchParams(); utm.set("utm_source", "instagram"); utm.set("utm_campaign", CUPOM ? "cupom-" + CUPOM.toLowerCase() : "viralcity"); }
+  if (CUPOM) utm.set("coupon", CUPOM);
+  var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + utm.toString() : "";
   if (CUPOM) {
     document.getElementById("cupom-nome").textContent = CUPOM;
     document.getElementById("cupom-aviso").hidden = false;
