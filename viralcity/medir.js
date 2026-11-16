@@ -101,6 +101,7 @@
       visita.checkout = true;
       resumo();
       marcar("foi_pro_checkout");
+      try { localStorage.setItem("vc_checkout", JSON.stringify({ t: Date.now(), pagina: pagina, href: el.href })); } catch (e3) {}
       etiqueta("checkout", "sim");
       try { window.clarity("upgrade", "checkout"); } catch (e2) {}
     }
@@ -136,6 +137,104 @@
     }
 
     aviso();
+    faltou();
+  }
+
+  /* O QUE FALTOU (15/11/2026, pedido do dono: dezenas de cliques no "comprar" da Fábrica e ninguém preenchia o checkout). Quem foi
+     pra Kirvano e voltou pra página (pelo voltar, recarregando ou trocando de aba), nas 6 horas seguintes, vê UMA vez a pergunta
+     "o que faltou?", com um toque e um campo livre. A resposta vai pro coletor (/r) e aparece na aba Site do painel. */
+  var MOTIVOS = [
+    ["caro", "Achei caro"],
+    ["nao_entendi", "Não entendi direito o que eu recebo"],
+    ["pra_mim", "Fiquei na dúvida se funciona pra mim"],
+    ["confianca", "Quero ver alguém usando antes"],
+    ["pagamento", "Problema no pagamento ou no CPF"],
+    ["depois", "Vou comprar depois"],
+    ["comprei", "Já comprei"],
+  ];
+  function faltou() {
+    function talvez() {
+      var c = null;
+      try { c = JSON.parse(localStorage.getItem("vc_checkout") || "null"); } catch (e) {}
+      if (!c || c.pagina !== pagina || Date.now() - c.t > 6 * 3600 * 1000 || Date.now() - c.t < 2000) return;
+      try { localStorage.removeItem("vc_checkout"); } catch (e) {}
+      mostrar(c.href);
+    }
+    addEventListener("pageshow", function (e) { if (e.persisted) talvez(); });
+    document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") talvez(); });
+    talvez();
+    // ?faltou=1 mostra a caixa sem precisar ir pra Kirvano (pro dono conferir)
+    if (q.get("faltou") === "1") mostrar("");
+  }
+  function mostrar(href) {
+    if (document.getElementById("faltou")) return;
+    marcar("faltou_mostrou");
+    enviar("/r", { id: visita.id, pagina: pagina, disp: visita.disp, motivo: "_mostrou" });
+    var css = document.createElement("style");
+    css.textContent = [
+      "#faltou{position:fixed;inset:0;z-index:10000;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);padding:0 max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));font:15px/1.4 system-ui,-apple-system,Segoe UI,sans-serif}",
+      "#faltou .caixa{width:100%;max-width:440px;background:#14161c;color:#f2f3f5;border:1px solid #2c3040;border-radius:16px 16px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.5);max-height:92vh;overflow:auto}",
+      "#faltou h3{margin:0 28px 4px 0;font-size:18px;line-height:1.25}",
+      "#faltou p{margin:0 0 14px;color:#a7adbb;font-size:14px}",
+      "#faltou .op{display:block;width:100%;text-align:left;margin:0 0 8px;padding:11px 14px;border-radius:10px;border:1px solid #2c3040;background:#1c1f28;color:inherit;font:inherit;cursor:pointer}",
+      "#faltou .op.sim{border-color:#ffd23f;background:#2a2614}",
+      "#faltou textarea{width:100%;box-sizing:border-box;min-height:64px;margin:4px 0 10px;padding:10px 12px;border-radius:10px;border:1px solid #2c3040;background:#0e1015;color:inherit;font:inherit;resize:vertical}",
+      "#faltou .enviar{width:100%;padding:12px;border:0;border-radius:10px;background:#ffd23f;color:#111;font:700 15px/1 system-ui,sans-serif;cursor:pointer}",
+      "#faltou .enviar:disabled{opacity:.45;cursor:default}",
+      "#faltou .voltar{display:block;text-align:center;margin-top:12px;color:#ffd23f;font-size:14px}",
+      "#faltou .fechar{position:absolute;right:10px;top:8px;width:36px;height:36px;border:0;background:none;color:#a7adbb;font-size:22px;cursor:pointer}",
+      "#faltou .obrigado{text-align:center;padding:12px 0 4px}",
+    ].join("\n");
+    document.head.appendChild(css);
+    var fundo = document.createElement("div");
+    fundo.id = "faltou";
+    fundo.setAttribute("role", "dialog");
+    fundo.setAttribute("aria-modal", "true");
+    fundo.setAttribute("aria-label", "O que faltou pra você comprar?");
+    var caixa = document.createElement("div");
+    caixa.className = "caixa";
+    caixa.style.position = "relative";
+    caixa.innerHTML = '<button type="button" class="fechar" aria-label="Fechar">×</button>' +
+      "<h3>O que faltou pra você comprar?</h3><p>Um toque já me ajuda. Eu leio todas as respostas.</p>";
+    var escolhido = "";
+    var botões = MOTIVOS.map(function (m) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "op"; b.textContent = m[1]; b.dataset.motivo = m[0];
+      b.addEventListener("click", function () {
+        escolhido = m[0];
+        botões.forEach(function (x) { x.classList.toggle("sim", x === b); });
+        enviarBtn.disabled = false;
+      });
+      caixa.appendChild(b);
+      return b;
+    });
+    var texto = document.createElement("textarea");
+    texto.placeholder = "Quer contar mais? (opcional)";
+    texto.maxLength = 500;
+    texto.addEventListener("input", function () { enviarBtn.disabled = !escolhido && !texto.value.trim(); });
+    caixa.appendChild(texto);
+    var enviarBtn = document.createElement("button");
+    enviarBtn.type = "button"; enviarBtn.className = "enviar"; enviarBtn.textContent = "Enviar"; enviarBtn.disabled = true;
+    caixa.appendChild(enviarBtn);
+    if (href) {
+      var volta = document.createElement("a");
+      volta.className = "voltar"; volta.href = href; volta.dataset.medir = "faltou_voltar_pagamento"; volta.textContent = "Voltar pro pagamento";
+      caixa.appendChild(volta);
+    }
+    fundo.appendChild(caixa);
+    document.body.appendChild(fundo);
+    function fechar() { fundo.remove(); }
+    caixa.querySelector(".fechar").addEventListener("click", fechar);
+    fundo.addEventListener("click", function (e) { if (e.target === fundo) fechar(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") fechar(); });
+    enviarBtn.addEventListener("click", function () {
+      var motivo = escolhido || "outro";
+      marcar("faltou_" + motivo);
+      enviar("/r", { id: visita.id, pagina: pagina, disp: visita.disp, motivo: motivo, texto: texto.value.trim().slice(0, 500) });
+      caixa.innerHTML = '<p class="obrigado">Valeu! Isso me ajuda a melhorar.</p>';
+      if (href) caixa.appendChild(volta);
+      setTimeout(fechar, href ? 6000 : 2500);
+    });
   }
 
   // o aviso da medição (LGPD), discreto, no fim da página
