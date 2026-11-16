@@ -77,7 +77,16 @@
     });
     // Tela cheia: a do navegador quando ele deixa pôr a caixa inteira (com os nossos botões); senão (iPhone), a caixa cobre a tela,
     // e a tela cheia do próprio vídeo nunca é usada, porque ela traz de volta o tempo e a barra de avançar.
+    // A CAIXA VAI PRO <body> ENQUANTO COBRE A TELA (16/11/2026, o dono no iPhone: "quando clico em fullscreen ele buga e não dá
+    // pra arrumar"): um antepassado com transform (a entrada do GSAP) ou com overflow escondido prende o position: fixed nele, e
+    // a caixa saía torta, cortada e com o ✕ fora da tela. Ao sair, ela volta pro lugar dela. Tirar o vídeo do documento pausa,
+    // então ele continua tocando se estava tocando.
+    var lugar = document.createComment("vsl");
     function cheiaDaPagina(ligar) {
+      var tocando = !vsl.paused;
+      if (ligar && caixa.parentNode !== document.body) { caixa.parentNode.insertBefore(lugar, caixa); document.body.appendChild(caixa); }
+      if (!ligar && lugar.parentNode) { lugar.parentNode.insertBefore(caixa, lugar); lugar.parentNode.removeChild(lugar); }
+      if (tocando && vsl.paused) vsl.play().catch(function () {});
       caixa.classList.toggle("vsl-cheia-pagina", ligar);
       document.documentElement.classList.toggle("vsl-travado", ligar);
       bCheia.textContent = ligar ? "✕" : "⛶";
