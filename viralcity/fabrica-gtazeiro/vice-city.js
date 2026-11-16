@@ -20,9 +20,10 @@ const PALETAS = {
   canal: { noite: "#061a20", ceu: ["#04141a", "#0f3a44", "#0a2a33", "#ffb627", "#ff8a1f"], sol: ["#ff8a1f", "#ffb627", "#ffe08a"], chao: ["#ffb627", "#4fd1c5"], borda: "#4fd1c5", faixa: "#ffb627", mont: ["#4fd1c5", "#ffb627"], montCorpo: "#082128", predio: "#05161b", janelas: ["#ffb627", "#ffd166", "#4fd1c5", "#ffffff"], palma: ["#03100f", "#ffb627"], nevoa: "#1d5560", base: "#051419" },
   noite: { noite: "#060a1f", ceu: ["#03051a", "#152060", "#0b123d", "#ff7a45", "#ff3d9a"], sol: ["#ff3d9a", "#ff8a3d", "#ffc857"], chao: ["#ff3d9a", "#2f8bff"], borda: "#2f8bff", faixa: "#ffc857", mont: ["#2f8bff", "#ff3d9a"], montCorpo: "#0a1030", predio: "#050820", janelas: ["#2f8bff", "#ff3d9a", "#ffc857", "#ffffff"], palma: ["#03051a", "#ff3d9a"], nevoa: "#2a2f7a", base: "#05081c" },
   praia: { noite: "#0b2233", ceu: ["#2a6f9e", "#6fb6d9", "#4a92bf", "#ffb27a", "#ff7d5c"], sol: ["#ff6b4a", "#ffa24c", "#fff0b3"], chao: ["#ff6b4a", "#2ee6d0"], borda: "#2ee6d0", faixa: "#fff0b3", mont: ["#2ee6d0", "#ff6b4a"], montCorpo: "#123a52", predio: "#0e2c40", janelas: ["#fff0b3", "#2ee6d0", "#ffa24c", "#ffffff"], palma: ["#0a1f2c", "#ff6b4a"], nevoa: "#e8907a", base: "#0b2638" },
+  logo: { noite: "#02222e", ceu: ["#021a24", "#0e3a40", "#0a2d33", "#ff9a3c", "#e2662a"], sol: ["#e0651f", "#f7a23a", "#ffd98a"], chao: ["#f28c28", "#2f8f88"], borda: "#f7a23a", faixa: "#ffd98a", mont: ["#2f8f88", "#f28c28"], montCorpo: "#052a33", predio: "#031b22", janelas: ["#ffc46b", "#f28c28", "#efe3cc", "#ffffff"], palma: ["#011219", "#f28c28"], nevoa: "#7a4a32", base: "#02161d" },
   ouro: { noite: "#09090b", ceu: ["#050506", "#1f1a10", "#121010", "#c98b2b", "#8a5a1a"], sol: ["#c98b2b", "#e9b949", "#f6dd8f"], chao: ["#e9b949", "#f3efe6"], borda: "#e9b949", faixa: "#f6dd8f", mont: ["#e9b949", "#6b5426"], montCorpo: "#0f0e0c", predio: "#070707", janelas: ["#f6dd8f", "#e9b949", "#ffffff", "#c98b2b"], palma: ["#050505", "#e9b949"], nevoa: "#3a2d12", base: "#08080a" },
 };
-const P = PALETAS[document.documentElement.dataset.paleta] || PALETAS.ouro;
+const P = PALETAS[document.documentElement.dataset.paleta] || PALETAS.logo;
 const v3 = (h) => { const c = new THREE.Color(h); return new THREE.Vector3(c.r, c.g, c.b); };
 
 if (canvas && temWebGL()) iniciar();
