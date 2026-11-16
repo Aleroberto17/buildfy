@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Você está na lista</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b1d24">
+<link rel="icon" href="../../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../estilo.css">
+<script src="../../medir.js" data-pagina="lista"></script>
+<style>
+  /* A página de obrigado da lista de espera da versão pra celular e Mac (16/11/2026): quem se inscreveu em ../ cai aqui. */
+  .obrigado { max-width: 560px; margin: 0 auto; padding: 72px max(16px, env(safe-area-inset-right, 0px)) 80px max(16px, env(safe-area-inset-left, 0px)); text-align: center; }
+  .selo { display: inline-block; font-family: var(--pixel); font-size: 10px; color: #1a0f05; background: var(--ambar); padding: 6px 10px; margin-bottom: 22px; }
+  .obrigado h1 { font-family: var(--pixel); font-weight: 400; font-size: clamp(18px, 4.6vw, 28px); line-height: 1.5; color: var(--amarelo); margin: 0 0 18px; text-shadow: 4px 4px 0 #3a1a07; }
+  .obrigado p { color: var(--texto-suave); font-size: 17px; line-height: 1.55; margin: 0 auto 26px; }
+  .obrigado p b { color: var(--texto); }
+  .obrigado .botao { font-size: 12px; padding: 18px 24px; }
+  .obrigado .depois { font-size: 14px; margin-top: 28px; }
+  .obrigado .depois a { color: var(--ambar); }
+</style>
+</head>
+<body>
+<main class="obrigado">
+  <div class="selo">VOCÊ ESTÁ NA LISTA</div>
+  <h1>A versão de celular e Mac vem aí</h1>
+  <p>Entra na <b>comunidade do WhatsApp</b> pra ser o primeiro a saber quando abrir.</p>
+  <a class="botao brilhar" id="comunidade" href="#" target="_blank" rel="noopener" data-medir="lista_comunidade" hidden>Entrar na comunidade</a>
+  <p id="sem-link" hidden>Pronto, você está na lista. A gente te chama no WhatsApp assim que abrir.</p>
+  <p class="depois">Enquanto isso, acompanha a Fábrica no <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="lista_instagram">@viralcity.jogo</a>.</p>
+</main>
+<script>
+// O LINK DA COMUNIDADE DO WHATSAPP. Vazio, a página só confirma a inscrição.
+var COMUNIDADE = "";
+(function () {
+  if (/^https:\/\/(chat\.whatsapp\.com|whatsapp\.com)\//.test(COMUNIDADE)) {
+    var a = document.getElementById("comunidade");
+    a.href = COMUNIDADE; a.hidden = false;
+  } else {
+    document.getElementById("sem-link").hidden = false;
+  }
+})();
+</script>
+</body>
+</html>

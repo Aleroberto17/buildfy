@@ -167,6 +167,19 @@
   body.travada .topo .botao, body.travada .heroi .acao, body.travada .pagina > :not(.heroi), body.travada .rodape, body.travada .barra-compra { display: none !important; }
   .trava-aviso { display: none; text-align: center; margin: 18px auto 0; max-width: 520px; color: var(--texto-suave); font-size: 15px; }
   body.travada .trava-aviso { display: block; }
+
+  /* ---------- a lista de espera da versão pra celular e Mac (16/11/2026): visível mesmo com a página travada ---------- */
+  .lista-espera { max-width: 520px; margin: 18px auto 0; text-align: center; }
+  .lista-abrir { background: none; border: 0; padding: 6px 4px; color: var(--texto-suave); font: 500 15px/1.4 var(--corpo); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .lista-abrir b { color: var(--ambar); }
+  .lista-abrir:hover { color: var(--texto); }
+  .lista-form { margin-top: 12px; padding: 18px 16px; background: var(--fundo-2); border: 2px solid var(--linha); text-align: left; display: grid; gap: 10px; }
+  .lista-form label { display: grid; gap: 4px; font-size: 14px; color: var(--texto-suave); }
+  .lista-form input { width: 100%; box-sizing: border-box; padding: 12px; font: 16px var(--corpo); color: var(--texto); background: var(--fundo); border: 2px solid var(--linha); border-radius: 0; }
+  .lista-form input:focus { outline: none; border-color: var(--ambar); }
+  .lista-form .botao { width: 100%; font-size: 11px; padding: 15px; margin-top: 4px; }
+  .lista-form .lgpd { font-size: 12px; color: var(--texto-suave); margin: 0; }
+  .lista-form .erro { font-size: 13px; color: var(--laranja); margin: 0; }
   .liberou { animation: liberou .9s ease-out both; }
   @keyframes liberou { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .liberou { animation: none; } }
@@ -230,6 +243,17 @@
       <button class="som" id="som" type="button">▶ Toque pra ouvir</button>
     </div>
     <p class="trava-aviso">Toque em <b>"Toque pra ouvir"</b> e assista para garantir seu acesso à Fábrica.</p>
+    <div class="lista-espera">
+      <button type="button" class="lista-abrir" id="lista-abrir" aria-expanded="false" aria-controls="lista-form">Não tem um PC com Windows? <b>Entre na lista para a versão de celular e Mac</b></button>
+      <form class="lista-form" id="lista-form" hidden novalidate>
+        <label>Nome <input name="nome" autocomplete="name" required maxlength="80"></label>
+        <label>E-mail <input name="email" type="email" autocomplete="email" required maxlength="120"></label>
+        <label>WhatsApp <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(11) 91234-5678" required maxlength="20"></label>
+        <p class="erro" id="lista-erro" hidden></p>
+        <button class="botao" type="submit" data-medir="lista_entrar">Entrar na lista</button>
+        <p class="lgpd">Seus dados servem só pra te avisar quando a versão de celular e Mac abrir.</p>
+      </form>
+    </div>
     <div class="acao revela">
       <a class="botao brilhar comprar" href="#oferta" data-onde="heroi">Quero a Fábrica de Conteúdo</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_heroi">@viralcity.jogo</a> pra saber quando.</p>
@@ -545,6 +569,38 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.ScrollTrigger) window.ScrollTrigger.refresh();
   }
   if (!OFERTA_EM || jaViu() || /[?&]tudo=1/.test(location.search)) liberar(false);
+
+  // A LISTA DE ESPERA (16/11/2026): nome, e-mail e WhatsApp vão pro coletor do painel (aba Site) e a pessoa segue pra página de
+  // obrigado, com o link da comunidade do WhatsApp (lista/)
+  var abrir = document.getElementById("lista-abrir"), form = document.getElementById("lista-form"), erro = document.getElementById("lista-erro");
+  abrir.addEventListener("click", function () {
+    form.hidden = !form.hidden;
+    abrir.setAttribute("aria-expanded", String(!form.hidden));
+    if (!form.hidden) form.elements.nome.focus();
+  });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var nome = form.elements.nome.value.trim(), email = form.elements.email.value.trim(), whats = form.elements.whatsapp.value.trim();
+    var problema = !nome ? "Escreve o seu nome." : !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? "Confere o e-mail." :
+      whats.replace(/\D/g, "").length < 10 ? "Confere o WhatsApp, com o DDD." : "";
+    erro.textContent = problema; erro.hidden = !problema;
+    if (problema) return;
+    var botao = form.querySelector("button[type=submit]");
+    botao.disabled = true; botao.textContent = "Enviando...";
+    var q = new URLSearchParams(location.search);
+    fetch("https://viralcity-metricas.viralcity-dados.workers.dev/l", {
+      method: "POST", keepalive: true,
+      body: JSON.stringify({ id: String(Math.random()).slice(2) + Date.now(), pagina: "fabrica", disp: innerWidth < 700 ? "celular" : "computador",
+        nome: nome, email: email, whatsapp: whats, origem: q.get("utm_source") || "" }),
+    }).then(function (r) {
+      if (!r.ok) throw new Error(String(r.status));
+      if (window.clarity) window.clarity("event", "lista_espera");
+      location.href = "lista/";
+    }).catch(function () {
+      erro.textContent = "Não deu pra enviar agora. Tenta de novo em um instante."; erro.hidden = false;
+      botao.disabled = false; botao.textContent = "Entrar na lista";
+    });
+  });
   // o player próprio (../vsl-player.js): sem barra de tempo e sem avançar; libera quando a pessoa chega na oferta assistindo com som
   window.montarVSL({ aoChegar: OFERTA_EM, quandoChegar: function () { liberar(true); } });
 
