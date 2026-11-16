@@ -218,6 +218,9 @@
   }
   .oferta .de { color: var(--texto-suave); text-decoration: line-through; font-size: 18px; }
   .oferta .ancora { color: var(--texto-suave); font-size: 18px; margin-top: 8px; } .oferta .ancora s { text-decoration-thickness: 2px; }
+  .cupom-aviso { margin: 14px auto 4px; padding: 10px 14px; background: #143843; border: 2px dashed var(--ambar); color: var(--texto); font-size: 15px; max-width: 420px; }
+  .cupom-aviso strong { color: var(--amarelo); }
+  .cupom-aviso[hidden] { display: none; }
 </style>
 <script src="../medir.js" data-pagina="fabrica"></script>
 <script src="../vsl-player.js"></script>
@@ -440,6 +443,7 @@
       <div class="preco">R$ 147</div>
       <div class="pequeno">depois do dia 19, o preço sobe</div>
       <div class="pequeno">em até 12x no cartão · 1 ano de acesso</div>
+      <div class="cupom-aviso" id="cupom-aviso" hidden>🎁 Seu cupom <strong id="cupom-nome"></strong> de 10% já entra no checkout</div>
       <ul>
         <li><strong>A Fábrica de Conteúdo</strong>, com 6 produções</li>
         <li>Vídeo longo pro YouTube, com thumbnails, títulos e tags</li>
@@ -515,7 +519,14 @@ var CHECKOUT_URL = "https://pay.kirvano.com/b7049a09-e281-48a3-9e5b-14cdecbd79ad
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
   var temCheckout = /^https:\/\//.test(CHECKOUT_URL);
-  var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + "utm_source=instagram&utm_campaign=viralcity" : "";
+  // O CUPOM (16/11/2026, o presente dos 1.000 seguidores): `?cupom=CODIGO` na página vai pro checkout como `coupon=CODIGO`, que a Kirvano
+  // aplica sozinha, e mostra a página inteira, sem a trava da VSL. O cupom em si é criado no painel da Kirvano.
+  var CUPOM = ((location.search.match(/[?&]cupom=([A-Za-z0-9]{3,20})/) || [])[1] || "").toUpperCase();
+  var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + "utm_source=instagram&utm_campaign=" + (CUPOM ? "cupom-" + CUPOM.toLowerCase() : "viralcity") + (CUPOM ? "&coupon=" + CUPOM : "") : "";
+  if (CUPOM) {
+    document.getElementById("cupom-nome").textContent = CUPOM;
+    document.getElementById("cupom-aviso").hidden = false;
+  }
 
   document.querySelectorAll(".comprar").forEach(function (b) {
     var onde = b.dataset.onde || "pagina";
@@ -572,7 +583,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (marcar) { try { localStorage.setItem(CHAVE_DA_TRAVA, "1"); } catch (e) {} if (window.clarity) window.clarity("event", "liberou_oferta"); }
     if (window.ScrollTrigger) window.ScrollTrigger.refresh();
   }
-  if (!OFERTA_EM || jaViu() || /[?&]tudo=1/.test(location.search)) liberar(false);
+  if (!OFERTA_EM || jaViu() || CUPOM || /[?&]tudo=1/.test(location.search)) liberar(false);
 
   // A LISTA DE ESPERA (16/11/2026): nome, e-mail e WhatsApp vão pro coletor do painel (aba Site) e a pessoa segue pra página de
   // obrigado, com o link da comunidade do WhatsApp (lista/)
