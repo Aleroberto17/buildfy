@@ -377,6 +377,11 @@
     [data-paleta="vi"] .heroi::before { background: url("img/vi/heroi-celular.jpg") center top / cover no-repeat; }
     [data-paleta="vi"] .heroi::after { background: linear-gradient(180deg, rgba(16,14,28,.4) 0%, rgba(16,14,28,.5) 50%, var(--noite) 90%); }
   }
+
+  /* SEM PALAVRA SOZINHA NA LINHA (16/11/2026, o dono: "não gostei de ficar uma palavra solta, uma linha sozinha"): os títulos
+     dividem as linhas por igual, e os parágrafos não deixam uma palavra só no fim */
+  h1, h2, h3, .heroi h1 .linha > span { text-wrap: balance; }
+  p, li, .chamada, .lead, summary { text-wrap: pretty; }
 </style>
 
 <script>(function(){var m=/[?&]paleta=(\w+)/.exec(location.search);if(m)document.documentElement.dataset.paleta=m[1];})();</script>
@@ -399,8 +404,8 @@
     <div class="selo revela"><i></i>Pra quem assiste o GTAzeiro</div>
     <h1>
       <span class="linha"><span>Um canal de GTA 6</span></span>
-      <span class="linha"><span>com vídeo novo <span class="neon">todo dia.</span></span></span>
-      <span class="linha"><span class="ciano">Sem você editar nada.</span></span>
+      <span class="linha"><span>com vídeo novo <span class="neon">todo&nbsp;dia.</span></span></span>
+      <span class="linha"><span class="ciano">Sem você editar&nbsp;nada.</span></span>
     </h1>
     <p class="lead revela">A Fábrica de Conteúdo pesquisa, escreve, narra e monta vídeos sobre GTA 6 com as cenas do jogo. E, quando você grava, transforma a sua gameplay em vídeos e cortes prontos. <b>Tudo no seu computador, você só aprova.</b></p>
     <div class="monitor revela">
