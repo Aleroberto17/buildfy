@@ -112,10 +112,16 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && caixa.classList.contains("vsl-cheia-pagina")) cheiaDaPagina(false); });
 
     // sem avançar: o vídeo nunca passa do ponto mais longe que já tocou de verdade
+    // O PONTO MAIS LONGE VEM DE TOCAR, NÃO DE PULAR (16/11/2026, o dono no iPhone: "assisti o vídeo inteiro e não liberou o botão"):
+    // a regra antiga só contava um avanço de menos de 1,5 s entre dois "timeupdate", e o iPhone espaça esses avisos (carregando, a
+    // 1,5x, ao trocar de tela cheia); um intervalo maior travava o ponto mais longe pra sempre e a página nunca liberava. Pular
+    // sempre passa pelo "seeking", que devolve o vídeo; tocar não. E chegar ao fim do vídeo também libera.
+    function chegar() { if (ligada && !chegou && op.aoChegar && maisLonge >= op.aoChegar) { chegou = true; if (op.quandoChegar) op.quandoChegar(); } }
     vsl.addEventListener("timeupdate", function () {
-      if (!vsl.seeking && vsl.currentTime - maisLonge < 1.5) maisLonge = Math.max(maisLonge, vsl.currentTime);
-      if (ligada && !chegou && op.aoChegar && maisLonge >= op.aoChegar) { chegou = true; if (op.quandoChegar) op.quandoChegar(); }
+      if (!vsl.seeking) maisLonge = Math.max(maisLonge, vsl.currentTime);
+      chegar();
     });
+    vsl.addEventListener("ended", function () { if (ligada) { maisLonge = Math.max(maisLonge, vsl.duration || 0); chegar(); } });
     vsl.addEventListener("seeking", function () {
       if (ligada && vsl.currentTime > maisLonge + 1) vsl.currentTime = maisLonge;
     });
