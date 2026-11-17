@@ -44,7 +44,8 @@
   .marca img { width: 36px; height: 36px; image-rendering: pixelated; border: 3px solid var(--ambar); }
   .marca span { font-family: var(--pixel); font-size: 13px; color: var(--branco); text-shadow: 3px 3px 0 #000; }
 
-  .selo { align-self: center; font-family: var(--pixel); font-size: 10px; letter-spacing: .04em; padding: 7px 10px; background: var(--ambar); color: #1a0d05; }
+  .presente { margin: 0; padding: 14px 16px; text-align: center; font-size: 16px; line-height: 1.5; color: var(--branco); background: rgba(255, 178, 56, .1); border: 2px dashed var(--ambar); border-radius: 12px; text-wrap: balance; }
+  .selo { align-self: center; font-family: var(--corpo); font-weight: 800; font-size: 13px; letter-spacing: .08em; padding: 7px 10px; background: var(--ambar); color: #1a0d05; }
   h1 { margin: 0; text-align: center; font-size: clamp(30px, 8.4vw, 42px); line-height: 1.08; font-weight: 800; color: var(--branco); text-wrap: balance; letter-spacing: -.01em; }
   h1 em { font-style: normal; color: var(--amarelo); }
   .sub { margin: -8px 0 0; text-align: center; color: var(--texto-suave); font-size: 17px; line-height: 1.55; text-wrap: balance; }
@@ -55,7 +56,7 @@
 
   .botao {
     display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 64px; padding: 14px 18px;
-    font-family: var(--pixel); font-size: 14px; letter-spacing: .03em; color: #1a0d05; text-decoration: none; text-align: center;
+    font-family: var(--corpo); font-weight: 800; font-size: 20px; letter-spacing: .06em; color: #1a0d05; text-decoration: none; text-align: center;
     background: linear-gradient(135deg, var(--laranja), var(--amarelo)); border: 3px solid var(--amarelo); border-radius: 12px;
     box-shadow: 0 5px 0 #8a3a12; transition: transform .15s ease, box-shadow .15s ease;
   }
@@ -82,6 +83,7 @@
 <main>
   <a class="marca" href="https://buildfy.tec.br/viralcity/"><img src="../img/logo.png" alt="" width="36" height="36"><span>VIRAL CITY</span></a>
 
+  <p class="presente">🎁 Vimos que muita gente quer começar um canal novo, então preparamos um presente pra vocês.</p>
   <span class="selo">GUIA GRÁTIS · PDF</span>
   <h1>Canal do zero: <em>postar todo dia</em> sem virar refém da edição</h1>
   <p class="sub">O que trava quase todo canal novo, o plano dos primeiros 30 dias e como colocar a IA pra fazer a parte pesada.</p>
@@ -92,11 +94,11 @@
     <img src="img/pagina-3.jpg" alt="" width="720" height="1280" loading="lazy">
   </div>
 
-  <a class="botao" href="canal-do-zero-viralcity.pdf" download="Canal do zero - Viral City.pdf">
+  <a class="botao" data-medir="baixar_pdf" href="canal-do-zero-viralcity.pdf" download="Canal do zero - Viral City.pdf">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M6 10l6 6 6-6M4 20h16"/></svg>
-    BAIXAR O GUIA
+    BAIXAR GRÁTIS
   </a>
-  <p class="nota">PDF de 11 páginas, 5 MB. Abre no celular. Sem cadastro.</p>
+  <p class="nota"><b style="color:var(--verde)">É grátis.</b> Sem cadastro e sem cartão. PDF de 11 páginas, abre no celular.</p>
 
   <section class="bloco">
     <h2>O QUE TEM DENTRO</h2>
