@@ -222,6 +222,16 @@
   .cupom-aviso strong { color: var(--amarelo); }
   .cupom-aviso[hidden] { display: none; }
 </style>
+<!-- O PIXEL DA META (17/11/2026, pro tráfego pago): "Fábrica de Conteúdo", 2601205323715303, na conta CA#1. Aqui ele marca a visita
+     (PageView) e o clique pro checkout (InitiateCheckout, no script do fim); a compra (Purchase) quem manda é a Kirvano, pela integração. -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2601205323715303');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2601205323715303&ev=PageView&noscript=1"></noscript>
 <script src="../medir.js" data-pagina="fabrica"></script>
 <script src="../vsl-player.js"></script>
 </head>
@@ -540,6 +550,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (temCheckout) {
       b.href = destino;
       b.dataset.medir = "comprar_fabrica_" + onde;
+      // o pixel da Meta marca a ida ao checkout (uma vez por visita), pra campanha poder otimizar por ela
+      b.addEventListener("click", function () {
+        if (window.fbq && !window.__foiProCheckout) { window.__foiProCheckout = true; fbq("track", "InitiateCheckout", { value: 147, currency: "BRL", content_name: "Fábrica de Conteúdo" }); }
+      });
     } else {
       b.textContent = "Em breve";
       b.classList.add("breve");

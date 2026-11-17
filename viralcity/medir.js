@@ -240,7 +240,10 @@
   // o aviso da medição (LGPD), discreto, no fim da página
   function aviso() {
     var p = document.createElement("p");
-    p.textContent = "Esta página mede as visitas de forma anônima, com o Microsoft Clarity e um contador próprio, pra melhorar o conteúdo.";
+    // a página com o pixel da Meta (a da Fábrica, 17/11/2026, pros anúncios) avisa dele também: ele usa cookies e não é anônimo
+    p.textContent = window.fbq
+      ? "Esta página mede as visitas com o Microsoft Clarity e um contador próprio, pra melhorar o conteúdo, e com o pixel da Meta, que usa cookies pra medir os anúncios."
+      : "Esta página mede as visitas de forma anônima, com o Microsoft Clarity e um contador próprio, pra melhorar o conteúdo.";
     p.style.cssText = "margin:0;padding:24px 16px " + (document.getElementById("barra") ? "96px" : "24px") + ";font-size:12px;line-height:1.5;text-align:center;opacity:.55;";
     var f = document.querySelector("footer");
     if (f) f.appendChild(p); else document.body.appendChild(p);
