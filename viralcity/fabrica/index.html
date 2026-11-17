@@ -2,6 +2,21 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<!-- sorteio A/B -->
+<script>
+/* O TESTE A/B (17/11/2026): metade das visitas vai pra versão B (b.html). Ver fazer-teste-ab.py. */
+(function () {
+  var q = location.search, v = (q.match(/[?&]v=(a|b)(?:&|$)/i) || [])[1];
+  if (/[?&]cupom=/.test(q)) v = "a";
+  try {
+    v = (v || localStorage.getItem("fabrica:ab") || (Math.random() < 0.5 ? "a" : "b")).toLowerCase();
+    localStorage.setItem("fabrica:ab", v);
+  } catch (e) { v = v || "a"; }
+  window.VARIANTE = v === "b" ? "b" : "a";
+  if (window.VARIANTE === "b") location.replace("b.html" + q + location.hash);
+})();
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fábrica de Conteúdo</title>
 <meta name="description" content="Seu canal com vídeo novo todo dia, sem gravar, sem editar e sem aparecer. A Fábrica de Conteúdo pesquisa, escreve, narra, monta e agenda os seus vídeos do YouTube, Instagram e TikTok. Você só aprova.">
@@ -234,7 +249,7 @@
 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
 s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2601205323715303');
-fbq('track', 'PageView');
+if (window.VARIANTE !== 'b') fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2601205323715303&ev=PageView&noscript=1"></noscript>
 <script src="../medir.js" data-pagina="fabrica"></script>
@@ -548,6 +563,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // que fica em outro domínio, não liga a ida ao checkout nem a compra ao anúncio que trouxe a pessoa.
   var fbclid = aqui.get("fbclid");
   if (fbclid) utm.set("fbclid", fbclid.slice(0, 500));
+  // a versão do teste A/B vai no utm_medium ("-va" ou "-vb"), e a Kirvano devolve na venda
+  utm.set("utm_medium", (utm.get("utm_medium") || "site") + "-v" + (window.VARIANTE || "a"));
   var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + utm.toString() : "";
   if (CUPOM) {
     document.getElementById("cupom-nome").textContent = CUPOM;

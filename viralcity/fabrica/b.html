@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<script>window.VARIANTE = "b"; try { localStorage.setItem("fabrica:ab", "b"); } catch (e) {}</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fábrica de Conteúdo</title>
+<meta name="description" content="Seu canal com vídeo novo todo dia, sem gravar, sem editar e sem aparecer. A Fábrica de Conteúdo pesquisa, escreve, narra, monta e agenda os seus vídeos do YouTube, Instagram e TikTok. Você só aprova.">
+<meta property="og:title" content="Fábrica de Conteúdo">
+<meta property="og:description" content="Seu canal com vídeo novo todo dia. Sem gravar, sem editar, sem aparecer.">
+<meta property="og:image" content="https://buildfy.tec.br/viralcity/fabrica/midia/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://buildfy.tec.br/viralcity/fabrica/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b1d24">
+<link rel="icon" href="../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  /* A página da Fábrica de Conteúdo: o mesmo jeito da página do curso (../curso/), com as telas do programa. */
+  .pagina { max-width: var(--largura); margin: 0 auto; padding: 0 16px 120px; }
+  section { padding: 56px 0 0; scroll-margin-top: 70px; }
+  .selo { display: inline-block; font-family: var(--pixel); font-size: 10px; color: #1a0f05; background: var(--ambar); border: 0; padding: 6px 10px; margin-bottom: 18px; }
+  h2.tit { font-family: var(--pixel); font-weight: 400; font-size: clamp(15px, 3.4vw, 22px); color: var(--amarelo); text-align: center; margin: 0 0 12px; line-height: 1.5; }
+  .chamada { text-align: center; max-width: 680px; margin: 0 auto 28px; color: var(--texto-suave); display: block; }
+  .pequeno { font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- herói ---------- */
+  .heroi { text-align: center; padding: 40px 0 0; position: relative; overflow: visible; }
+  .heroi h1 { font-family: var(--pixel); font-weight: 400; font-size: clamp(20px, 4.8vw, 36px); line-height: 1.45; color: var(--amarelo); margin: 0 auto 18px; max-width: 900px; text-shadow: 4px 4px 0 #3a1a07; }
+  .heroi h1 em { font-style: normal; color: var(--laranja); }
+  .heroi .lead { max-width: 720px; margin: 0 auto 26px; font-size: 18px; }
+  .brilho { position: absolute; inset: -40px 0 auto; height: 520px; z-index: -1; pointer-events: none;
+    background: radial-gradient(60% 55% at 50% 30%, rgba(255,122,47,.20), transparent 70%); }
+  .monitor { position: relative; max-width: 860px; margin: 0 auto; padding: 14px; background: #061218; border: 4px solid var(--linha); box-shadow: 10px 10px 0 #05242c, 0 0 80px rgba(255,178,56,.12); }
+  .monitor::before { content: none; } /* sem o pé do monitor embaixo do vídeo (12/11/2026, pedido do dono) */
+  .monitor video { width: 100%; aspect-ratio: 16 / 9; background: #000; object-fit: cover; }
+  .monitor .rotulo-monitor { position: absolute; left: 24px; top: 24px; font-family: var(--pixel); font-size: 8px; line-height: 1.5; color: #1a0f05; background: var(--amarelo); padding: 5px 7px; }
+  /* o botão do meio da VSL (o mesmo da página do curso): começa muda; o toque liga o som do começo */
+  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--pixel); font-size: 12px; line-height: 1.4;
+    color: #1a0f05; background: var(--amarelo); border: 3px solid #1a0f05; box-shadow: 4px 4px 0 var(--laranja); padding: 16px 20px; cursor: pointer; animation: pulsar 1.4s ease-in-out infinite; }
+  .som[hidden] { display: none; }
+  @keyframes pulsar { 50% { transform: translate(-50%, -50%) scale(1.06); } }
+  @media (prefers-reduced-motion: reduce) { .som { animation: none; } }
+  .acao { margin-top: 46px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .acao .botao { font-size: 13px; padding: 18px 26px; }
+  .confianca { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font-size: 14px; color: var(--texto-suave); }
+  .confianca span::before { content: "■ "; color: var(--ambar); }
+  .aviso-breve { font-size: 14px; color: var(--texto-suave); max-width: 46ch; margin: 0; }
+  .aviso-breve[hidden] { display: none; }
+  .botao.breve { background: var(--fundo-3); color: var(--texto-suave); border-color: var(--linha); box-shadow: 4px 4px 0 #05242c; cursor: default; }
+  .botao.breve:hover, .botao.breve:active { transform: none; box-shadow: 4px 4px 0 #05242c; }
+
+  /* ---------- faixa que corre ---------- */
+  .faixa { margin: 56px -16px 0; background: var(--ambar); color: #1a0f05; overflow: hidden; border-top: 3px solid #1a0f05; border-bottom: 3px solid #1a0f05; transform: rotate(-1.2deg); }
+  .faixa .trilho { display: flex; gap: 40px; width: max-content; padding: 12px 0; font-family: var(--pixel); font-size: 12px; animation: correr 30s linear infinite; }
+  .faixa .trilho span::after { content: "✦"; margin-left: 40px; }
+  @keyframes correr { to { transform: translateX(-50%); } }
+
+  /* ---------- cartões de três ---------- */
+  .regras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .regra { background: var(--fundo-2); border: 3px solid var(--linha); border-top-width: 8px; border-top-color: var(--ambar); padding: 18px; }
+  .regra h3 { margin: 0 0 6px; font-size: 16px; color: var(--branco); }
+  .regra p { margin: 0; font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- as etapas ---------- */
+  .etapas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: etapa; list-style: none; padding: 0; margin: 0; }
+  .etapa { background: var(--fundo-2); border: 3px solid var(--linha); padding: 16px 14px; position: relative; transition: border-color .2s, transform .2s; }
+  .etapa:hover { border-color: var(--ambar); transform: translateY(-4px); }
+  .etapa .bola { width: 46px; height: 46px; display: grid; place-items: center; font-family: var(--pixel); font-size: 14px; margin-bottom: 12px;
+    color: #1a0f05; background: var(--amarelo); border: 3px solid #1a0f05; box-shadow: 3px 3px 0 var(--laranja); }
+  .etapa h3 { font-size: 16px; margin: 0 0 4px; color: var(--branco); }
+  .etapa p { margin: 0; font-size: 14px; color: var(--texto-suave); line-height: 1.5; }
+
+  /* ---------- o que sai: o vídeo e o corte ---------- */
+  .sai { display: grid; grid-template-columns: 1.7fr 1fr; gap: 24px; align-items: center; }
+  .sai .monitor { margin: 0; }
+  .sai .monitor::before { display: none; }
+  .fone { width: 100%; max-width: 230px; margin: 0 auto; padding: 6px; background: #061218; border: 3px solid var(--ambar); border-radius: 18px; box-shadow: 6px 6px 0 #05242c; }
+  .fone video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 12px; background: #000; }
+  .legenda-pixel { font-family: var(--pixel); font-size: 8px; color: var(--texto-suave); text-align: center; padding: 10px 0 2px; line-height: 1.6; }
+
+  /* ---------- as telas do programa ---------- */
+  .telas { display: grid; gap: 44px; }
+  .tela-linha { display: grid; grid-template-columns: 1fr 1.6fr; gap: 28px; align-items: center; }
+  .tela-linha:nth-child(even) .tela-texto { order: 2; }
+  .tela-texto .etiqueta-tela { font-family: var(--pixel); font-size: 10px; color: var(--laranja); margin: 0 0 10px; }
+  .tela-texto h3 { margin: 0 0 8px; font-size: 21px; color: var(--branco); line-height: 1.3; }
+  .tela-texto p { margin: 0 0 10px; color: var(--texto); }
+  .tela-texto ul { margin: 0; padding: 0; list-style: none; }
+  .tela-texto li { padding: 4px 0 4px 22px; position: relative; font-size: 15px; color: var(--texto-suave); }
+  .tela-texto li::before { content: ""; position: absolute; left: 0; top: 12px; width: 10px; height: 10px; background: var(--ambar); }
+  .janela { display: block; margin: 0; background: #0a1419; border: 3px solid var(--linha); box-shadow: 8px 8px 0 #05242c; overflow: hidden; text-decoration: none; transition: border-color .2s; }
+  .janela:hover { border-color: var(--ambar); }
+  .janela .barra { display: flex; gap: 7px; align-items: center; padding: 9px 12px; background: var(--fundo-3); }
+  .janela .barra i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .janela .barra b { margin-left: 8px; font-size: 12px; font-weight: 500; color: var(--texto-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .janela img { width: 100%; height: auto; }
+
+  /* ---------- o fluxo da aprovação ---------- */
+  .fluxo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 980px; margin: 0 auto; list-style: none; padding: 0; }
+  .fluxo li { background: var(--fundo-2); border: 3px solid var(--linha); padding: 16px; position: relative; }
+  .fluxo li b { display: block; font-family: var(--pixel); font-size: 10px; color: var(--ambar); margin-bottom: 8px; }
+  .fluxo li strong { display: block; margin-bottom: 4px; }
+  .fluxo li span { font-size: 14px; color: var(--texto-suave); }
+  .fluxo li.vira { border-color: #3f9a52; }
+  .redes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 980px; margin: 18px auto 0; }
+  .rede { background: var(--fundo-2); border: 3px solid var(--linha); border-left-width: 8px; padding: 14px 16px; }
+  .rede.yt { border-left-color: #ff5a4a; } .rede.ig { border-left-color: #d36ac2; } .rede.tt { border-left-color: #5fd4d8; }
+  .rede h3 { margin: 0 0 4px; font-size: 16px; color: var(--branco); }
+  .rede p { margin: 0; font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- o escritório ---------- */
+  .escritorio { display: grid; grid-template-columns: 1fr 1.5fr; gap: 28px; align-items: center; }
+  .escritorio .texto p { margin: 0 0 12px; }
+  .postos { list-style: none; padding: 0; margin: 16px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .postos li { background: var(--fundo-2); border: 2px solid var(--linha); padding: 10px 12px; font-size: 14px; color: var(--texto-suave); }
+  .postos li b { display: block; font-family: var(--pixel); font-size: 9px; color: var(--amarelo); margin-bottom: 4px; line-height: 1.5; }
+  .escritorio .monitor::before { display: none; }
+
+  /* ---------- números da licença ---------- */
+  .modos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 860px; margin: 0 auto; }
+  .modo { background: var(--fundo-2); border: 3px solid var(--linha); border-top-width: 8px; padding: 18px; }
+  .modo.proprio { border-top-color: var(--ambar); } .modo.ligado { border-top-color: #5fd4d8; }
+  .modo h3 { margin: 0 0 6px; font-size: 17px; color: var(--branco); }
+  .modo p { margin: 0; font-size: 15px; color: var(--texto-suave); }
+  .numeros-licenca { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 860px; margin: 0 auto; }
+  .numero { text-align: center; padding: 22px 10px; background: var(--fundo-2); border: 3px solid var(--linha); }
+  .numero .valor { font-family: var(--pixel); font-size: clamp(26px, 6vw, 40px); color: var(--amarelo); }
+  .numero .rot { font-size: 14px; color: var(--texto-suave); margin-top: 8px; }
+  .nota-licenca { max-width: 760px; margin: 18px auto 0; text-align: center; color: var(--texto-suave); font-size: 15px; }
+
+  /* ---------- o que você precisa ---------- */
+  .precisa { list-style: none; padding: 0; margin: 0 auto; max-width: 860px; display: grid; gap: 10px; }
+  .precisa li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; padding: 14px; background: var(--fundo-2); border: 2px solid var(--linha); }
+  .precisa .ic { width: 44px; height: 44px; display: grid; place-items: center; font-family: var(--pixel); font-size: 12px; color: #1a0f05; background: var(--ambar); border: 2px solid #1a0f05; }
+  .precisa strong { display: block; font-size: 16px; margin-bottom: 2px; }
+  .precisa span { color: var(--texto-suave); font-size: 15px; }
+  .precisa .custo { display: inline-block; margin-top: 6px; font-family: var(--pixel); font-size: 8px; line-height: 1.6; padding: 3px 6px; border: 1px solid var(--linha); color: var(--ambar); }
+
+  .honesto { max-width: 760px; margin: 0 auto; padding: 18px 20px; border: 3px solid var(--ambar); background: var(--fundo-2); }
+  .honesto p { margin: 0 0 10px; } .honesto p:last-child { margin: 0; }
+
+  /* ---------- a oferta ---------- */
+  .oferta { position: relative; max-width: 560px; margin: 0 auto; text-align: center; background: var(--fundo-2); border: 3px solid var(--laranja); box-shadow: 8px 8px 0 var(--laranja); padding: 32px 24px 28px; }
+  .oferta .preco { font-family: var(--pixel); font-size: 42px; color: var(--amarelo); margin: 12px 0 6px; text-shadow: 4px 4px 0 #3a1a07; }
+  .oferta ul { text-align: left; margin: 20px 0; padding-left: 0; list-style: none; }
+  .oferta li { padding: 6px 0 6px 28px; position: relative; }
+  .oferta li::before { content: ""; position: absolute; left: 0; top: 12px; width: 14px; height: 14px; background: var(--ambar); box-shadow: 2px 2px 0 var(--laranja); }
+  .oferta .botao { width: 100%; font-size: 13px; padding: 18px; }
+  .oferta .aviso-breve { margin: 12px auto 0; }
+  .garantia { display: flex; gap: 14px; align-items: center; text-align: left; margin-top: 20px; padding-top: 18px; border-top: 2px dashed var(--linha); }
+  .garantia svg { flex: none; width: 54px; height: 60px; }
+  .brilhar { animation: brilho 2.4s ease-in-out infinite; }
+  @keyframes brilho { 50% { box-shadow: 4px 4px 0 var(--laranja), 0 0 28px rgba(255,216,77,.55); } }
+
+  .faq { max-width: 760px; margin: 0 auto; }
+  .faq details { background: var(--fundo-2); border: 2px solid var(--linha); margin: 8px 0; padding: 12px 16px; }
+  .faq summary { cursor: pointer; font-weight: 700; color: var(--branco); }
+  .faq p { margin: 10px 0 0; color: var(--texto-suave); }
+
+  /* ---------- barra fixa de compra ---------- */
+  .barra-compra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: center; gap: 14px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(6,18,24,.96); border-top: 3px solid var(--ambar);
+    transform: translateY(110%); transition: transform .35s ease; }
+  .barra-compra.ver { transform: none; }
+  /* A PÁGINA TRAVADA (12/11/2026, pedido do dono): até a VSL chegar na oferta, só aparecem o título e o vídeo. */
+  body.travada .topo .botao, body.travada .heroi .acao, body.travada .pagina > :not(.heroi), body.travada .rodape, body.travada .barra-compra { display: none !important; }
+  .trava-aviso { display: none; text-align: center; margin: 18px auto 0; max-width: 520px; color: var(--texto-suave); font-size: 15px; }
+  body.travada .trava-aviso { display: block; }
+
+  /* ---------- a lista de espera da versão pra celular e Mac (16/11/2026): no fim da página, só depois que a oferta libera ---------- */
+  .lista-espera { max-width: 520px; margin: 18px auto 0; text-align: center; }
+  .lista-abrir { background: none; border: 0; padding: 6px 4px; color: var(--texto-suave); font: 500 15px/1.4 var(--corpo); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .lista-abrir b { color: var(--ambar); }
+  .lista-abrir:hover { color: var(--texto); }
+  .lista-form { margin-top: 12px; padding: 18px 16px; background: var(--fundo-2); border: 2px solid var(--linha); text-align: left; display: grid; gap: 10px; }
+  .lista-form[hidden], .lista-espera [hidden] { display: none; }
+  .lista-form label { display: grid; gap: 4px; font-size: 14px; color: var(--texto-suave); }
+  .lista-form input { width: 100%; box-sizing: border-box; padding: 12px; font: 16px var(--corpo); color: var(--texto); background: var(--fundo); border: 2px solid var(--linha); border-radius: 0; }
+  .lista-form input:focus { outline: none; border-color: var(--ambar); }
+  .lista-form .botao { width: 100%; font-size: 11px; padding: 15px; margin-top: 4px; }
+  .lista-form .lgpd { font-size: 12px; color: var(--texto-suave); margin: 0; }
+  .lista-form .erro { font-size: 13px; color: var(--laranja); margin: 0; }
+  .liberou { animation: liberou .9s ease-out both; }
+  @keyframes liberou { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .liberou { animation: none; } }
+  .barra-compra .txt { font-size: 14px; } .barra-compra .txt b { font-family: var(--pixel); font-size: 12px; color: var(--amarelo); }
+
+  /* A fonte de pixel não tem as maiúsculas acentuadas (o "É" sai minúsculo): os rótulos com acento vão na Inter. */
+  .selo, .etiqueta-tela, .legenda-pixel, .rotulo-monitor, .precisa .custo { font-family: var(--corpo) !important; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+  .selo { font-size: 13px; } .etiqueta-tela { font-size: 13px !important; } .legenda-pixel { font-size: 11px !important; }
+  .rotulo-monitor { font-size: 11px !important; } .precisa .custo { font-size: 10px !important; letter-spacing: 1px; }
+
+  /* só com as animações carregadas */
+  .anima .revela { opacity: 0; transform: translateY(28px); }
+
+  @media (max-width: 860px) {
+    .regras, .redes, .modos { grid-template-columns: 1fr; }
+    .etapas { grid-template-columns: repeat(2, 1fr); }
+    .sai, .escritorio, .tela-linha { grid-template-columns: 1fr; }
+    .tela-linha:nth-child(even) .tela-texto { order: 0; }
+    .fluxo { grid-template-columns: repeat(2, 1fr); }
+    .barra-compra .txt { display: none; }
+    .fone { max-width: 210px; }
+  }
+  @media (max-width: 480px) {
+    .etapa { padding: 14px 12px; }
+    .etapa .bola { width: 40px; height: 40px; font-size: 12px; }
+    .etapa h3 { font-size: 15px; }
+    .postos { grid-template-columns: 1fr; }
+    .numeros-licenca { gap: 8px; }
+    .numero { padding: 16px 6px; }
+    .numero .rot { font-size: 13px; }
+  }
+  @media (max-width: 380px) { .etapas, .fluxo { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) {
+    .faixa .trilho, .brilhar { animation: none; }
+  }
+  .oferta .de { color: var(--texto-suave); text-decoration: line-through; font-size: 18px; }
+  .oferta .ancora { color: var(--texto-suave); font-size: 18px; margin-top: 8px; } .oferta .ancora s { text-decoration-thickness: 2px; }
+  .cupom-aviso { margin: 14px auto 4px; padding: 10px 14px; background: #143843; border: 2px dashed var(--ambar); color: var(--texto); font-size: 15px; max-width: 420px; }
+  .cupom-aviso strong { color: var(--amarelo); }
+  .cupom-aviso[hidden] { display: none; }
+</style>
+<!-- O PIXEL DA META (17/11/2026, pro tráfego pago): "Fábrica de Conteúdo", 2601205323715303, na conta CA#1. Aqui ele marca só a visita
+     (PageView). A ida ao checkout (InitiateCheckout), o pagamento (AddPaymentInfo) e a compra (Purchase) quem manda é a Kirvano, pelo
+     mesmo pixel cadastrado no produto (Pixels de rastreamento); marcar o clique aqui também contaria a ida ao checkout duas vezes. -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2601205323715303');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2601205323715303&ev=PageView&noscript=1"></noscript>
+<script src="../medir.js" data-pagina="fabrica-b"></script>
+<script src="../vsl-player.js"></script>
+</head>
+<body class="travada">
+
+<header class="topo">
+  <a class="marca" href="../">
+    <img src="../img/logo.png" alt="" width="40" height="40">
+    <span>VIRAL CITY</span>
+  </a>
+  <a class="botao botao-pequeno" href="#oferta" data-medir="ver_oferta">Quero a Fábrica</a>
+</header>
+
+<main class="pagina">
+
+  <section class="heroi">
+    <div class="brilho"></div>
+    <div class="selo revela">FÁBRICA DE CONTEÚDO</div>
+    <h1 class="revela">Seu canal com vídeo novo todo dia. <em>Sem gravar, sem editar, sem aparecer.</em></h1>
+    <p class="lead revela">Você escolhe o assunto. A Fábrica pesquisa, escreve, narra, monta e posta. <b>Você só aprova.</b></p>
+    <div class="monitor revela">
+      <video id="vsl" src="midia/vsl-b.mp4" poster="midia/vsl-b.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo de apresentação da Fábrica de Conteúdo"></video>
+      <button class="som" id="som" type="button">▶ Toque pra ouvir</button>
+    </div>
+    <p class="trava-aviso">Toque em <b>"Toque pra ouvir"</b> e assista para garantir seu acesso à Fábrica.</p>
+    <div class="acao revela">
+      <a class="botao brilhar comprar" href="#oferta" data-onde="heroi">Quero a Fábrica de Conteúdo</a>
+      <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_heroi">@viralcity.jogo</a> pra saber quando.</p>
+      <div class="confianca"><span>YouTube, Instagram e TikTok</span><span>7 dias de garantia</span></div>
+    </div>
+  </section>
+
+  <div class="faixa" aria-hidden="true">
+    <div class="trilho">
+      <span>PESQUISA</span><span>ROTEIRO</span><span>VOZ</span><span>IMAGENS</span><span>MONTAGEM</span><span>THUMBNAILS</span><span>REELS E TIKTOK</span><span>AGENDAMENTO</span>
+      <span>PESQUISA</span><span>ROTEIRO</span><span>VOZ</span><span>IMAGENS</span><span>MONTAGEM</span><span>THUMBNAILS</span><span>REELS E TIKTOK</span><span>AGENDAMENTO</span>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="tit revela">Canal não morre por falta de ideia. Morre de cansaço.</h2>
+    <p class="chamada revela">Pesquisa, roteiro, narração, imagem, edição, thumbnail, título, corte pro Reels. Todo santo dia. Ninguém aguenta.</p>
+    <p class="chamada revela"><b>A Fábrica aguenta. Você só aprova.</b></p>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Uma equipe inteira trabalhando no seu computador</h2>
+    <ol class="etapas">
+      <li class="etapa revela"><div class="bola">1</div><h3>Pesquisador</h3><p>Acha os fatos.</p></li>
+      <li class="etapa revela"><div class="bola">2</div><h3>Roteirista</h3><p>Escreve a história que prende.</p></li>
+      <li class="etapa revela"><div class="bola">3</div><h3>Revisor</h3><p>Corta o que não é verdade.</p></li>
+      <li class="etapa revela"><div class="bola">4</div><h3>Narrador</h3><p>Grava a voz. Você não fala nada.</p></li>
+      <li class="etapa revela"><div class="bola">5</div><h3>Caçador de imagens</h3><p>Escolhe uma por uma.</p></li>
+      <li class="etapa revela"><div class="bola">6</div><h3>Editor</h3><p>Monta com movimento e legenda.</p></li>
+      <li class="etapa revela"><div class="bola">7</div><h3>Designer</h3><p>5 thumbnails e os títulos.</p></li>
+      <li class="etapa revela"><div class="bola">8</div><h3>Cortador</h3><p>3 cortes pro Reels e pro TikTok.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Uma frase sua. Quatro posts prontos.</h2>
+    <div class="sai">
+      <div class="revela">
+        <div class="monitor"><video src="img/video-cafe.mp4" poster="img/video-cafe-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho de um vídeo longo feito pela Fábrica"></video></div>
+        <div class="legenda-pixel">O VÍDEO LONGO, PRO YOUTUBE</div>
+      </div>
+      <div class="revela">
+        <div class="fone"><video src="img/corte.mp4" poster="img/corte-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho de um corte em pé feito pela Fábrica"></video></div>
+        <div class="legenda-pixel">+ 3 CORTES EM PÉ</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Só quer Reels e TikTok? Também faz.</h2>
+    <div class="modos">
+      <div class="modo proprio revela"><h3>Produção própria</h3><p>Vídeos curtos de 25 a 55 segundos, do tema ao post pronto.</p></div>
+      <div class="modo ligado revela"><h3>Ligado ao seu canal</h3><p>Recebe os 3 cortes de cada vídeo do YouTube.</p></div>
+    </div>
+  </section>
+
+  <section id="telas">
+    <h2 class="tit revela">Não é promessa. É a tela.</h2>
+    <div class="telas">
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">PRODUÇÃO DE UM CANAL</p>
+          <h3>Uma frase e um clique</h3>
+        </div>
+        <a class="janela revela" href="img/producao.jpg" target="_blank" rel="noopener" data-medir="tela_producao">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Produção · canal do YouTube</b></div>
+          <picture><source srcset="img/producao.webp" type="image/webp"><img src="img/producao.jpg" alt="Tela de Produção de um canal do YouTube na Fábrica de Conteúdo, com o campo do tema e um vídeo esperando revisão" width="1600" height="756" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">REVISÃO</p>
+          <h3>Você assiste antes de tudo</h3>
+        </div>
+        <a class="janela revela" href="img/revisao.jpg" target="_blank" rel="noopener" data-medir="tela_revisao">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Revisão do vídeo</b></div>
+          <picture><source srcset="img/revisao.webp" type="image/webp"><img src="img/revisao.jpg" alt="Tela de revisão de um vídeo do YouTube, com o player, o horário de publicação e os botões de aprovar e rejeitar" width="1600" height="856" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">THUMBNAIL E TÍTULO</p>
+          <h3>5 thumbnails e os títulos já prontos</h3>
+        </div>
+        <a class="janela revela" href="img/thumbs-titulos.jpg" target="_blank" rel="noopener" data-medir="tela_thumbs">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Thumbnail e título</b></div>
+          <picture><source srcset="img/thumbs-titulos.webp" type="image/webp"><img src="img/thumbs-titulos.jpg" alt="As 5 opções de thumbnail e as opções de título de um vídeo" width="1320" height="945" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">CORTES EM PÉ</p>
+          <h3>3 cortes por vídeo, prontos pras redes</h3>
+        </div>
+        <a class="janela revela" href="img/cortes.jpg" target="_blank" rel="noopener" data-medir="tela_cortes">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Cortes em pé</b></div>
+          <picture><source srcset="img/cortes.webp" type="image/webp"><img src="img/cortes.jpg" alt="Os três cortes em pé de um vídeo de teste sobre o café, com o gancho no alto" width="1073" height="652" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">PRODUÇÃO DE UM PERFIL</p>
+          <h3>Os vídeos curtos de um perfil</h3>
+        </div>
+        <a class="janela revela" href="img/perfil-producao.jpg" target="_blank" rel="noopener" data-medir="tela_perfil">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Produção · perfil do Instagram</b></div>
+          <picture><source srcset="img/perfil-producao.webp" type="image/webp"><img src="img/perfil-producao.jpg" alt="Tela de Produção de um perfil do Instagram, com o campo do fato e um vídeo curto esperando revisão" width="1600" height="911" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">REVISÃO DO CURTO</p>
+          <h3>Assista, ajuste a legenda e aprove</h3>
+        </div>
+        <a class="janela revela" href="img/curto.jpg" target="_blank" rel="noopener" data-medir="tela_curto">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Revisão do vídeo curto</b></div>
+          <picture><source srcset="img/curto.webp" type="image/webp"><img src="img/curto.jpg" alt="Tela de revisão de um vídeo curto, com o vídeo em pé, a legenda do post e os botões de aprovar e rejeitar" width="1600" height="1056" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">VÍNCULO</p>
+          <h3>Você decide o que cada perfil faz</h3>
+        </div>
+        <a class="janela revela" href="img/vinculo.jpg" target="_blank" rel="noopener" data-medir="tela_vinculo">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Configuração · Vínculo</b></div>
+          <picture><source srcset="img/vinculo.webp" type="image/webp"><img src="img/vinculo.jpg" alt="Configuração de um perfil do Instagram, com o Vínculo escolhido pra receber os cortes de um canal" width="1600" height="800" loading="lazy"></picture>
+        </a>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">CONTAS</p>
+          <h3>As 6 produções numa tela só</h3>
+        </div>
+        <a class="janela revela" href="img/contas.jpg" target="_blank" rel="noopener" data-medir="tela_contas">
+          <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Contas</b></div>
+          <picture><source srcset="img/contas.webp" type="image/webp"><img src="img/contas.jpg" alt="Tela de Contas, com os 2 canais do YouTube, os 2 perfis do Instagram e os 2 do TikTok e o vínculo de cada perfil" width="1600" height="1000" loading="lazy"></picture>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Você aprova. Ela posta.</h2>
+    <div class="redes">
+      <div class="rede yt revela"><h3>YouTube</h3><p>Agendado, com título e thumbnail.</p></div>
+      <div class="rede ig revela"><h3>Instagram</h3><p>Posta sozinha na hora marcada, com o PC ligado.</p></div>
+      <div class="rede tt revela"><h3>TikTok</h3><p>Cai no seu app, pronto pra postar.</p></div>
+    </div>
+  </section>
+
+  <section class="escritorio">
+    <div class="texto revela">
+      <h2 class="tit" style="text-align:left">E você vê eles trabalhando.</h2>
+      <p>Cada produção tem a sua sala e o seu agente. Você acompanha ao vivo.</p>
+      <ul class="postos">
+        <li><b>PESQUISA</b>na estante</li>
+        <li><b>ROTEIRO</b>na mesa</li>
+        <li><b>VOZ</b>na cabine</li>
+        <li><b>THUMBNAIL</b>no cavalete</li>
+      </ul>
+    </div>
+    <div class="revela">
+      <div class="monitor">
+        <video src="img/escritorio.mp4" poster="img/escritorio-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O escritório dos agentes da Fábrica de Conteúdo"></video>
+      </div>
+      <div class="legenda-pixel">O SEU ESCRITÓRIO</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">6 produções numa compra só</h2>
+    <div class="numeros-licenca">
+      <div class="numero revela"><div class="valor">2</div><div class="rot">canais do YouTube</div></div>
+      <div class="numero revela"><div class="valor">2</div><div class="rot">perfis do Instagram</div></div>
+      <div class="numero revela"><div class="valor">2</div><div class="rot">perfis do TikTok</div></div>
+    </div>
+  </section>
+
+  <section id="oferta">
+    <h2 class="tit revela">Tudo isso por R$ 0,27 por dia</h2>
+    <div class="oferta revela">
+      <div class="pequeno">preço de lançamento, por tempo limitado</div>
+      <div class="ancora">de <s>R$ 297</s> por</div>
+      <div class="preco">R$ 97</div>
+      <div class="pequeno">depois do dia 19, o preço sobe</div>
+      <div class="pequeno">em até 12x no cartão · 1 ano de acesso</div>
+      <div class="cupom-aviso" id="cupom-aviso" hidden>🎁 Seu cupom <strong id="cupom-nome"></strong> de 10% já entra no checkout</div>
+      <ul>
+        <li><strong>A Fábrica de Conteúdo</strong>, com 6 produções</li>
+        <li>Vídeo longo pro YouTube, com thumbnails, títulos e tags</li>
+        <li>Cortes e vídeos curtos pro Instagram e pro TikTok</li>
+        <li>Modo gameplay: edita a sua gameplay crua, com legenda, zoom, thumbnails e cortes em pé com a sua webcam</li>
+        <li>O maestro: um vídeo por dia, sozinho</li>
+        <li>O escritório dos agentes</li>
+        <li>O curso da Fábrica, passo a passo</li>
+        <li>1 ano de acesso, com todas as atualizações</li>
+      </ul>
+      <a class="botao brilhar comprar" href="#oferta" data-onde="oferta">Quero a Fábrica de Conteúdo</a>
+      <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_oferta">@viralcity.jogo</a> pra saber quando.</p>
+      <p class="pequeno" style="margin:12px 0 0">Pra Windows. Usa a sua assinatura do Claude.</p>
+      <div class="garantia">
+        <svg viewBox="0 0 18 20" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
+        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Mudou de ideia, devolvo o seu dinheiro.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Perguntas</h2>
+    <div class="faq">
+      <details class="revela"><summary>Preciso aparecer ou gravar a minha voz?</summary><p>Não. Quem narra é a Fábrica.</p></details>
+      <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Escreve o tema e clica. O curso mostra o resto.</p></details>
+      <details class="revela"><summary>Tem algum outro custo?</summary><p>Só a sua assinatura do Claude. A voz é grátis.</p></details>
+      <details class="revela"><summary>Serve pro meu assunto?</summary><p>Curiosidades, como as coisas funcionam, lugares, natureza, invenções. Se tem imagem, ela faz.</p></details>
+      <details class="revela"><summary>Funciona no Mac ou no celular?</summary><p>Não. Só Windows.</p></details>
+      <details class="revela"><summary>O acesso é pra sempre?</summary><p>É de 1 ano, com todas as atualizações. Depois, é só renovar.</p></details>
+      <details class="revela"><summary>E se eu não gostar?</summary><p>7 dias de garantia. Devolvo o seu dinheiro.</p></details>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Daqui a 30 dias, você pode ter 30 vídeos no ar. Ou continuar sem nenhum.</h2>
+    <div class="acao revela" style="text-align:center">
+      <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica</a>
+      <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_fecho">@viralcity.jogo</a> pra saber quando.</p>
+      <p class="pequeno" style="margin:10px 0 0">De R$ 297 por R$ 97 por tempo limitado, em até 12x · 7 dias de garantia</p>
+    </div>
+  </section>
+
+  <section class="secao-lista">
+      <div class="lista-espera">
+        <button type="button" class="lista-abrir" id="lista-abrir" aria-expanded="false" aria-controls="lista-form">Não tem um PC com Windows? <b>Entre na lista para a versão de celular e Mac</b></button>
+        <form class="lista-form" id="lista-form" hidden novalidate>
+          <label>Nome <input name="nome" autocomplete="name" required maxlength="80"></label>
+          <label>E-mail <input name="email" type="email" autocomplete="email" required maxlength="120"></label>
+          <label>WhatsApp <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(11) 91234-5678" required maxlength="20"></label>
+          <p class="erro" id="lista-erro" hidden></p>
+          <button class="botao" type="submit" data-medir="lista_entrar">Entrar na lista</button>
+          <p class="lgpd">Seus dados servem só pra te avisar quando a versão de celular e Mac abrir.</p>
+        </form>
+      </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p>Viral City · construindo em público</p>
+  <p><a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_rodape">instagram.com/viralcity.jogo</a></p>
+</footer>
+
+<div class="barra-compra" id="barra">
+  <div class="txt">Fábrica de Conteúdo · 6 produções</div>
+  <a class="botao botao-pequeno comprar" href="#oferta" data-onde="barra">Quero a Fábrica</a>
+</div>
+
+<script>
+// O LINK DO CHECKOUT NA KIRVANO. Vazio, os botões de compra dizem "Em breve" e não levam a lugar nenhum.
+// Com o link, eles vão pra Kirvano com a origem do Instagram, e o medir.js marca "foi_pro_checkout".
+var CHECKOUT_URL = "https://pay.kirvano.com/9de63b95-93d3-4f55-9c3f-ac542d8fb1fb";
+
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  var temCheckout = /^https:\/\//.test(CHECKOUT_URL);
+  // O CUPOM (16/11/2026, o presente dos 1.000 seguidores): `?cupom=CODIGO` na página vai pro checkout como `coupon=CODIGO`, que a Kirvano
+  // aplica sozinha, e mostra a página inteira, sem a trava da VSL. O cupom em si é criado no painel da Kirvano.
+  var CUPOM = ((location.search.match(/[?&]cupom=([A-Za-z0-9]{3,20})/) || [])[1] || "").toUpperCase();
+  // A UTM DE QUEM CHEGOU VAI PRO CHECKOUT (16/11/2026, pro tráfego pago): o link do anúncio traz utm_source=meta e o nome da campanha,
+  // do conjunto e do anúncio, e a Kirvano devolve isso na venda (a aba Ads do painel junta o gasto e a venda por ela). Sem UTM na
+  // chegada, segue a de sempre (instagram, viralcity, ou o cupom).
+  var aqui = new URLSearchParams(location.search), utm = new URLSearchParams();
+  ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { var v = aqui.get(k); if (v) utm.set(k, v.slice(0, 120)); });
+  if (!utm.get("utm_source")) { utm = new URLSearchParams(); utm.set("utm_source", "instagram"); utm.set("utm_campaign", CUPOM ? "cupom-" + CUPOM.toLowerCase() : "viralcity"); }
+  if (CUPOM) utm.set("coupon", CUPOM);
+  // O CLIQUE DO ANÚNCIO TAMBÉM VAI (17/11/2026): o `fbclid` que a Meta põe no link segue pro checkout, senão o pixel na Kirvano,
+  // que fica em outro domínio, não liga a ida ao checkout nem a compra ao anúncio que trouxe a pessoa.
+  var fbclid = aqui.get("fbclid");
+  if (fbclid) utm.set("fbclid", fbclid.slice(0, 500));
+  // a versão do teste A/B vai no utm_medium ("-va" ou "-vb"), e a Kirvano devolve na venda
+  utm.set("utm_medium", (utm.get("utm_medium") || "site") + "-v" + (window.VARIANTE || "a"));
+  var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + utm.toString() : "";
+  if (CUPOM) {
+    document.getElementById("cupom-nome").textContent = CUPOM;
+    document.getElementById("cupom-aviso").hidden = false;
+  }
+
+  document.querySelectorAll(".comprar").forEach(function (b) {
+    var onde = b.dataset.onde || "pagina";
+    if (temCheckout) {
+      b.href = destino;
+      b.dataset.medir = "comprar_fabrica_" + onde;
+    } else {
+      b.textContent = "Em breve";
+      b.classList.add("breve");
+      b.classList.remove("brilhar");
+      b.setAttribute("aria-disabled", "true");
+      b.dataset.medir = "em_breve_fabrica_" + onde;
+      b.removeAttribute("href");
+      b.setAttribute("role", "link");
+      b.tabIndex = 0;
+      var aviso = b.parentElement.querySelector(".aviso-breve");
+      if (aviso) aviso.hidden = false;
+    }
+  });
+
+  // a barra de compra aparece depois do herói e some em cima da oferta
+  var barra = document.getElementById("barra"), heroi = document.querySelector(".heroi"), oferta = document.getElementById("oferta");
+  function conferirBarra() {
+    var passou = heroi.getBoundingClientRect().bottom < 0;
+    var r = oferta.getBoundingClientRect(), naOferta = r.top < innerHeight && r.bottom > 0;
+    barra.classList.toggle("ver", passou && !naOferta);
+  }
+  addEventListener("scroll", conferirBarra, { passive: true }); conferirBarra();
+  // sem checkout, a barra leva até a oferta (onde está o aviso)
+  if (!temCheckout) {
+    var b = barra.querySelector(".comprar");
+    b.addEventListener("click", function () { oferta.scrollIntoView({ behavior: "smooth" }); });
+  }
+
+  // os vídeos de baixo só tocam quando aparecem na tela (economiza dados no celular)
+  var vids = document.querySelectorAll("video[data-quando-aparecer]");
+  if ("IntersectionObserver" in window) {
+    var ov = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) e.target.play().catch(function () {}); else e.target.pause(); });
+    }, { threshold: 0.35 });
+    vids.forEach(function (v) { ov.observe(v); });
+  }
+  // a VSL: começa muda; o botão do meio liga o som do começo
+
+  // A TRAVA: o resto da página e os botões só aparecem quando a VSL, com som, chega na oferta. Quem já chegou uma vez (guardado
+  // no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
+  var OFERTA_EM = 84; // a VSL B (teste A/B de 17/11/2026, fazer-teste-ab.py)
+  var CHAVE_DA_TRAVA = "fabrica-b:viu-oferta";
+  function jaViu() { try { return localStorage.getItem(CHAVE_DA_TRAVA) === "1"; } catch (e) { return false; } }
+  function liberar(marcar) {
+    if (!document.body.classList.contains("travada")) return;
+    document.body.classList.remove("travada");
+    document.querySelectorAll(".heroi .acao, .pagina > :not(.heroi)").forEach(function (el) { el.classList.add("liberou"); });
+    if (marcar) { try { localStorage.setItem(CHAVE_DA_TRAVA, "1"); } catch (e) {} if (window.clarity) window.clarity("event", "liberou_oferta"); }
+    if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+  }
+  if (!OFERTA_EM || jaViu() || CUPOM || /[?&]tudo=1/.test(location.search)) liberar(false);
+
+  // A LISTA DE ESPERA (16/11/2026): nome, e-mail e WhatsApp vão pro coletor do painel (aba Site) e a pessoa segue pra página de
+  // obrigado, com o link da comunidade do WhatsApp (lista/)
+  var abrir = document.getElementById("lista-abrir"), form = document.getElementById("lista-form"), erro = document.getElementById("lista-erro");
+  abrir.addEventListener("click", function () {
+    form.hidden = !form.hidden;
+    abrir.setAttribute("aria-expanded", String(!form.hidden));
+    if (!form.hidden) form.elements.nome.focus();
+  });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var nome = form.elements.nome.value.trim(), email = form.elements.email.value.trim(), whats = form.elements.whatsapp.value.trim();
+    var problema = !nome ? "Escreve o seu nome." : !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? "Confere o e-mail." :
+      whats.replace(/\D/g, "").length < 10 ? "Confere o WhatsApp, com o DDD." : "";
+    erro.textContent = problema; erro.hidden = !problema;
+    if (problema) return;
+    var botao = form.querySelector("button[type=submit]");
+    botao.disabled = true; botao.textContent = "Enviando...";
+    var q = new URLSearchParams(location.search);
+    fetch("https://viralcity-metricas.viralcity-dados.workers.dev/l", {
+      method: "POST", keepalive: true,
+      body: JSON.stringify({ id: String(Math.random()).slice(2) + Date.now(), pagina: "fabrica", disp: innerWidth < 700 ? "celular" : "computador",
+        nome: nome, email: email, whatsapp: whats, origem: q.get("utm_source") || "" }),
+    }).then(function (r) {
+      if (!r.ok) throw new Error(String(r.status));
+      if (window.clarity) window.clarity("event", "lista_espera");
+      location.href = "lista/";
+    }).catch(function () {
+      erro.textContent = "Não deu pra enviar agora. Tenta de novo em um instante."; erro.hidden = false;
+      botao.disabled = false; botao.textContent = "Entrar na lista";
+    });
+  });
+  // o player próprio (../vsl-player.js): sem barra de tempo e sem avançar; libera quando a pessoa chega na oferta assistindo com som
+  window.montarVSL({ aoChegar: OFERTA_EM, quandoChegar: function () { liberar(true); } });
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // o resto é do GSAP; sem ele, tudo já está visível
+  var gsap = window.gsap;
+  if (!gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(window.ScrollTrigger);
+  document.documentElement.classList.add("anima");
+  gsap.to(gsap.utils.toArray(".heroi .revela"), { opacity: 1, y: 0, duration: 0.8, stagger: 0.12, ease: "power3.out", delay: 0.1 });
+  gsap.from(".heroi .monitor", { rotation: -2, scale: 0.94, duration: 1.1, ease: "back.out(1.6)", delay: 0.35 });
+  gsap.utils.toArray(".revela").forEach(function (el) {
+    if (el.closest(".heroi")) return;
+    gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+  });
+  gsap.from(".etapa .bola", { scale: 0, rotation: -90, duration: 0.6, stagger: 0.12, ease: "back.out(2.5)", scrollTrigger: { trigger: ".etapas", start: "top 82%", once: true } });
+  gsap.from(".oferta", { scale: 0.9, rotation: 1.5, duration: 0.9, ease: "back.out(1.8)", scrollTrigger: { trigger: ".oferta", start: "top 85%", once: true } });
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+</body>
+</html>
