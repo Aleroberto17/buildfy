@@ -544,6 +544,10 @@ document.addEventListener("DOMContentLoaded", function () {
   ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { var v = aqui.get(k); if (v) utm.set(k, v.slice(0, 120)); });
   if (!utm.get("utm_source")) { utm = new URLSearchParams(); utm.set("utm_source", "instagram"); utm.set("utm_campaign", CUPOM ? "cupom-" + CUPOM.toLowerCase() : "viralcity"); }
   if (CUPOM) utm.set("coupon", CUPOM);
+  // O CLIQUE DO ANÚNCIO TAMBÉM VAI (17/11/2026): o `fbclid` que a Meta põe no link segue pro checkout, senão o pixel na Kirvano,
+  // que fica em outro domínio, não liga a ida ao checkout nem a compra ao anúncio que trouxe a pessoa.
+  var fbclid = aqui.get("fbclid");
+  if (fbclid) utm.set("fbclid", fbclid.slice(0, 500));
   var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + utm.toString() : "";
   if (CUPOM) {
     document.getElementById("cupom-nome").textContent = CUPOM;
