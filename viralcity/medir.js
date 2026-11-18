@@ -36,7 +36,18 @@
   } catch (e) {}
   var doDono = false;
   try { doDono = localStorage.getItem("vc_eu") === "1"; } catch (e) {}
+  /* A PESSOA (17/11/2026): uma identificação anônima e sorteada, guardada neste navegador, pra contar pessoas e não só aberturas
+     da página (quem volta várias vezes conta uma vez). Não tem nome, e-mail nem nada da pessoa. */
+  var pessoa = "";
+  try {
+    pessoa = localStorage.getItem("vc_pessoa") || "";
+    if (!pessoa) {
+      pessoa = window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now();
+      localStorage.setItem("vc_pessoa", pessoa);
+    }
+  } catch (e) { pessoa = ""; }
   var visita = {
+    pessoa: pessoa,
     id: (window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now()),
     pagina: pagina,
     disp: innerWidth < 700 ? "celular" : "computador",
