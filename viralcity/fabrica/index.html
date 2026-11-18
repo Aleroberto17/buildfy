@@ -417,11 +417,11 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
       <div class="tela-linha">
         <div class="tela-texto revela">
           <p class="etiqueta-tela">CONTAS</p>
-          <h3>As 6 produções numa tela só</h3>
+          <h3>As 15 produções numa tela só</h3>
         </div>
         <a class="janela revela" href="img/contas.jpg" target="_blank" rel="noopener" data-medir="tela_contas">
           <div class="barra"><i style="background:#ff5a4a"></i><i style="background:#ffb238"></i><i style="background:#5fcf75"></i><b>Contas</b></div>
-          <picture><source srcset="img/contas.webp" type="image/webp"><img src="img/contas.jpg" alt="Tela de Contas, com os 2 canais do YouTube, os 2 perfis do Instagram e os 2 do TikTok e o vínculo de cada perfil" width="1600" height="1000" loading="lazy"></picture>
+          <picture><source srcset="img/contas.webp" type="image/webp"><img src="img/contas.jpg" alt="Tela de Contas, com até 5 canais do YouTube, 5 perfis do Instagram e 5 do TikTok e o vínculo de cada perfil" width="1600" height="1000" loading="lazy"></picture>
         </a>
       </div>
 
@@ -457,11 +457,11 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
   </section>
 
   <section>
-    <h2 class="tit revela">6 produções numa compra só</h2>
+    <h2 class="tit revela">15 produções numa compra só</h2>
     <div class="numeros-licenca">
-      <div class="numero revela"><div class="valor">2</div><div class="rot">canais do YouTube</div></div>
-      <div class="numero revela"><div class="valor">2</div><div class="rot">perfis do Instagram</div></div>
-      <div class="numero revela"><div class="valor">2</div><div class="rot">perfis do TikTok</div></div>
+      <div class="numero revela"><div class="valor">5</div><div class="rot">canais do YouTube</div></div>
+      <div class="numero revela"><div class="valor">5</div><div class="rot">perfis do Instagram</div></div>
+      <div class="numero revela"><div class="valor">5</div><div class="rot">perfis do TikTok</div></div>
     </div>
   </section>
 
@@ -475,7 +475,7 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
       <div class="pequeno">em até 12x no cartão · 1 ano de acesso</div>
       <div class="cupom-aviso" id="cupom-aviso" hidden>🎁 Seu cupom <strong id="cupom-nome"></strong> de 10% já entra no checkout</div>
       <ul>
-        <li><strong>A Fábrica de Conteúdo</strong>, com 6 produções</li>
+        <li><strong>A Fábrica de Conteúdo</strong>, com 15 produções</li>
         <li>Vídeo longo pro YouTube, com thumbnails, títulos e tags</li>
         <li>Cortes e vídeos curtos pro Instagram e pro TikTok</li>
         <li>Modo gameplay: edita a sua gameplay crua, com legenda, zoom, thumbnails e cortes em pé com a sua webcam</li>
@@ -537,7 +537,7 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
 </footer>
 
 <div class="barra-compra" id="barra">
-  <div class="txt">Fábrica de Conteúdo · 6 produções</div>
+  <div class="txt">Fábrica de Conteúdo · 15 produções</div>
   <a class="botao botao-pequeno comprar" href="#oferta" data-onde="barra">Quero a Fábrica</a>
 </div>
 
@@ -616,7 +616,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // A TRAVA: o resto da página e os botões só aparecem quando a VSL, com som, chega na oferta. Quem já chegou uma vez (guardado
   // no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
-  var OFERTA_EM = 204; // segundo da VSL em que a oferta começa (o preço; desde 14/11/2026 com R$ 147 e o vídeo a 1,15x, pedido do dono; 204 desde 16/11/2026, com "por tempo limitado" no lugar da data)
+  var OFERTA_EM = 208; // segundo da VSL em que a oferta começa (o preço; desde 14/11/2026 com R$ 147 e o vídeo a 1,15x, pedido do dono; 204 desde 16/11/2026, com "por tempo limitado" no lugar da data; 208 desde 17/11/2026, com as 15 produções)
   var CHAVE_DA_TRAVA = "fabrica:viu-oferta";
   function jaViu() { try { return localStorage.getItem(CHAVE_DA_TRAVA) === "1"; } catch (e) { return false; } }
   function liberar(marcar) {
