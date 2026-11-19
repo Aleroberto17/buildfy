@@ -204,6 +204,16 @@
     .faixa .trilho, .som, .brilhar, .digitando i, .cursor { animation: none; }
   }
 </style>
+<!-- O PIXEL DA META (18/11/2026, pra campanha do curso): o mesmo da Fábrica, 2601205323715303, na conta CA#1. Aqui ele marca só a visita
+     (PageView). A ida ao checkout e a compra quem manda é a Kirvano, pelo mesmo pixel cadastrado no produto do curso. -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2601205323715303');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2601205323715303&ev=PageView&noscript=1"></noscript>
 <script src="../medir.js" data-pagina="curso"></script>
 <script src="../vsl-player.js"></script>
 </head>
@@ -449,7 +459,7 @@
         <li><strong>Bônus 4:</strong> o projeto do vídeo de exemplo</li>
       </ul>
       <!-- O link do checkout: a oferta de R$ 97 na Kirvano. -->
-      <a class="botao brilhar" href="https://pay.kirvano.com/20a32525-ff97-450e-a63a-b305f17af1b2?utm_source=instagram&utm_campaign=viralcity">Quero criar e monetizar</a>
+      <a class="botao brilhar" id="comprar-curso" href="https://pay.kirvano.com/20a32525-ff97-450e-a63a-b305f17af1b2?utm_source=instagram&utm_campaign=viralcity">Quero criar e monetizar</a>
       <div class="garantia">
         <svg viewBox="0 0 18 20" shape-rendering="crispEdges"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
         <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Assista às aulas. Se não for pra você, pede o reembolso em até 7 dias e recebe o valor de volta. O risco fica comigo.</span></div>
@@ -481,6 +491,19 @@
 // roda depois dos scripts com defer (o GSAP), que carregam antes do DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
+  // A UTM DE QUEM CHEGOU VAI PRO CHECKOUT (18/11/2026, pra campanha do curso, como na página da Fábrica): o link do anúncio traz
+  // utm_source=meta e os nomes da campanha, do conjunto e do anúncio, e a Kirvano devolve isso na venda. Sem UTM na chegada, segue a de
+  // sempre (instagram, viralcity). O `fbclid` também vai, senão o pixel na Kirvano não liga a compra ao anúncio.
+  (function () {
+    var bt = document.getElementById("comprar-curso");
+    if (!bt) return;
+    var aqui = new URLSearchParams(location.search), utm = new URLSearchParams();
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { var v = aqui.get(k); if (v) utm.set(k, v.slice(0, 120)); });
+    if (!utm.get("utm_source")) { utm = new URLSearchParams(); utm.set("utm_source", "instagram"); utm.set("utm_campaign", "viralcity"); }
+    var fbclid = aqui.get("fbclid");
+    if (fbclid) utm.set("fbclid", fbclid.slice(0, 500));
+    bt.href = bt.href.split("?")[0] + "?" + utm.toString();
+  })();
   // a VSL: começa muda; o botão do meio liga o som do começo
   // A TRAVA (18/11/2026, como na versão B da página da Fábrica): o resto da página e os botões só aparecem quando a VSL, com som,
   // chega na oferta. Quem já chegou uma vez (guardado no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
