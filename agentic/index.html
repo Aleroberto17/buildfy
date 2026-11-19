@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agentic Code</title>
+<meta name="description" content="O editor de vibecoding pra Windows. Você descreve o que quer e a IA constrói sites, sistemas, SaaS e aplicativos web, com o Claude Code, o Codex ou o Antigravity num editor só. E você vê cada agente trabalhando.">
+<meta property="og:title" content="Agentic Code">
+<meta property="og:description" content="Descreva o que você quer. A IA constrói. E você vê cada agente trabalhando.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1e1e1e">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Silkscreen&display=swap" rel="stylesheet">
+<style>
+  /* A página do Agentic Code: o molde da página da Fábrica de Conteúdo, nas cores de um editor de código. */
+  :root {
+    --fundo: #1e1e1e;
+    --fundo-2: #252526;
+    --fundo-3: #181825;
+    --linha: #3c3c3c;
+    --azul: #3b8eea;
+    --azul-esc: #0e639c;
+    --verde: #23d18b;
+    --branco: #ffffff;
+    --texto: #d4d4d4;
+    --texto-suave: #9da5b4;
+    --pixel: "Silkscreen", ui-monospace, monospace;
+    --corpo: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Cascadia Code", Consolas, ui-monospace, monospace;
+    --largura: 1080px;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font-family: var(--corpo); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  img, video { display: block; max-width: 100%; }
+  a { color: var(--azul); }
+  strong, b { color: var(--branco); }
+
+  /* ---------- topo ---------- */
+  .topo { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 10px 16px; background: rgba(24, 24, 37, .94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--linha); }
+  .marca { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--branco); }
+  .marca img { width: 36px; height: 36px; image-rendering: pixelated; }
+  .marca span { font-family: var(--pixel); font-size: 16px; letter-spacing: 1px; }
+
+  /* ---------- botões ---------- */
+  .botao { display: inline-block; font-family: var(--corpo); font-weight: 800; font-size: 16px; line-height: 1.3; letter-spacing: .3px;
+    color: var(--branco); background: var(--azul-esc); padding: 16px 24px; text-decoration: none; text-align: center;
+    border: 2px solid var(--azul); box-shadow: 4px 4px 0 #0a3a5c; transition: transform .08s, box-shadow .08s, background .15s; cursor: pointer; }
+  .botao:hover { background: #1177bb; transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #0a3a5c; }
+  .botao:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #0a3a5c; }
+  .botao:focus-visible { outline: 2px solid var(--branco); outline-offset: 3px; }
+  .botao-pequeno { padding: 9px 14px; font-size: 14px; box-shadow: 3px 3px 0 #0a3a5c; }
+  .brilhar { animation: brilho 2.4s ease-in-out infinite; }
+  @keyframes brilho { 50% { box-shadow: 4px 4px 0 #0a3a5c, 0 0 26px rgba(59,142,234,.55); } }
+
+  .pagina { max-width: var(--largura); margin: 0 auto; padding: 0 16px 40px; }
+  section { padding: 72px 0 0; scroll-margin-top: 70px; }
+  .selo { display: inline-block; font-family: var(--pixel); font-size: 13px; letter-spacing: 1px; color: var(--verde);
+    background: rgba(35,209,139,.08); border: 1px solid rgba(35,209,139,.45); padding: 5px 10px; margin-bottom: 18px; }
+  .kicker { display: block; text-align: center; font-family: var(--pixel); font-size: 14px; letter-spacing: 1px; color: var(--verde); margin: 0 0 10px; }
+  h2.tit { font-weight: 800; font-size: clamp(24px, 4.2vw, 36px); line-height: 1.2; color: var(--branco); text-align: center; margin: 0 auto 14px; max-width: 820px; text-wrap: balance; }
+  .chamada { text-align: center; max-width: 660px; margin: 0 auto 28px; color: var(--texto-suave); }
+  .pequeno { font-size: 14px; color: var(--texto-suave); }
+
+  /* ---------- herói ---------- */
+  .heroi { text-align: center; padding: 44px 0 0; position: relative; }
+  .brilho { position: absolute; inset: -40px -16px auto; height: 560px; z-index: -1; pointer-events: none;
+    background: radial-gradient(55% 55% at 50% 30%, rgba(59,142,234,.20), transparent 70%); }
+  .logo-grande { width: 96px; height: 96px; margin: 0 auto 18px; image-rendering: pixelated; filter: drop-shadow(0 10px 30px rgba(59,142,234,.35)); }
+  .heroi h1 { font-weight: 800; font-size: clamp(32px, 5.8vw, 56px); line-height: 1.08; letter-spacing: -1px; color: var(--branco); margin: 0 auto 18px; max-width: 900px; text-wrap: balance; }
+  .heroi h1 em { font-style: normal; color: var(--azul); }
+  .heroi .lead { max-width: 700px; margin: 0 auto 30px; font-size: 19px; color: var(--texto); }
+
+  /* a janela do programa, em volta das telas e dos vídeos */
+  .janela { position: relative; max-width: 900px; margin: 0 auto; background: var(--fundo-3); border: 1px solid var(--linha);
+    box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(59,142,234,.12); text-align: left; }
+  .janela .barra { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #2d2d30; border-bottom: 1px solid var(--linha); }
+  .janela .barra img { width: 18px; height: 18px; image-rendering: pixelated; }
+  .janela .barra b { font-weight: 500; font-size: 13px; color: var(--texto-suave); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .janela .barra i { width: 10px; height: 10px; border-radius: 50%; background: #555; display: block; }
+  .janela .barra i:nth-of-type(1) { background: #ff5f57; } .janela .barra i:nth-of-type(2) { background: #febc2e; } .janela .barra i:nth-of-type(3) { background: #28c840; }
+  .janela > img, .janela video { width: 100%; height: auto; background: #000; }
+  .janela video.escritorio { aspect-ratio: 896 / 632; object-fit: cover; }
+  .rotulo { position: absolute; left: 14px; bottom: 14px; font-family: var(--pixel); font-size: 12px; color: var(--fundo-3); background: var(--verde); padding: 3px 8px; }
+
+  /* a VSL: começa muda; o botão do meio liga o som do começo (o player é o vsl-player.js, o mesmo da página da Fábrica) */
+  .tela-vsl { position: relative; background: #000; }
+  .tela-vsl video { aspect-ratio: 16 / 9; object-fit: cover; }
+  .tela-vsl.sem-vsl video { aspect-ratio: 896 / 632; }
+  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font: 800 16px/1.3 var(--corpo); color: var(--branco);
+    background: var(--azul-esc); border: 2px solid var(--azul); box-shadow: 4px 4px 0 #0a3a5c; padding: 16px 22px; cursor: pointer; animation: pulsar 1.4s ease-in-out infinite; }
+  .som[hidden] { display: none; }
+  @keyframes pulsar { 50% { transform: translate(-50%, -50%) scale(1.06); } }
+  .legenda-vsl { margin: 12px auto 0; max-width: 900px; font-size: 14px; color: var(--texto-suave); text-align: center; }
+  .legenda-vsl[hidden] { display: none; }
+
+  .acao { margin-top: 36px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .confianca { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; font-size: 14px; color: var(--texto-suave); }
+  .confianca span::before { content: "\25A0  "; color: var(--verde); }
+
+  /* ---------- faixa que corre ---------- */
+  .faixa { margin: 64px -16px 0; background: var(--azul-esc); color: var(--branco); overflow: hidden; border-top: 1px solid var(--azul); border-bottom: 1px solid var(--azul); }
+  .faixa .trilho { display: flex; gap: 40px; width: max-content; padding: 11px 0; font-family: var(--pixel); font-size: 15px; letter-spacing: 1px; animation: correr 36s linear infinite; }
+  .faixa .trilho span::after { content: ">_"; margin-left: 40px; color: var(--verde); }
+  @keyframes correr { to { transform: translateX(-50%); } }
+
+  /* ---------- o que você constrói ---------- */
+  .feitos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .feito { background: var(--fundo-2); border: 1px solid var(--linha); border-top: 3px solid var(--verde); padding: 18px; }
+  .feito .ic { font-family: var(--mono); font-size: 15px; color: var(--verde); margin-bottom: 10px; }
+  .feito h3 { margin: 0 0 6px; font-size: 19px; color: var(--branco); }
+  .feito p { margin: 0; font-size: 15px; color: var(--texto-suave); }
+
+  /* ---------- como funciona ---------- */
+  .passos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .passo { background: var(--fundo-2); border: 1px solid var(--linha); padding: 18px; }
+  .passo .n { width: 40px; height: 40px; display: grid; place-items: center; font-family: var(--pixel); font-size: 17px; color: var(--fundo-3); background: var(--verde); margin-bottom: 12px; }
+  .passo h3 { margin: 0 0 6px; font-size: 18px; color: var(--branco); }
+  .passo p { margin: 0; font-size: 15px; color: var(--texto-suave); }
+  .terminal { margin-top: 10px; background: #0c0c0c; border: 1px solid var(--linha); font-family: var(--mono); font-size: 13px; line-height: 1.6; padding: 10px 12px; color: #cccccc; }
+  .terminal .p { color: var(--verde); }
+
+  .exemplo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 28px; }
+  .exemplo figure { margin: 0; }
+  .exemplo .janela { display: block; max-width: none; text-decoration: none; }
+  .exemplo .janela > img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .exemplo figcaption { margin-top: 10px; font-size: 14px; color: var(--texto-suave); text-align: center; }
+
+  /* ---------- as telas do editor ---------- */
+  .telas { display: grid; gap: 52px; }
+  .tela-linha { display: grid; grid-template-columns: 1fr 1.7fr; gap: 30px; align-items: center; }
+  .tela-linha:nth-child(even) { grid-template-columns: 1.7fr 1fr; }
+  .tela-linha:nth-child(even) .tela-texto { order: 2; }
+  .etiqueta-tela { font-family: var(--pixel); font-size: 14px; letter-spacing: .5px; color: var(--verde); margin: 0 0 8px; }
+  .tela-texto h3 { margin: 0 0 8px; font-size: 24px; line-height: 1.25; color: var(--branco); }
+  .tela-texto p { margin: 0; color: var(--texto-suave); }
+  .lista-check { list-style: none; padding: 0; margin: 14px 0 0; }
+  .lista-check li { position: relative; padding: 4px 0 4px 26px; color: var(--texto); font-size: 16px; }
+  .lista-check li::before { content: ""; position: absolute; left: 0; top: 12px; width: 12px; height: 12px; background: var(--verde); }
+
+  /* ---------- os três agentes ---------- */
+  .agentes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 900px; margin: 0 auto; }
+  .agente { background: var(--fundo-2); border: 1px solid var(--linha); padding: 18px; text-align: center; }
+  .agente b { display: block; font-family: var(--pixel); font-weight: 400; font-size: 16px; color: var(--branco); margin-bottom: 4px; }
+  .agente span { font-size: 15px; color: var(--texto-suave); }
+  .agente.claude { border-top: 3px solid #d97757; } .agente.codex { border-top: 3px solid var(--texto); } .agente.agy { border-top: 3px solid #f2c94c; }
+
+  /* ---------- o diferencial: o escritório ---------- */
+  .postos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .posto { background: var(--fundo-2); border: 1px solid var(--linha); border-left: 4px solid var(--azul); padding: 16px 18px; }
+  .posto b { display: block; font-family: var(--pixel); font-weight: 400; font-size: 14px; letter-spacing: .5px; color: var(--verde); margin-bottom: 4px; }
+  .posto span { font-size: 15px; color: var(--texto-suave); }
+  .equipe { display: grid; grid-template-columns: 1fr 1.35fr; gap: 32px; align-items: center; margin-top: 44px; }
+  .equipe .texto h3 { margin: 0 0 8px; font-size: 26px; line-height: 1.2; color: var(--branco); }
+  .equipe .texto p { margin: 0; }
+
+  /* ---------- o resto que vem junto ---------- */
+  .recursos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .recurso .tela { display: block; margin: -18px -18px 16px; border-bottom: 1px solid var(--linha); background: #000; }
+  .recurso .tela img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .recurso { background: var(--fundo-2); border: 1px solid var(--linha); border-top: 3px solid var(--azul); padding: 18px; }
+  .recurso .ic { font-family: var(--pixel); font-size: 15px; color: var(--verde); margin-bottom: 8px; }
+  .recurso h3 { margin: 0 0 6px; font-size: 17px; color: var(--branco); }
+  .recurso p { margin: 0; font-size: 15px; color: var(--texto-suave); }
+
+  /* ---------- o curso ---------- */
+  .modulos { list-style: none; padding: 0; margin: 0 auto; max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .modulo { background: var(--fundo-2); border: 1px solid var(--linha); padding: 18px; display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+  .modulo .n { width: 44px; height: 44px; display: grid; place-items: center; font-family: var(--pixel); font-size: 18px; color: var(--fundo-3); background: var(--azul); }
+  .modulo h3 { margin: 0 0 4px; font-size: 17px; color: var(--branco); }
+  .modulo p { margin: 0; font-size: 15px; color: var(--texto-suave); }
+
+  /* ---------- o que você precisa ---------- */
+  .precisa { list-style: none; padding: 0; margin: 0 auto; max-width: 820px; display: grid; gap: 10px; }
+  .precisa li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; padding: 14px 16px; background: var(--fundo-2); border: 1px solid var(--linha); }
+  .precisa .n { width: 44px; height: 44px; display: grid; place-items: center; font-family: var(--pixel); font-size: 18px; color: var(--fundo-3); background: var(--verde); }
+  .precisa strong { display: block; font-size: 17px; margin-bottom: 2px; }
+  .precisa span { color: var(--texto-suave); font-size: 15px; }
+  .honesto { max-width: 820px; margin: 14px auto 0; padding: 14px 18px; border: 1px dashed var(--azul); color: var(--texto); font-size: 15px; }
+
+  /* ---------- a oferta ---------- */
+  .oferta { position: relative; max-width: 560px; margin: 0 auto; text-align: center; background: var(--fundo-2); border: 2px solid var(--azul);
+    box-shadow: 8px 8px 0 var(--azul-esc), 0 0 60px rgba(59,142,234,.15); padding: 32px 24px 28px; }
+  .oferta .preco { font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -1px; color: var(--branco); margin: 10px 0 8px; }
+  .oferta .preco small { font-size: 26px; font-weight: 700; color: var(--texto-suave); margin-right: 4px; }
+  .oferta ul { text-align: left; margin: 22px 0; padding: 0; list-style: none; }
+  .oferta li { padding: 6px 0 6px 28px; position: relative; }
+  .oferta li::before { content: ""; position: absolute; left: 0; top: 13px; width: 13px; height: 13px; background: var(--verde); }
+  .oferta li.sub { padding-left: 52px; font-size: 15px; color: var(--texto-suave); }
+  .oferta li.sub::before { left: 28px; width: 9px; height: 9px; top: 14px; background: var(--azul); }
+  .oferta .botao { width: 100%; font-size: 18px; padding: 18px; }
+  .depois { margin: 14px 0 0; font-size: 14px; color: var(--texto-suave); }
+  .garantia { display: flex; gap: 14px; align-items: center; text-align: left; margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--linha); }
+  .garantia svg { flex: none; width: 50px; height: 56px; }
+
+  /* ---------- perguntas ---------- */
+  .faq { max-width: 760px; margin: 0 auto; }
+  .faq details { background: var(--fundo-2); border: 1px solid var(--linha); margin: 8px 0; padding: 14px 18px; }
+  .faq summary { cursor: pointer; font-weight: 700; color: var(--branco); }
+  .faq p { margin: 10px 0 0; color: var(--texto-suave); }
+
+  .fecho { text-align: center; padding-bottom: 20px; }
+  .rodape { text-align: center; padding: 30px 16px 8px; border-top: 1px solid var(--linha); color: var(--texto-suave); font-size: 14px; }
+  .rodape p { margin: 0; }
+  .rodape .marca { justify-content: center; margin-bottom: 8px; }
+
+  /* entrada suave, só com o script ligado */
+  .anima .revela { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .anima .revela.vista { opacity: 1; transform: none; }
+
+  @media (max-width: 860px) {
+    .equipe, .tela-linha, .tela-linha:nth-child(even) { grid-template-columns: 1fr; }
+    .tela-linha:nth-child(even) .tela-texto { order: 0; }
+    .feitos, .postos, .recursos, .modulos, .exemplo { grid-template-columns: 1fr 1fr; }
+    .passos, .agentes { grid-template-columns: 1fr; }
+    .equipe .texto { text-align: center; }
+  }
+  @media (max-width: 520px) {
+    body { font-size: 16px; }
+    section { padding-top: 56px; }
+    .feitos, .postos, .recursos, .modulos, .exemplo { grid-template-columns: 1fr; }
+    .logo-grande { width: 80px; height: 80px; }
+    .heroi .lead { font-size: 17px; }
+    .janela .barra b { font-size: 12px; }
+    .rotulo { font-size: 10px; left: 8px; bottom: 8px; }
+    .som { font-size: 14px; padding: 12px 16px; }
+    .oferta { padding: 26px 16px 22px; }
+    .oferta .preco { font-size: 48px; }
+    .marca span { font-size: 13px; white-space: nowrap; }
+    .marca img { width: 30px; height: 30px; }
+    .topo .botao-pequeno { font-size: 12px; padding: 8px 10px; white-space: nowrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faixa .trilho, .brilhar, .som { animation: none; }
+    .anima .revela { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+<script>
+/* ENQUANTO A VSL NÃO EXISTIR (img/vsl.mp4 e img/vsl-poster.jpg), o vídeo do escritório toca no lugar dela, mudo e em loop, sem o
+   botão "Toque pra ouvir" e sem a linha do que o vídeo mostra. Quem chama é o onerror do <source> da VSL. */
+window.semVSL = function () {
+  if (window.SEM_VSL) return;
+  window.SEM_VSL = true;
+  var v = document.getElementById("vsl");
+  if (!v) return;
+  var fonte = v.querySelector("source");
+  if (fonte) fonte.remove();
+  v.poster = "img/equipe-poster.jpg";
+  v.src = "img/equipe.mp4";
+  v.setAttribute("aria-label", "O escritório do Agentic Code: o Claude Code divide um pedido e sete sub-agentes trabalham ao mesmo tempo");
+  v.muted = true; v.loop = true;
+  v.load();
+  v.play().catch(function () {});
+  var caixa = v.parentElement;
+  caixa.classList.add("sem-vsl");
+  ["som", "legenda-vsl"].forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  var barra = caixa.querySelector(".vsl-barra");
+  if (barra) barra.hidden = true;
+};
+</script>
+<script src="medir.js" data-pagina="agentic"></script>
+<script src="vsl-player.js"></script>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="#">
+    <img src="img/logo.png" alt="" width="36" height="36">
+    <span>AGENTIC CODE</span>
+  </a>
+  <a class="botao botao-pequeno" href="#oferta" data-medir="ver_oferta">Quero o Agentic Code</a>
+</header>
+
+<main class="pagina">
+
+  <section class="heroi">
+    <div class="brilho"></div>
+    <img class="logo-grande revela" src="img/logo.png" alt="Logo do Agentic Code: a janela de um terminal com três agentes em pixel art" width="96" height="96">
+    <div class="selo revela">EDITOR DE VIBECODING PRA WINDOWS</div>
+    <h1 class="revela">Descreva o que você quer. <em>A IA constrói.</em></h1>
+    <p class="lead revela">Sites, sistemas, SaaS e aplicativos web, sem escrever o código você mesmo. O Claude Code, o Codex ou o Antigravity trabalha no seu projeto, num editor só. E você vê cada agente trabalhando.</p>
+    <div class="janela revela">
+      <div class="barra"><img src="img/logo.png" alt="" width="18" height="18"><b>Agentic Code</b><i></i><i></i><i></i></div>
+      <div class="tela-vsl">
+        <video id="vsl" poster="img/vsl-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo de apresentação do Agentic Code">
+          <source src="img/vsl.mp4" type="video/mp4" onerror="window.semVSL && window.semVSL()">
+        </video>
+        <button class="som" id="som" type="button">&#9654; Toque pra ouvir</button>
+      </div>
+    </div>
+    <p class="legenda-vsl revela" id="legenda-vsl">No vídeo: o site completo de uma loja de carros, feito pela IA dentro do Agentic Code.</p>
+    <div class="acao revela">
+      <a class="botao brilhar" href="#oferta" data-onde="heroi" data-medir="ver_oferta_heroi">Quero o Agentic Code</a>
+      <div class="confianca"><span>Claude Code, Codex e Antigravity</span><span>Windows 10 e 11</span><span>7 dias de garantia</span></div>
+    </div>
+  </section>
+
+  <div class="faixa" aria-hidden="true">
+    <div class="trilho">
+      <span>SITES</span><span>SISTEMAS</span><span>SAAS</span><span>APLICATIVOS WEB</span><span>EXPLORADOR</span><span>EDITOR</span><span>TERMINAL</span><span>SESSÕES SALVAS</span><span>ESCRITÓRIO DOS AGENTES</span>
+      <span>SITES</span><span>SISTEMAS</span><span>SAAS</span><span>APLICATIVOS WEB</span><span>EXPLORADOR</span><span>EDITOR</span><span>TERMINAL</span><span>SESSÕES SALVAS</span><span>ESCRITÓRIO DOS AGENTES</span>
+    </div>
+  </div>
+
+  <section>
+    <span class="kicker revela">O QUE VOCÊ CONSTRÓI</span>
+    <h2 class="tit revela">Da ideia ao projeto, em português</h2>
+    <p class="chamada revela">Você diz o que quer. O agente escreve o código, cria os arquivos e roda os comandos. Você acompanha e ajusta.</p>
+    <div class="feitos">
+      <div class="feito revela"><div class="ic">&lt;/&gt;</div><h3>Sites</h3><p>Peça a página de uma empresa ou uma loja com catálogo e filtros.</p></div>
+      <div class="feito revela"><div class="ic">{ }</div><h3>Sistemas</h3><p>Peça um cadastro, um painel, o controle que a sua empresa precisa.</p></div>
+      <div class="feito revela"><div class="ic">$_</div><h3>SaaS</h3><p>Descreva a sua ideia de produto, com login e área do cliente.</p></div>
+      <div class="feito revela"><div class="ic">[ ]</div><h3>Aplicativos web</h3><p>Peça ferramentas que abrem no navegador, no computador e no celular.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="kicker revela">COMO FUNCIONA</span>
+    <h2 class="tit revela">Abra, descreva, acompanhe</h2>
+    <ol class="passos">
+      <li class="passo revela"><div class="n">1</div><h3>Abra a pasta do projeto</h3><p>Nova ou que você já tem. Os arquivos aparecem no explorador.</p></li>
+      <li class="passo revela"><div class="n">2</div><h3>Descreva o que você quer</h3><p>No terminal, pro agente que você usa.</p>
+        <div class="terminal" aria-hidden="true"><span class="p">&gt;</span> crie o site de uma loja de carros, com estoque, filtros e botão do WhatsApp</div></li>
+      <li class="passo revela"><div class="n">3</div><h3>Acompanhe e ajuste</h3><p>Os arquivos mudam na tela enquanto ele trabalha. Abra, leia, edite e peça o próximo passo.</p></li>
+    </ol>
+    <div class="exemplo">
+      <figure class="revela">
+        <a class="janela" href="img/tela-equipe-loja.jpg" target="_blank" rel="noopener" data-medir="tela_equipe_loja">
+          <div class="barra"><img src="img/logo.png" alt="" width="18" height="18"><b>loja-de-carros · Escritório</b><i></i><i></i><i></i></div>
+          <img src="img/tela-equipe-loja.jpg" alt="O pedido da loja de carros dividido entre 4 sub-agentes no salão da Equipe: Base e layout, Página inicial, Página de estoque e Página do carro" width="1920" height="1080" loading="lazy">
+        </a>
+        <figcaption>O pedido da loja de carros virou uma equipe de 4.</figcaption>
+      </figure>
+      <figure class="revela">
+        <a class="janela" href="img/tela-loja-carro.jpg" target="_blank" rel="noopener" data-medir="tela_loja_carro">
+          <div class="barra"><img src="img/logo.png" alt="" width="18" height="18"><b>loja-de-carros · página do carro</b><i></i><i></i><i></i></div>
+          <img src="img/tela-loja-carro.jpg" alt="A página de um carro no site feito pela IA, com a galeria de fotos, o preço do carro e os botões Chamar no WhatsApp e Simular financiamento" width="1920" height="1080" loading="lazy">
+        </a>
+        <figcaption>A página do carro que a IA fez: galeria, preço e WhatsApp.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="telas">
+    <span class="kicker revela">O EDITOR</span>
+    <h2 class="tit revela">Tudo o que você precisa, numa janela só</h2>
+    <p class="chamada revela">Explorador, abas, editor, pesquisa e um terminal de verdade, aqui dentro.</p>
+    <div class="telas">
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">CÓDIGO, TERMINAL E AGENTE</p>
+          <h3>Você vê o código nascendo</h3>
+          <p>O arquivo que o agente escreve muda na tela sozinho.</p>
+          <ul class="lista-check">
+            <li>Explorador com as suas pastas</li>
+            <li>Abas e dois editores lado a lado</li>
+            <li>Pesquisa em todos os arquivos</li>
+            <li>O terminal do agente embaixo</li>
+          </ul>
+        </div>
+        <div class="janela revela">
+          <div class="barra"><img src="img/logo.png" alt="" width="18" height="18"><b>Agentic Code · projeto-teste</b><i></i><i></i><i></i></div>
+          <img src="img/editor.png" alt="O Agentic Code com o explorador de arquivos, um arquivo aberto no editor, o escritório à direita e o terminal do Claude Code embaixo" width="1600" height="900" loading="lazy">
+        </div>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">SESSÕES SALVAS</p>
+          <h3>Feche hoje, continue amanhã</h3>
+          <p>Cada conversa com o Claude Code fica salva, com o primeiro pedido como título. Um clique e ela volta inteira, mesmo depois de fechar o programa.</p>
+        </div>
+        <div class="janela revela">
+          <div class="barra"><img src="img/logo.png" alt="" width="18" height="18"><b>Agentic Code · Sessões</b><i></i><i></i><i></i></div>
+          <img src="img/tela-sessoes.jpg" alt="A vista Sessões do Agentic Code, com a conversa salva do site da padaria" width="1100" height="640" loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <span class="kicker revela">OS AGENTES</span>
+    <h2 class="tit revela">Claude Code, Codex e Antigravity num editor só</h2>
+    <p class="chamada revela">Use o agente que você já tem. Cada um tem o seu boneco no escritório.</p>
+    <div class="agentes">
+      <div class="agente claude revela"><b>CLAUDE CODE</b><span>De jaleco.</span></div>
+      <div class="agente codex revela"><b>CODEX</b><span>De terno.</span></div>
+      <div class="agente agy revela"><b>ANTIGRAVITY</b><span>De colete e capacete.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="kicker revela">O DIFERENCIAL</span>
+    <h2 class="tit revela">E você vê cada agente trabalhando</h2>
+    <p class="chamada revela">Enquanto ele trabalha, o boneco dele anda por um escritório em pixel art. Bate o olho e você sabe o que ele está fazendo.</p>
+    <ul class="postos">
+      <li class="posto revela"><b>ESCREVENDO</b><span>Na mesa dele, digitando.</span></li>
+      <li class="posto revela"><b>LENDO ARQUIVO</b><span>Nas estantes da biblioteca.</span></li>
+      <li class="posto revela"><b>RODANDO COMANDO</b><span>Nos racks dos servidores.</span></li>
+      <li class="posto revela"><b>PESQUISANDO</b><span>No globo, buscando na web.</span></li>
+      <li class="posto revela"><b>PLANEJANDO</b><span>No quadro branco e na mesa de reunião.</span></li>
+      <li class="posto revela"><b>LIVRE</b><span>Café na copa, sofá ou ping-pong.</span></li>
+    </ul>
+
+    <div class="equipe">
+      <div class="texto revela">
+        <span class="kicker" style="text-align:inherit">A EQUIPE</span>
+        <h3>Pedido grande vira uma equipe</h3>
+        <p>O Claude trabalha como chefe: divide o pedido entre sub-agentes, todos ao mesmo tempo, e confere tudo no fim.</p>
+        <ul class="lista-check">
+          <li>Cada sub-agente ganha uma mesa no salão da Equipe</li>
+          <li>A tarefa dele aparece na etiqueta</li>
+          <li>O quadro das tarefas mostra o que já ficou pronto</li>
+          <li>Clicou num funcionário, abre o arquivo que ele está mexendo</li>
+        </ul>
+      </div>
+      <div class="revela">
+        <div class="janela">
+          <div class="barra"><img src="img/logo.png" alt="" width="18" height="18"><b>Escritório · Salão da Equipe</b><i></i><i></i><i></i></div>
+          <video class="escritorio" src="img/equipe.mp4" poster="img/equipe-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O escritório do Agentic Code: o Claude Code divide um pedido e sete sub-agentes trabalham ao mesmo tempo no salão da Equipe"></video>
+          <span class="rotulo">7 SUB-AGENTES AO MESMO TEMPO</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="kicker revela">VEM JUNTO</span>
+    <h2 class="tit revela">Feito pra você não perder nada</h2>
+    <div class="recursos">
+      <div class="recurso revela">
+        <a class="tela" href="img/tela-pergunta.jpg" target="_blank" rel="noopener" data-medir="tela_pergunta"><img src="img/tela-pergunta.jpg" alt="O cartão em português: Pasta nova. Você confia nesta pasta? Com os botões Não, sair e Sim, confio nesta pasta" width="1150" height="520" loading="lazy" style="object-position: 100% 50%"></a>
+        <div class="ic">PT-BR</div>
+        <h3>Perguntas em português</h3>
+        <p>Quando o Claude Code pergunta algo, aparece um cartão em português com um botão por resposta. E ele te responde em português.</p>
+      </div>
+      <div class="recurso revela">
+        <a class="tela" href="img/tela-marcas.jpg" target="_blank" rel="noopener" data-medir="tela_marcas"><img src="img/tela-marcas.jpg" alt="O explorador com o index.html aberto no editor e a marca do agente no arquivo contato.html" width="1150" height="700" loading="lazy" style="object-position: 0 0"></a>
+        <div class="ic">ARQUIVOS</div>
+        <h3>Você vê onde ele mexe</h3>
+        <p>O arquivo que o agente lê ou escreve ganha a marca dele. O que acabou de mudar fica verde.</p>
+      </div>
+      <div class="recurso revela">
+        <a class="tela" href="img/tela-resumo.jpg" target="_blank" rel="noopener" data-medir="tela_resumo"><img src="img/tela-resumo.jpg" alt="O Resumo do dia: 5 pedidos seus, 7 tarefas prontas, 11 sub-agentes chamados e 12 arquivos mudados" width="1150" height="660" loading="lazy" style="object-position: 0 50%"></a>
+        <div class="ic">RESUMO</div>
+        <h3>O resumo do dia</h3>
+        <p>Pedidos, tarefas prontas, sub-agentes e arquivos mudados. Hoje e no último dia de trabalho.</p>
+      </div>
+      <div class="recurso revela">
+        <a class="tela" href="img/tela-construir.jpg" target="_blank" rel="noopener" data-medir="tela_construir"><img src="img/tela-construir.jpg" alt="O modo Construir com o catálogo aberto e um fliperama posto no escritório" width="1548" height="660" loading="lazy" style="object-position: 100% 50%"></a>
+        <div class="ic">CONSTRUIR</div>
+        <h3>O escritório é seu</h3>
+        <p>Arraste os móveis, tire o que quiser e ponha os do catálogo: móveis, eletrônicos, decoração e até fliperama.</p>
+      </div>
+      <div class="recurso revela">
+        <div class="ic">AVISO</div>
+        <h3>O Windows te chama</h3>
+        <p>Foi pra outra janela e o agente parou pra te perguntar algo? Chega um aviso com som. Um clique e você está no terminal dele.</p>
+      </div>
+      <div class="recurso revela">
+        <div class="ic">LOCAL</div>
+        <h3>Roda no seu computador</h3>
+        <p>O programa e os seus projetos ficam na sua máquina.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="curso">
+    <span class="kicker revela">O CURSO</span>
+    <h2 class="tit revela">Junto com o programa, quatro cursos</h2>
+    <p class="chamada revela">Do primeiro clique ao seu sistema no ar, protegido.</p>
+    <ul class="modulos">
+      <li class="modulo revela"><div class="n">1</div><div><h3>Instalar, ativar e usar</h3><p>O Agentic Code de ponta a ponta.</p></div></li>
+      <li class="modulo revela"><div class="n">2</div><div><h3>Criar sites com o Agentic Code</h3><p>Curso completo.</p></div></li>
+      <li class="modulo revela"><div class="n">3</div><div><h3>Criar sistemas, SaaS e aplicativos web</h3><p>Curso completo.</p></div></li>
+      <li class="modulo revela"><div class="n">4</div><div><h3>Cibersegurança: proteger o seu site e o seu sistema</h3><p>Curso completo.</p></div></li>
+    </ul>
+  </section>
+
+  <section id="requisitos">
+    <span class="kicker revela">ANTES DE COMPRAR</span>
+    <h2 class="tit revela">O que você precisa</h2>
+    <ul class="precisa">
+      <li class="revela"><div class="n">1</div><div><strong>Um PC com Windows 10 ou 11</strong><span>Não funciona no Mac nem no Linux.</span></div></li>
+      <li class="revela"><div class="n">2</div><div><strong>Pelo menos um agente instalado, com a sua conta</strong><span>O Claude Code com uma assinatura do Claude, ou o Codex, ou o Antigravity.</span></div></li>
+      <li class="revela"><div class="n">3</div><div><strong>Internet pra ativar</strong><span>A ativação é no primeiro uso, com o e-mail da compra.</span></div></li>
+    </ul>
+    <p class="honesto revela">O Agentic Code não inclui nem substitui a assinatura do Claude, do Codex ou do Antigravity. Ele é o editor onde o agente que você já tem trabalha.</p>
+  </section>
+
+  <section id="oferta">
+    <h2 class="tit revela">Tudo isso no seu computador</h2>
+    <div class="oferta revela">
+      <div class="pequeno">licença de 1 ano, com todas as atualizações</div>
+      <div class="preco"><small>R$</small>147</div>
+      <ul>
+        <li><strong>O Agentic Code</strong>, o editor de vibecoding pra Windows</li>
+        <li>Explorador, editor, pesquisa e o terminal do seu agente</li>
+        <li>Claude Code, Codex e Antigravity num editor só</li>
+        <li>Sessões salvas, perguntas em português, aviso do Windows e resumo do dia</li>
+        <li>O escritório dos agentes e a equipe de sub-agentes do Claude</li>
+        <li>O modo Construir, com o catálogo de móveis</li>
+        <li><strong>Curso:</strong> instalar, ativar e usar</li>
+        <li><strong>Curso completo:</strong> Criar sites com o Agentic Code</li>
+        <li><strong>Curso completo:</strong> Criar sistemas, SaaS e aplicativos web</li>
+        <li><strong>Curso completo:</strong> Cibersegurança: proteger o seu site e o seu sistema</li>
+        <li>1 ano de licença, com todas as atualizações</li>
+      </ul>
+      <a class="botao brilhar comprar" href="#oferta" data-onde="oferta">Quero o Agentic Code</a>
+      <p class="depois">Depois da compra, você baixa pelo link com o e-mail da compra e os 4 últimos números do CPF, e ativa no primeiro uso.</p>
+      <div class="garantia">
+        <svg viewBox="0 0 18 20" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#0e639c"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#3b8eea"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#181825"/></svg>
+        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Não gostou, devolvemos o seu dinheiro.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Perguntas</h2>
+    <div class="faq">
+      <details class="revela"><summary>O que é vibecoding?</summary><p>É construir conversando: você descreve o que quer e o agente de IA escreve o código. No Agentic Code você faz isso com o Claude Code, o Codex ou o Antigravity, vendo os arquivos e o agente trabalhando.</p></details>
+      <details class="revela"><summary>Preciso ter o Claude Code, o Codex ou o Antigravity?</summary><p>Sim. Pelo menos um deles, instalado e com a sua conta: o Claude Code com uma assinatura do Claude, ou o Codex, ou o Antigravity. O Agentic Code não inclui nem substitui essa assinatura.</p></details>
+      <details class="revela"><summary>Preciso escrever código?</summary><p>Não precisa escrever o código você mesmo: você descreve e o agente escreve. Se quiser mexer, o editor está ali. Os cursos mostram o caminho, do primeiro site ao sistema.</p></details>
+      <details class="revela"><summary>O que vem no curso?</summary><p>Quatro partes: instalar, ativar e usar o Agentic Code, e três cursos completos: "Criar sites com o Agentic Code", "Criar sistemas, SaaS e aplicativos web" e "Cibersegurança: proteger o seu site e o seu sistema".</p></details>
+      <details class="revela"><summary>Funciona no Mac ou no Linux?</summary><p>Não. Só no Windows 10 ou 11.</p></details>
+      <details class="revela"><summary>A equipe de sub-agentes funciona com todos?</summary><p>A equipe, as perguntas em português e as sessões salvas são do Claude Code. O Codex e o Antigravity rodam no terminal do programa e têm o boneco deles no escritório.</p></details>
+      <details class="revela"><summary>Como recebo depois da compra?</summary><p>Você baixa pelo link com o e-mail da compra e os 4 últimos números do CPF. Instala, abre e ativa no primeiro uso.</p></details>
+      <details class="revela"><summary>Posso usar em mais de um computador?</summary><p>A sua cópia é pessoal, ligada à sua licença e ao seu computador.</p></details>
+      <details class="revela"><summary>O acesso é pra sempre?</summary><p>Não. É uma licença de 1 ano, com todas as atualizações. Depois, é só renovar.</p></details>
+      <details class="revela"><summary>Os meus projetos saem do meu computador?</summary><p>O Agentic Code roda no seu computador e não mexe nos seus projetos por conta própria. O que vai pra fora é o que o próprio agente já manda, como sempre mandou.</p></details>
+      <details class="revela"><summary>O Windows mostra algum aviso na instalação?</summary><p>Pode mostrar o aviso de app desconhecido. É só clicar em "Mais informações" e "Executar assim mesmo". O curso mostra o passo.</p></details>
+      <details class="revela"><summary>E se eu não gostar?</summary><p>7 dias de garantia. Devolvemos o seu dinheiro.</p></details>
+    </div>
+  </section>
+
+  <section class="fecho">
+    <h2 class="tit revela">O seu próximo site começa com uma frase.</h2>
+    <p class="chamada revela">Descreva. Veja a IA construir.</p>
+    <div class="acao revela" style="margin-top:8px">
+      <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero o Agentic Code</a>
+      <div class="confianca"><span>Windows 10 e 11</span><span>7 dias de garantia</span></div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="marca"><img src="img/logo.png" alt="" width="36" height="36"><span>AGENTIC CODE</span></div>
+  <p>Claude Code, Codex e Antigravity são marcas dos seus donos. O Agentic Code não tem ligação com eles.</p>
+</footer>
+
+<script>
+// O LINK DO CHECKOUT NA KIRVANO. Todos os botões de compra (classe "comprar") usam ele, com a UTM de quem chegou.
+const CHECKOUT = "https://pay.kirvano.com/c60d107e-560b-4274-8d16-bd10595256c7";
+
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  // A UTM DE QUEM CHEGOU VAI PRO CHECKOUT (o mesmo da página da Fábrica): o link do anúncio traz utm_source e o nome da campanha,
+  // do conjunto e do anúncio, e a Kirvano devolve isso na venda. Sem UTM na chegada, vai a de sempre (site, agentic).
+  var aqui = new URLSearchParams(location.search), utm = new URLSearchParams();
+  ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { var v = aqui.get(k); if (v) utm.set(k, v.slice(0, 120)); });
+  if (!utm.get("utm_source")) { utm = new URLSearchParams(); utm.set("utm_source", "site"); utm.set("utm_medium", "pagina"); utm.set("utm_campaign", "agentic"); }
+  // o clique do anúncio também segue (fbclid), senão a compra não se liga ao anúncio que trouxe a pessoa
+  var fbclid = aqui.get("fbclid");
+  if (fbclid) utm.set("fbclid", fbclid.slice(0, 500));
+  var destino = CHECKOUT + (CHECKOUT.indexOf("?") < 0 ? "?" : "&") + utm.toString();
+  if (/A-DEFINIR/.test(CHECKOUT)) console.warn("Agentic Code: o link do checkout ainda não foi definido (const CHECKOUT).");
+
+  document.querySelectorAll(".comprar").forEach(function (b) {
+    b.href = destino;
+    b.dataset.medir = "comprar_agentic_" + (b.dataset.onde || "pagina");
+  });
+
+  // a VSL, com o player da página da Fábrica (../vsl-player.js copiado aqui): começa muda e em loop, o "Toque pra ouvir" liga o som
+  // do começo, sem barra de tempo e sem avançar; o medir.js conta a retenção pelo mesmo <video id="vsl">.
+  // Sem a VSL no ar, quem toca é o vídeo do escritório (window.semVSL, no <head>), e o botão some.
+  if (window.montarVSL) window.montarVSL({});
+  if (window.SEM_VSL) { var b = document.querySelector(".tela-vsl .vsl-barra"); if (b) b.hidden = true; }
+
+  // os vídeos de baixo só tocam quando aparecem na tela (economiza dados no celular)
+  var vids = document.querySelectorAll("video[data-quando-aparecer]");
+  if ("IntersectionObserver" in window) {
+    var ov = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) e.target.play().catch(function () {}); else e.target.pause(); });
+    }, { threshold: 0.25 });
+    vids.forEach(function (v) { ov.observe(v); });
+  }
+
+  // a entrada suave de cada bloco, sem biblioteca; sem o observador, tudo já está visível
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("anima");
+  var or = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("vista"); or.unobserve(e.target); } });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".revela").forEach(function (el) { or.observe(el); });
+});
+</script>
+</body>
+</html>
