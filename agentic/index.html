@@ -445,7 +445,7 @@ window.semVSL = function () {
     <span>Agentic Code</span>
   </a>
   <nav><a href="#editor">A IDE</a><a href="#os">O cérebro</a><a href="#seguranca">Segurança</a><a href="#oferta">Preço</a></nav>
-  <a class="botao botao-pequeno" href="#oferta" data-medir="ver_oferta">Quero o Agentic Code</a>
+  <a class="botao botao-pequeno" href="#vsl" data-vai-pro-video data-medir="ver_video_topo">Quero o Agentic Code</a>
 </header>
 
 <main class="pagina">
@@ -466,9 +466,9 @@ window.semVSL = function () {
     </svg></div>
     <div class="selo revela"><i></i>A IDE com IA pra Windows</div>
     <h1 class="revela">Descreva o site e o sistema. <em>A sua equipe de IA constrói</em> na sua frente.</h1>
-    <p class="lead revela">O <strong>Agentic Code</strong> é uma IDE completa, como o VS Code, com a IA no centro: você pede no chat, uma equipe de agentes escreve o código, e você vê o site e o sistema ganhando forma na prévia. E ele tem um cérebro, o Agentic OS, que lembra do projeto e aprende com você.</p>
+    <p class="lead revela">O <strong>Agentic Code</strong> é uma IDE completa, com a IA no centro: você pede no chat, uma equipe de agentes escreve o código, e você vê o site e o sistema ganhando forma na prévia. E ele tem um cérebro, o Agentic OS, que lembra do projeto e aprende com você e te ajuda a economizar tokens.</p>
     <div class="acao revela">
-      <div class="botoes"><a class="botao" href="#oferta" data-onde="heroi" data-medir="ver_oferta_heroi">Quero o Agentic Code</a><a class="botao botao-claro" href="#vsl" id="ver-por-dentro" data-medir="ver_por_dentro">Ver por dentro</a></div>
+      <div class="botoes"><a class="botao" href="#oferta" data-onde="heroi" data-medir="ver_oferta_heroi">Quero o Agentic Code</a><a class="botao botao-claro" href="#vsl" id="ver-por-dentro" data-vai-pro-video data-medir="ver_por_dentro">Ver por dentro</a></div>
       <div class="confianca"><span>Windows 10 e 11</span><span>Com o seu Claude Code, Codex ou Antigravity</span><span>7 dias de garantia</span></div>
     </div>
     <div class="janela revela">
@@ -900,12 +900,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <script>
 /* "Ver por dentro" (20/11/2026, pedido do dono): leva até a VSL e começa a tocar com som, como o "Toque pra ouvir". */
-document.getElementById("ver-por-dentro").addEventListener("click", function (e) {
-  var v = document.getElementById("vsl"), som = document.getElementById("som");
-  if (!v) return;
-  e.preventDefault();
-  v.closest(".janela").scrollIntoView({ behavior: "smooth", block: "center" });
-  if (som && !som.hidden) som.click(); else v.play().catch(function () {});
+/* O "Quero o Agentic Code" do topo faz o mesmo (20/11/2026, pedido do dono). */
+document.querySelectorAll("[data-vai-pro-video]").forEach(function (b) {
+  b.addEventListener("click", function (e) {
+    var v = document.getElementById("vsl"), som = document.getElementById("som");
+    if (!v) return;
+    e.preventDefault();
+    v.closest(".janela").scrollIntoView({ behavior: "smooth", block: "center" });
+    if (som && !som.hidden) som.click(); else v.play().catch(function () {});
+  });
 });
 </script>
 <script>
