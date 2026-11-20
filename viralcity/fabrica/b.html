@@ -544,12 +544,32 @@ document.addEventListener("DOMContentLoaded", function () {
   // chegada, segue a de sempre (instagram, viralcity, ou o cupom).
   var aqui = new URLSearchParams(location.search), utm = new URLSearchParams();
   ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { var v = aqui.get(k); if (v) utm.set(k, v.slice(0, 120)); });
+  var fbclid = (aqui.get("fbclid") || "").slice(0, 500);
+  // QUEM CLICOU NO ANÚNCIO E VOLTA POR OUTRO LINK (20/11/2026): a pessoa abriu a página pelo anúncio às 8h29, saiu, voltou pelo link da
+  // bio às 9h26 e comprou; a venda chegou com a UTM de sempre e o painel contou como orgânica. Agora o navegador guarda a UTM e o
+  // `fbclid` do anúncio por 7 dias (a janela de clique da Meta), e quem volta SEM UTM nenhuma vai pro checkout com a do anúncio e
+  // "-volta" no utm_medium. Link que traz a sua própria UTM (a DM, por exemplo) e o cupom seguem valendo como chegaram.
+  var CHAVE_DO_ANUNCIO = "fabrica:anuncio", SETE_DIAS = 7 * 24 * 60 * 60 * 1000;
+  try {
+    if (utm.get("utm_source") === "meta") {
+      localStorage.setItem(CHAVE_DO_ANUNCIO, JSON.stringify({ t: Date.now(), utm: utm.toString(), fbclid: fbclid }));
+    } else if (!utm.get("utm_source") && !CUPOM) {
+      var guardado = JSON.parse(localStorage.getItem(CHAVE_DO_ANUNCIO) || "null");
+      if (guardado && guardado.utm && Date.now() - guardado.t < SETE_DIAS) {
+        var doAnuncio = new URLSearchParams(String(guardado.utm));
+        if (doAnuncio.get("utm_source") === "meta") {
+          ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { var v = doAnuncio.get(k); if (v) utm.set(k, v.slice(0, 120)); });
+          utm.set("utm_medium", (utm.get("utm_medium") || "pago") + "-volta");
+          if (!fbclid) fbclid = String(guardado.fbclid || "").slice(0, 500);
+        }
+      }
+    }
+  } catch (e) {}
   if (!utm.get("utm_source")) { utm = new URLSearchParams(); utm.set("utm_source", "instagram"); utm.set("utm_campaign", CUPOM ? "cupom-" + CUPOM.toLowerCase() : "viralcity"); }
   if (CUPOM) utm.set("coupon", CUPOM);
   // O CLIQUE DO ANÚNCIO TAMBÉM VAI (17/11/2026): o `fbclid` que a Meta põe no link segue pro checkout, senão o pixel na Kirvano,
   // que fica em outro domínio, não liga a ida ao checkout nem a compra ao anúncio que trouxe a pessoa.
-  var fbclid = aqui.get("fbclid");
-  if (fbclid) utm.set("fbclid", fbclid.slice(0, 500));
+  if (fbclid) utm.set("fbclid", fbclid);
   // a versão do teste A/B vai no utm_medium ("-va" ou "-vb"), e a Kirvano devolve na venda
   utm.set("utm_medium", (utm.get("utm_medium") || "site") + "-v" + (window.VARIANTE || "a"));
   var destino = temCheckout ? CHECKOUT_URL + (CHECKOUT_URL.indexOf("?") < 0 ? "?" : "&") + utm.toString() : "";
