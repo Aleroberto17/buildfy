@@ -393,6 +393,12 @@
     .ceu i, .escuro::before, .heroi .janela::before, .botao::after { animation: none; }
     .orbitas .lua, .orbitas .lua-2 { display: none; }
   }
+  .cta-vsl { margin-top: 26px; }
+  .cta-vsl .botao { font-size: 18px; padding: 18px 34px; }
+  .cta-meio { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 56px; }
+  .cta-meio span { font: 500 13px var(--corpo); color: var(--suave, #6c6860); letter-spacing: .02em; }
+  .escuro .cta-meio .botao { background: #fff; color: var(--tinta); }
+  .escuro .cta-meio span { color: rgba(255,255,255,.6); }
 </style>
 <script>
 /* ENQUANTO A VSL NÃO EXISTIR (img/vsl.mp4 e img/vsl-poster.jpg), o vídeo do escritório toca no lugar dela, mudo e em loop, sem o
@@ -406,7 +412,7 @@ window.semVSL = function () {
   if (fonte) fonte.remove();
   v.poster = "img/equipe-poster.jpg";
   v.src = "img/equipe.mp4";
-  v.setAttribute("aria-label", "O escritório do Agentic Code: o Claude Code divide um pedido e sete sub-agentes trabalham ao mesmo tempo");
+  v.setAttribute("aria-label", "O escritório do Agentic Code: um pedido de revisão vira três sub-agentes trabalhando ao mesmo tempo");
   v.muted = true; v.loop = true;
   v.load();
   v.play().catch(function () {});
@@ -474,18 +480,19 @@ window.semVSL = function () {
 
   <section>
     <span class="kicker revela">VEJA FUNCIONANDO</span>
-    <h2 class="tit revela">Um site e um sistema completos, <em>do zero.</em></h2>
-    <p class="chamada revela">O site que traz as pacientes e o sistema que organiza a clínica: agenda, leads, pacientes, caixa e estoque, um ligado no outro. Num pedido só.</p>
+    <h2 class="tit revela">Um site e um sistema completos, <em>por dentro.</em></h2>
+    <p class="chamada revela">O site que traz as pacientes e o sistema que organiza a clínica, abertos no Agentic Code: a IA lê o projeto inteiro, a prévia mostra os dois, no computador e no celular, e a equipe revisa tudo ao mesmo tempo.</p>
     <div class="janela revela">
-      <div class="barra"><b>instituto-aurora · site + sistema</b><i></i><i></i><i></i></div>
+      <div class="barra"><b>leal-a-face · site + sistema</b><i></i><i></i><i></i></div>
       <div class="tela-vsl">
-        <video id="vsl" poster="img/vsl-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo: o Agentic Code fazendo do zero o site e o sistema de gestão de uma clínica de estética">
+        <video id="vsl" poster="img/vsl-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo: o site e o sistema de gestão de uma clínica de estética, abertos e revisados dentro do Agentic Code">
           <source src="img/vsl.mp4" type="video/mp4" onerror="window.semVSL && window.semVSL()">
         </video>
         <button class="som" id="som" type="button">&#9654; Toque pra ouvir</button>
       </div>
     </div>
-    <p class="legenda-vsl revela" id="legenda-vsl">No vídeo: o Instituto Aurora, uma clínica de exemplo com fotos de banco, feita do zero pelo Agentic Code, do primeiro pedido ao site e ao sistema prontos.</p>
+    <div class="botoes cta-vsl"><a class="botao" href="#oferta" data-onde="vsl" data-medir="ver_oferta_vsl">Quero o Agentic Code</a></div>
+    <p class="legenda-vsl revela" id="legenda-vsl">No vídeo: o site e o sistema de uma clínica de harmonização facial, abertos, rodando e revisados dentro do Agentic Code.</p>
   </section>
 
   <section id="editor">
@@ -546,6 +553,7 @@ window.semVSL = function () {
         </div>
       </div>
     </div>
+    <div class="cta-meio revela"><a class="botao" href="#oferta" data-onde="editor" data-medir="ver_oferta_editor">Quero o Agentic Code</a><span>Windows 10 e 11 · 7 dias de garantia</span></div>
   </section>
 
   <section>
@@ -555,8 +563,8 @@ window.semVSL = function () {
     <div class="equipe">
       <div class="texto revela">
         <span class="kicker" style="text-align:inherit">A equipe</span>
-        <h3>Um pedido, sete sub-agentes ao mesmo tempo</h3>
-        <p>"Crie o site da loja de carros" virou um time: estrutura, visual, estoque, página do carro. Cada um na sua mesa, com a tarefa na etiqueta, e o quadro risca o que fica pronto.</p>
+        <h3>Um pedido, uma equipe ao mesmo tempo</h3>
+        <p>"Revisa tudo, cada um numa parte" virou um time: um confere o site e o sistema no celular, outro testa se o formulário chega como lead, outro revisa os textos. Cada um na sua mesa, com a tarefa na etiqueta.</p>
         <ul class="lista-check">
           <li>Clicou num funcionário, abre o arquivo que ele está mexendo</li>
           <li>Ele junta as partes e confere se tudo funciona junto</li>
@@ -565,8 +573,8 @@ window.semVSL = function () {
       <div class="revela">
         <div class="janela">
           <div class="barra"><b>Escritório · Salão da Equipe</b><i></i><i></i><i></i></div>
-          <video class="escritorio" src="img/equipe.mp4" poster="img/equipe-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O escritório do Agentic Code: o Claude Code divide um pedido e sete sub-agentes trabalham ao mesmo tempo no salão da Equipe"></video>
-          <span class="rotulo">7 SUB-AGENTES AO MESMO TEMPO</span>
+          <video class="escritorio" src="img/equipe.mp4" poster="img/equipe-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O escritório do Agentic Code: um pedido de revisão vira três sub-agentes trabalhando ao mesmo tempo no salão da Equipe"></video>
+          <span class="rotulo">3 SUB-AGENTES AO MESMO TEMPO</span>
         </div>
       </div>
     </div>
@@ -595,6 +603,19 @@ window.semVSL = function () {
       <div class="pilar revela"><div class="ic">APRENDIZADO</div><h3>Corrigiu uma vez, vale pra sempre.</h3><p>"Nunca use roxo." "Preço sempre em R$ 0,00." Ele guarda sozinho, avisa o que guardou e segue a regra nas próximas conversas.</p></div>
       <div class="pilar revela"><div class="ic">EQUIPE</div><h3>Pedido grande vira um time.</h3><p>Ele divide o trabalho, chama sub-agentes que trabalham ao mesmo tempo, junta as partes e confere tudo no fim. Você vê cada um numa mesa.</p></div>
     </div>
+  </section>
+
+  <section id="economia">
+    <span class="kicker revela">ECONOMIA DE TOKENS</span>
+    <h2 class="tit revela">Parece que gasta mais. <em>Na prática, economiza.</em></h2>
+    <p class="chamada revela">Memória, perguntas e equipe parecem coisa a mais pra IA processar. Mas o que mais queima o seu limite não é isso: é a IA relendo o projeto a cada conversa e refazendo o que entendeu errado. O Agentic OS corta os dois, e o token vai pro trabalho.</p>
+    <div class="pilares">
+      <div class="pilar revela"><div class="ic">MEMÓRIA</div><h3>Não relê o projeto toda vez.</h3><p>Sem memória, cada conversa nova começa abrindo arquivo por arquivo pra entender o que já existe. Com ela, o resumo do projeto entra pronto, curto, e o agente vai direto ao pedido.</p></div>
+      <div class="pilar revela"><div class="ic">PERGUNTAS</div><h3>Não refaz o que entendeu errado.</h3><p>Uma pergunta antes custa pouco. Um site inteiro no caminho errado custa o pedido de novo, e o conserto. Ele pergunta só o que muda o resultado.</p></div>
+      <div class="pilar revela"><div class="ic">EQUIPE</div><h3>A conversa principal não incha.</h3><p>Cada sub-agente trabalha só com a parte dele e devolve o resumo. O agente principal não carrega cada arquivo de todo mundo, e a conversa longa continua leve.</p></div>
+      <div class="pilar revela"><div class="ic">APRENDIZADO</div><h3>Não repete o mesmo erro.</h3><p>Corrigiu uma vez, a regra fica guardada. Você não gasta pedido explicando a mesma coisa de novo na semana seguinte.</p></div>
+    </div>
+    <p class="honesto revela">Quanto economiza depende do projeto e do pedido. O que muda é pra onde o token vai: pro que você pediu, não pra IA se situar de novo.</p>
   </section>
 
   <section id="telas">
@@ -660,6 +681,7 @@ window.semVSL = function () {
 
 
     </div>
+    <div class="cta-meio revela"><a class="botao" href="#oferta" data-onde="telas" data-medir="ver_oferta_telas">Quero o Agentic Code</a><span>Windows 10 e 11 · 7 dias de garantia</span></div>
   </section>
 
   <section>
@@ -695,6 +717,7 @@ window.semVSL = function () {
       </div>
     </div>
     <p class="honesto-escuro revela">Nenhuma ferramenta garante segurança total. O Blindar encontra o que dá pra encontrar lendo o código, explica em português simples e conserta com você. Ele só lê o seu projeto: nunca testa nada contra site ou servidor de outra pessoa.</p>
+    <div class="cta-meio revela"><a class="botao" href="#oferta" data-onde="seguranca" data-medir="ver_oferta_seguranca">Quero o Agentic Code</a><span>Windows 10 e 11 · 7 dias de garantia</span></div>
   </section>
 
   <section>
@@ -738,6 +761,7 @@ window.semVSL = function () {
       <li class="modulo revela"><div class="n">3</div><div><h3>Criar sistemas, SaaS e aplicativos web</h3><p>Curso completo.</p></div></li>
       <li class="modulo revela"><div class="n">4</div><div><h3>Cibersegurança: proteger o seu site e o seu sistema</h3><p>Curso completo.</p></div></li>
     </ul>
+    <div class="cta-meio revela"><a class="botao" href="#oferta" data-onde="curso" data-medir="ver_oferta_curso">Quero o Agentic Code</a><span>Windows 10 e 11 · 7 dias de garantia</span></div>
   </section>
 
   <section id="requisitos">
