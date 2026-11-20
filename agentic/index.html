@@ -462,7 +462,7 @@ window.semVSL = function () {
     <h1 class="revela">Descreva o site e o sistema. <em>A sua equipe de IA constrói</em> na sua frente.</h1>
     <p class="lead revela">O <strong>Agentic Code</strong> é uma IDE completa, como o VS Code, com a IA no centro: você pede no chat, uma equipe de agentes escreve o código, e você vê o site e o sistema ganhando forma na prévia. E ele tem um cérebro, o Agentic OS, que lembra do projeto e aprende com você.</p>
     <div class="acao revela">
-      <div class="botoes"><a class="botao" href="#oferta" data-onde="heroi" data-medir="ver_oferta_heroi">Quero o Agentic Code</a><a class="botao botao-claro" href="#telas" data-medir="ver_por_dentro">Ver por dentro</a></div>
+      <div class="botoes"><a class="botao" href="#oferta" data-onde="heroi" data-medir="ver_oferta_heroi">Quero o Agentic Code</a><a class="botao botao-claro" href="#vsl" id="ver-por-dentro" data-medir="ver_por_dentro">Ver por dentro</a></div>
       <div class="confianca"><span>Windows 10 e 11</span><span>Com o seu Claude Code, Codex ou Antigravity</span><span>7 dias de garantia</span></div>
     </div>
     <div class="janela revela">
@@ -645,16 +645,16 @@ window.semVSL = function () {
         <div class="tela-texto revela">
           <p class="etiqueta-tela">O CÉREBRO DO PROJETO</p>
           <h3>Veja o que a sua IA sabe. <em>Literalmente.</em></h3>
-          <p>Um clique e a memória vira um mapa, como no Obsidian: o projeto no centro, ligado aos arquivos da memória, a cada regra que você ensinou, às skills e às conversas. Clique num ponto e leia o que tem dentro, ou abra no editor.</p>
+          <p>Um clique e o projeto vira um mapa, como no Obsidian: o projeto no centro, ligado à memória, a cada regra que você ensinou, às pastas, às páginas, ao código e às conversas, cada grupo numa cor. Clique num ponto e leia o que tem dentro, ou abra no editor.</p>
           <ul class="lista-check">
-            <li>Cada regra guardada vira um ponto ligado ao projeto</li>
-            <li>Arraste, aproxime e explore</li>
-            <li>Do ponto pro arquivo em um clique</li>
+            <li>Cada arquivo, regra e conversa vira um ponto ligado ao projeto</li>
+            <li>Filtre por grupo, procure, arraste e aproxime</li>
+            <li>O "Animar" mostra o projeto crescendo, ponto a ponto</li>
           </ul>
         </div>
         <div class="janela revela">
-          <div class="barra"><b>O cérebro do projeto · doceria-da-ana</b><i></i><i></i><i></i></div>
-          <img src="img/os-cerebro.jpg" alt="O cérebro do projeto: o grafo da memória da Doceria da Ana, com o projeto no centro ligado aos arquivos da memória, às seções e às conversas" width="1100" height="880" loading="lazy">
+          <div class="barra"><b>O cérebro do projeto · instituto-aurora</b><i></i><i></i><i></i></div>
+          <img src="img/os-cerebro.jpg" alt="O cérebro do projeto: o mapa do Instituto Aurora, com o projeto no centro ligado à memória, às regras, às pastas, às páginas, ao código, às imagens e às conversas, e o painel dos grupos ao lado" width="1100" height="731" loading="lazy">
         </div>
       </div>
 
@@ -872,6 +872,16 @@ document.addEventListener("DOMContentLoaded", function () {
   var barra = document.querySelector(".progresso"), pedido = false;
   function andar() { pedido = false; var t = document.documentElement; barra.style.transform = "scaleX(" + Math.min(1, t.scrollTop / Math.max(1, t.scrollHeight - innerHeight)) + ")"; }
   addEventListener("scroll", function () { if (!pedido) { pedido = true; requestAnimationFrame(andar); } }, { passive: true });
+});
+</script>
+<script>
+/* "Ver por dentro" (20/11/2026, pedido do dono): leva até a VSL e começa a tocar com som, como o "Toque pra ouvir". */
+document.getElementById("ver-por-dentro").addEventListener("click", function (e) {
+  var v = document.getElementById("vsl"), som = document.getElementById("som");
+  if (!v) return;
+  e.preventDefault();
+  v.closest(".janela").scrollIntoView({ behavior: "smooth", block: "center" });
+  if (som && !som.hidden) som.click(); else v.play().catch(function () {});
 });
 </script>
 </body>
