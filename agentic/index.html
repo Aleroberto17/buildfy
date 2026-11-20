@@ -95,6 +95,12 @@
   .botoes { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
   .confianca { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; font-size: 14px; color: var(--suave); }
   .confianca span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ambar); margin: 0 8px 2px 0; vertical-align: middle; }
+  .compativel { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 18px; margin-top: 18px; font-size: 14px; font-weight: 600; color: var(--texto); }
+  .compativel span { display: inline-flex; align-items: center; gap: 7px; }
+  .compativel img { width: 20px; height: 20px; border-radius: 5px; }
+  .compativel .compativel-rotulo { font-weight: 500; color: var(--suave); font-size: 13px; letter-spacing: .02em; }
+  .escuro .compativel { color: #e9e4da; }
+  @media (max-width: 600px) { .compativel { gap: 8px 14px; } .compativel .compativel-rotulo { flex-basis: 100%; justify-content: center; } }
 
   /* a janela do programa, em volta das telas e dos vídeos */
   .janela { position: relative; max-width: 1000px; margin: 0 auto; background: #1e1e1e; border-radius: 14px; overflow: hidden; text-align: left;
@@ -469,7 +475,8 @@ window.semVSL = function () {
     <p class="lead revela">O <strong>Agentic Code</strong> é uma IDE completa, com a IA no centro: você pede no chat, uma equipe de agentes escreve o código, e você vê o site e o sistema ganhando forma na prévia. E ele tem um cérebro, o Agentic OS, que lembra do projeto e aprende com você e te ajuda a economizar tokens.</p>
     <div class="acao revela">
       <div class="botoes"><a class="botao" href="#oferta" data-onde="heroi" data-medir="ver_oferta_heroi">Quero o Agentic Code</a><a class="botao botao-claro" href="#vsl" id="ver-por-dentro" data-vai-pro-video data-medir="ver_por_dentro">Ver por dentro</a></div>
-      <div class="confianca"><span>Windows 10 e 11</span><span>Com o seu Claude Code, Codex ou Antigravity</span><span>7 dias de garantia</span></div>
+      <div class="confianca"><span>Windows 10 e 11</span><span>7 dias de garantia</span></div>
+      <div class="compativel"><span class="compativel-rotulo">Compatível com</span><span><img src="img/compat-claude.svg" alt="" width="20" height="20">Claude Code</span><span><img src="img/compat-codex.svg" alt="" width="20" height="20">Codex</span><span><img src="img/compat-antigravity.svg" alt="" width="20" height="20">Antigravity</span></div>
     </div>
     <div class="janela revela">
       <div class="barra"><b>doceria-da-ana · Agentic Code</b><i></i><i></i><i></i></div>
@@ -833,6 +840,7 @@ window.semVSL = function () {
     <div class="acao revela" style="margin-top:8px">
       <a class="botao comprar" href="#oferta" data-onde="fecho">Quero o Agentic Code</a>
       <div class="confianca"><span>Windows 10 e 11</span><span>7 dias de garantia</span></div>
+      <div class="compativel"><span class="compativel-rotulo">Compatível com</span><span><img src="img/compat-claude.svg" alt="" width="20" height="20">Claude Code</span><span><img src="img/compat-codex.svg" alt="" width="20" height="20">Codex</span><span><img src="img/compat-antigravity.svg" alt="" width="20" height="20">Antigravity</span></div>
     </div>
   </section>
 
