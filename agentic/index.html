@@ -908,5 +908,21 @@ document.getElementById("ver-por-dentro").addEventListener("click", function (e)
   if (som && !som.hidden) som.click(); else v.play().catch(function () {});
 });
 </script>
+<script>
+/* A PÁGINA ABRE NO TOPO (20/11/2026, o dono no celular: "o site carrega direto nessa parte"): o botão pra oferta deixava #oferta no
+   endereço, e ao recarregar ou voltar o Safari pulava direto pra oferta, além de lembrar onde a pessoa parou. Os links internos rolam
+   sem mudar o endereço, e sem âncora no endereço a página sempre começa na headline. */
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+if (!location.hash) addEventListener("load", function () { scrollTo(0, 0); });
+else history.replaceState(null, "", location.pathname + location.search);
+document.addEventListener("click", function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="#"]');
+  if (!a || e.defaultPrevented) return;
+  var alvo = document.getElementById(a.getAttribute("href").slice(1));
+  if (!alvo) return;
+  e.preventDefault();
+  alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+</script>
 </body>
 </html>
