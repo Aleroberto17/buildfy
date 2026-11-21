@@ -255,6 +255,8 @@
     background: linear-gradient(160deg, rgba(200,146,46,.65), rgba(200,146,46,0) 40%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor; mask-composite: exclude; }
   .oferta .preco { font-weight: 600; font-size: 68px; line-height: 1; letter-spacing: -2.5px; color: var(--tinta); margin: 14px 0 8px; }
+  .oferta .de { margin-top: 14px; font-size: 19px; color: var(--suave); }
+  .oferta .de s { color: var(--suave); text-decoration-color: #b3402e; text-decoration-thickness: 2px; }
   .oferta .preco small { font-size: 26px; font-weight: 500; color: var(--suave); margin-right: 6px; letter-spacing: 0; }
   .oferta ul { text-align: left; margin: 28px 0; padding: 0; list-style: none; }
   .oferta li { padding: 7px 0 7px 30px; position: relative; font-size: 16px; }
@@ -786,7 +788,8 @@ window.semVSL = function () {
     <h2 class="tit revela">O Agentic Code completo, <em>com os cursos.</em></h2>
     <div class="oferta revela">
       <div class="pequeno">licença de 1 ano, com todas as atualizações</div>
-      <div class="preco"><small>R$</small>147</div>
+      <div class="de">de <s>R$ 397</s> por</div>
+      <div class="preco" style="margin-top:6px"><small>R$</small>147</div>
       <ul>
         <li><strong>O Agentic Code</strong>, a IDE com IA pra Windows</li>
         <li class="sub">O chat no estilo Claude Code desktop, com o histórico de conversas</li>
