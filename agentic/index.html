@@ -2,6 +2,20 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<!-- sorteio A/B -->
+<script>
+/* O TESTE A/B DE PREÇO (22/11/2026): metade das visitas vai pra versão B (b.html, R$ 97). Ver fazer-teste-ab.py. */
+(function () {
+  var q = location.search, v = (q.match(/[?&]v=(a|b)(?:&|$)/i) || [])[1];
+  try {
+    v = (v || localStorage.getItem("agentic:ab") || (Math.random() < 0.5 ? "a" : "b")).toLowerCase();
+    localStorage.setItem("agentic:ab", v);
+  } catch (e) { v = v || "a"; }
+  window.VARIANTE = v === "b" ? "b" : "a";
+  if (window.VARIANTE === "b") location.replace("b.html" + q + location.hash);
+})();
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Agentic Code</title>
 <meta name="description" content="O Agentic Code é a IDE com IA pra Windows: editor de código, terminal, prévia e depurador, com o chat e uma equipe de agentes dentro. Descreva o site ou o sistema e veja a IA construir na sua frente.">
@@ -788,7 +802,7 @@ window.semVSL = function () {
     <h2 class="tit revela">O Agentic Code completo, <em>com os cursos.</em></h2>
     <div class="oferta revela">
       <div class="pequeno">licença de 1 ano, com todas as atualizações</div>
-      <div class="de">de <s>R$ 397</s> por</div>
+      <div class="de">de <s>R$ 297</s> por</div>
       <div class="preco" style="margin-top:6px"><small>R$</small>147</div>
       <ul>
         <li><strong>O Agentic Code</strong>, a IDE com IA pra Windows</li>
@@ -868,6 +882,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // o clique do anúncio também segue (fbclid), senão a compra não se liga ao anúncio que trouxe a pessoa
   var fbclid = aqui.get("fbclid");
   if (fbclid) utm.set("fbclid", fbclid.slice(0, 500));
+  // a versão do teste A/B vai no utm_medium ("-va" ou "-vb"), e a Kirvano devolve na venda
+  utm.set("utm_medium", (utm.get("utm_medium") || "site") + "-v" + (window.VARIANTE || "a"));
   var destino = CHECKOUT + (CHECKOUT.indexOf("?") < 0 ? "?" : "&") + utm.toString();
   if (/A-DEFINIR/.test(CHECKOUT)) console.warn("Agentic Code: o link do checkout ainda não foi definido (const CHECKOUT).");
 

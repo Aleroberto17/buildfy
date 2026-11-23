@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<script>window.VARIANTE = "b"; try { localStorage.setItem("agentic:ab", "b"); } catch (e) {}</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agentic Code</title>
+<meta name="description" content="O Agentic Code é a IDE com IA pra Windows: editor de código, terminal, prévia e depurador, com o chat e uma equipe de agentes dentro. Descreva o site ou o sistema e veja a IA construir na sua frente.">
+<meta property="og:title" content="Agentic Code">
+<meta property="og:description" content="A IDE com IA pra Windows. Descreva o site ou o sistema, e a sua equipe de IA constrói na sua frente.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#faf9f7">
+<link rel="icon" href="img/logo-orbita.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* A PÁGINA DO AGENTIC CODE NA IDENTIDADE "PAPEL E ÓRBITA" (19/11/2026, escolha do dono entre 5: clara, humana e cara, no jeito
+     da Anthropic, com o âmbar dourado; o logo é o planeta com o anel passando por ele e a lua dourada, a versão B1). O app segue
+     escuro: as telas dele entram como peças de vitrine, com moldura fina e sombra macia. */
+  :root {
+    --papel: #faf9f7;
+    --cartao: #ffffff;
+    --pedra: #ebe8e2;
+    --pedra-2: #f1efeb;
+    --tinta: #191816;
+    --texto: #3b3934;
+    --suave: #6c6860;
+    --ambar: #c8922e;
+    --ambar-esc: #a8761c;
+    --areia: #f4ead6;
+    --corpo: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --serifa: "Instrument Serif", Georgia, serif;
+    --mono: "JetBrains Mono", Consolas, ui-monospace, monospace;
+    --largura: 1120px;
+    --fundo-logo: var(--papel);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  html { overflow-x: clip; }
+  body { margin: 0; background: var(--papel); color: var(--texto); font-family: var(--corpo); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  img, video { display: block; max-width: 100%; }
+  a { color: var(--ambar-esc); }
+  strong, b { color: var(--tinta); font-weight: 600; }
+  code { font-family: var(--mono); font-size: .86em; color: var(--ambar-esc); background: var(--areia); padding: 1px 6px; border-radius: 5px; }
+
+  /* ---------- o logo ---------- */
+  .orbita { flex: none; display: block; }
+  .marca { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--tinta); }
+  .marca .orbita { width: 30px; height: 30px; }
+  .marca span { font-weight: 600; font-size: 18px; letter-spacing: -0.4px; }
+
+  /* ---------- topo ---------- */
+  .topo { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px max(16px, calc((100vw - var(--largura)) / 2)); background: rgba(250, 249, 247, .96);
+    border-bottom: 1px solid var(--pedra); }
+  .topo nav { display: flex; gap: 26px; font-size: 15px; }
+  .topo nav a { color: var(--suave); text-decoration: none; }
+  .topo nav a:hover { color: var(--tinta); }
+
+  /* ---------- botões ---------- */
+  .botao { display: inline-block; font: 600 16px/1.3 var(--corpo); color: #fff; background: var(--tinta); padding: 15px 26px; border-radius: 999px;
+    text-decoration: none; text-align: center; border: none; cursor: pointer; transition: transform .15s, box-shadow .15s, background .15s;
+    box-shadow: 0 1px 2px rgba(25,24,22,.2), 0 8px 24px rgba(25,24,22,.12); }
+  .botao:hover { background: #2c2a26; transform: translateY(-1px); box-shadow: 0 2px 4px rgba(25,24,22,.2), 0 12px 30px rgba(25,24,22,.16); }
+  .botao:active { transform: none; }
+  .botao:focus-visible { outline: 2px solid var(--ambar); outline-offset: 3px; }
+  .botao-pequeno { padding: 9px 16px; font-size: 14px; box-shadow: none; }
+  .botao-claro { background: var(--areia); color: #6b4a12; box-shadow: none; }
+  .botao-claro:hover { background: #efe0c2; }
+  .brilhar { position: relative; }
+
+  .pagina { max-width: var(--largura); margin: 0 auto; padding: 0 16px 40px; }
+  section { padding: 112px 0 0; scroll-margin-top: 70px; }
+  .selo { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; color: var(--texto);
+    background: var(--cartao); border: 1px solid var(--pedra); padding: 6px 14px 6px 8px; border-radius: 999px; margin-bottom: 26px; }
+  .selo i { width: 8px; height: 8px; border-radius: 50%; background: var(--ambar); display: block; margin-left: 4px; box-shadow: 0 0 0 4px var(--areia); }
+  .kicker { display: block; text-align: center; font: 500 12.5px var(--mono); letter-spacing: 1.6px; text-transform: uppercase; color: var(--ambar-esc); margin: 0 0 16px; }
+  h2.tit { font-weight: 600; font-size: clamp(30px, 4.4vw, 48px); line-height: 1.08; letter-spacing: -1.4px; color: var(--tinta); text-align: center; margin: 0 auto 18px; max-width: 860px; text-wrap: balance; }
+  h2.tit em, h3 em { font-family: var(--serifa); font-style: italic; font-weight: 400; color: var(--ambar); letter-spacing: -0.5px; }
+  .chamada { text-align: center; max-width: 660px; margin: 0 auto 48px; color: var(--suave); font-size: 18px; }
+  .pequeno { font-size: 14px; color: var(--suave); }
+
+  /* ---------- herói ---------- */
+  .heroi { text-align: center; padding: 84px 0 0; position: relative; }
+  .brilho { position: absolute; inset: 0 -16px auto; height: 620px; z-index: -1; pointer-events: none;
+    background: radial-gradient(48% 46% at 50% 18%, rgba(200,146,46,.13), transparent 72%); }
+  .heroi h1 { font-weight: 600; font-size: clamp(40px, 7vw, 76px); line-height: 1.02; letter-spacing: -2.6px; color: var(--tinta); margin: 0 auto 24px; max-width: 980px; text-wrap: balance; }
+  .heroi h1 em { font-family: var(--serifa); font-style: italic; font-weight: 400; color: var(--ambar); letter-spacing: -1px; }
+  .heroi .lead { max-width: 660px; margin: 0 auto 36px; font-size: 19px; color: var(--suave); }
+  .heroi .lead strong { color: var(--tinta); }
+  .acao { margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .heroi .acao { margin: 0 0 64px; }
+  .botoes { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .confianca { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; font-size: 14px; color: var(--suave); }
+  .confianca span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ambar); margin: 0 8px 2px 0; vertical-align: middle; }
+  .compativel { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 18px; margin-top: 18px; font-size: 14px; font-weight: 600; color: var(--texto); }
+  .compativel span { display: inline-flex; align-items: center; gap: 7px; }
+  .compativel img { width: 20px; height: 20px; border-radius: 5px; }
+  .compativel .compativel-rotulo { font-weight: 500; color: var(--suave); font-size: 13px; letter-spacing: .02em; }
+  .escuro .compativel { color: #e9e4da; }
+  @media (max-width: 600px) { .compativel { gap: 8px 14px; } .compativel .compativel-rotulo { flex-basis: 100%; justify-content: center; } }
+
+  /* a janela do programa, em volta das telas e dos vídeos */
+  .janela { position: relative; max-width: 1000px; margin: 0 auto; background: #1e1e1e; border-radius: 14px; overflow: hidden; text-align: left;
+    border: 1px solid rgba(25,24,22,.12); box-shadow: 0 1px 2px rgba(25,24,22,.06), 0 24px 60px rgba(25,24,22,.14), 0 60px 120px rgba(25,24,22,.08); }
+  .janela .barra { display: flex; align-items: center; gap: 7px; padding: 10px 14px; background: #2b2b2b; border-bottom: 1px solid #3a3a3a; }
+  .janela .barra b { order: 2; font-weight: 500; font-size: 12.5px; color: #a3a3a3; flex: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 46px; }
+  .janela .barra i { order: 1; width: 11px; height: 11px; border-radius: 50%; background: #555; display: block; }
+  .janela .barra i:nth-of-type(1) { background: #ff5f57; } .janela .barra i:nth-of-type(2) { background: #febc2e; } .janela .barra i:nth-of-type(3) { background: #28c840; }
+  .janela > img, .janela video { width: 100%; height: auto; background: #000; }
+  .tela-linha > .janela, .equipe .janela { width: 100%; }
+  .janela video.escritorio { aspect-ratio: 896 / 632; object-fit: cover; }
+  .rotulo { position: absolute; left: 16px; bottom: 16px; font: 500 12px var(--mono); letter-spacing: .6px; color: var(--tinta); background: rgba(250,249,247,.97);
+    padding: 6px 12px; border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+  .rotulo::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ambar); margin-right: 8px; vertical-align: middle; }
+
+  /* a VSL: começa muda; o botão do meio liga o som do começo (o player é o vsl-player.js, o mesmo da página da Fábrica) */
+  .tela-vsl { position: relative; background: #000; }
+  .tela-vsl video { aspect-ratio: 16 / 9; object-fit: cover; }
+  .tela-vsl.sem-vsl video { aspect-ratio: 896 / 632; }
+  .som { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font: 600 16px/1.3 var(--corpo); color: var(--tinta);
+    background: #fff; border: none; border-radius: 999px; box-shadow: 0 10px 40px rgba(0,0,0,.4); padding: 15px 24px; cursor: pointer; animation: pulsar 1.6s ease-in-out infinite; }
+  .som[hidden] { display: none; }
+  @keyframes pulsar { 50% { transform: translate(-50%, -50%) scale(1.05); } }
+  .legenda-vsl { margin: 16px auto 0; max-width: 900px; font-size: 14px; color: var(--suave); text-align: center; }
+  .legenda-vsl[hidden] { display: none; }
+
+  /* ---------- os cartões ---------- */
+  .cartao-base, .dor, .pilar, .skill, .token, .recurso, .agente, .posto, .modulo, .precisa li, .faq details, .passo-seg {
+    background: var(--cartao); border: 1px solid var(--pedra); border-radius: 16px; }
+
+  /* as dores */
+  .dores { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 960px; margin: 0 auto; }
+  .dor { padding: 26px 28px; }
+  .dor h3 { margin: 0 0 8px; font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: var(--tinta); }
+  .dor p { margin: 0; font-size: 15.5px; color: var(--suave); }
+  .virada { text-align: center; max-width: 820px; margin: 56px auto 0; font-size: clamp(26px, 3.6vw, 38px); line-height: 1.15; font-weight: 600; letter-spacing: -1px; color: var(--tinta); text-wrap: balance; }
+  .virada em { font-family: var(--serifa); font-style: italic; font-weight: 400; color: var(--ambar); }
+
+  /* os quatro pilares do Agentic OS */
+  .pilares { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .pilar { padding: 26px 22px; }
+  .pilar .ic { font: 500 11.5px var(--mono); letter-spacing: 1.4px; color: var(--ambar-esc); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .pilar .ic::before { content: ""; width: 28px; height: 28px; border-radius: 9px; background: var(--areia); display: block;
+    background-image: radial-gradient(circle at 50% 50%, var(--ambar) 0 4px, transparent 5px); }
+  .pilar h3 { margin: 0 0 8px; font-size: 20px; line-height: 1.2; font-weight: 600; letter-spacing: -0.4px; color: var(--tinta); }
+  .pilar p { margin: 0; font-size: 15px; color: var(--suave); }
+
+  /* ---------- as telas do editor ---------- */
+  .telas { display: grid; gap: 96px; }
+  .tela-linha { display: grid; grid-template-columns: 1fr 1.55fr; gap: 56px; align-items: center; }
+  .tela-linha:nth-child(even) { grid-template-columns: 1.55fr 1fr; }
+  .tela-linha:nth-child(even) .tela-texto { order: 2; }
+  .etiqueta-tela { font: 500 12px var(--mono); letter-spacing: 1.4px; color: var(--ambar-esc); margin: 0 0 12px; }
+  .tela-texto h3 { margin: 0 0 12px; font-size: 30px; line-height: 1.1; font-weight: 600; letter-spacing: -1px; color: var(--tinta); text-wrap: balance; }
+  .tela-texto p { margin: 0; color: var(--suave); }
+  .lista-check { list-style: none; padding: 0; margin: 18px 0 0; }
+  .lista-check li { position: relative; padding: 5px 0 5px 28px; color: var(--texto); font-size: 15.5px; }
+  .lista-check li::before { content: ""; position: absolute; left: 0; top: 10px; width: 16px; height: 16px; border-radius: 50%; background: var(--areia);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-5' fill='none' stroke='%23a8761c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+
+  /* ---------- as skills ---------- */
+  .skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 960px; margin: 0 auto; }
+  .skill { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: baseline; padding: 18px 20px; }
+  .skill b { font-family: var(--mono); font-weight: 600; font-size: 14.5px; color: var(--ambar-esc); white-space: nowrap; }
+  .skill span { font-size: 15px; color: var(--suave); }
+  .skill.destaque { background: var(--tinta); border-color: var(--tinta); }
+  .skill.destaque b { color: #e0ad4e; } .skill.destaque span { color: #c9c4ba; }
+
+  /* ---------- a faixa escura: segurança ---------- */
+  .escuro { background: var(--tinta); color: #c9c4ba; margin: 112px -16px 0; padding: 104px 16px; border-radius: 28px; --fundo-logo: var(--tinta); }
+  .escuro h2.tit { color: #faf9f7; }
+  .escuro .kicker { color: #e0ad4e; }
+  .escuro .chamada { color: #a39e94; }
+  .escuro strong, .escuro b { color: #faf9f7; }
+  .escuro code { background: rgba(224,173,78,.14); color: #f0c878; }
+  .seguranca { display: grid; grid-template-columns: 1fr 1.25fr; gap: 48px; align-items: center; max-width: var(--largura); margin: 0 auto; }
+  .passos-seg { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; counter-reset: seg; }
+  .passo-seg { background: #222120; border-color: #34322e; padding: 18px 20px 18px 64px; position: relative; }
+  .passo-seg::before { counter-increment: seg; content: "0" counter(seg); position: absolute; left: 20px; top: 18px; font: 500 13px var(--mono); color: #e0ad4e; }
+  .passo-seg b { display: block; font-size: 16.5px; margin-bottom: 2px; }
+  .passo-seg span { font-size: 15px; color: #a39e94; }
+  .escuro .janela { border-color: #34322e; box-shadow: 0 30px 90px rgba(0,0,0,.6); }
+  .seguranca { grid-template-columns: 1.2fr 1fr; }
+  .seguranca .janela { max-width: 440px; width: 100%; }
+  .honesto-escuro { max-width: 760px; margin: 40px auto 0; text-align: center; font-size: 14.5px; color: #8f8a80; }
+  .gravidades { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 18px; }
+  .gravidades span { font: 500 12px var(--mono); padding: 4px 10px; border-radius: 999px; }
+  .g1 { background: rgba(240,113,107,.16); color: #f39b95; } .g2 { background: rgba(232,150,70,.16); color: #f0b277; }
+  .g3 { background: rgba(224,173,78,.14); color: #f0c878; } .g4 { background: rgba(160,155,145,.16); color: #c9c4ba; }
+
+  /* ---------- o que vem junto ---------- */
+  .recursos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .recurso { padding: 22px; overflow: hidden; }
+  .recurso .tela { display: block; margin: -22px -22px 20px; border-bottom: 1px solid var(--pedra); background: #1e1e1e; }
+  .recurso .tela img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .recurso .ic { font: 500 11.5px var(--mono); letter-spacing: 1.4px; color: var(--ambar-esc); margin-bottom: 8px; }
+  .recurso h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; color: var(--tinta); }
+  .recurso p { margin: 0; font-size: 15px; color: var(--suave); }
+
+  /* ---------- o escritório ---------- */
+  .postos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .posto { padding: 18px 20px; }
+  .posto b { display: block; font: 500 12px var(--mono); letter-spacing: 1.2px; color: var(--ambar-esc); margin-bottom: 4px; }
+  .posto span { font-size: 15px; color: var(--suave); }
+  .equipe { display: grid; grid-template-columns: 1fr 1.35fr; gap: 48px; align-items: center; margin-top: 56px; }
+  .equipe .texto h3 { margin: 0 0 10px; font-size: 30px; line-height: 1.1; font-weight: 600; letter-spacing: -1px; color: var(--tinta); }
+  .equipe .texto p { margin: 0; color: var(--suave); }
+
+  /* ---------- os agentes ---------- */
+  .agentes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 960px; margin: 0 auto; }
+  .agente { padding: 22px; text-align: center; }
+  .agente b { display: block; font-weight: 600; font-size: 18px; color: var(--tinta); margin-bottom: 6px; }
+  .agente span { font-size: 15px; color: var(--suave); }
+
+  /* ---------- a comparação ---------- */
+  .compara { width: 100%; max-width: 960px; margin: 0 auto; border-collapse: separate; border-spacing: 0; font-size: 15.5px; background: var(--cartao);
+    border: 1px solid var(--pedra); border-radius: 18px; overflow: hidden; }
+  .compara th, .compara td { padding: 16px 20px; border-bottom: 1px solid var(--pedra); text-align: left; vertical-align: top; }
+  .compara tr:last-child th, .compara tr:last-child td { border-bottom: none; }
+  .compara thead th { font: 500 11.5px var(--mono); letter-spacing: 1.3px; color: var(--suave); background: var(--pedra-2); }
+  .compara thead th:last-child { color: var(--ambar-esc); }
+  .compara tbody th { color: var(--tinta); font-weight: 600; width: 24%; }
+  .compara td:nth-child(2) { color: var(--suave); }
+  .compara td:last-child { color: var(--tinta); background: #fdf9f1; }
+  .compara-nota { max-width: 960px; margin: 14px auto 0; font-size: 13.5px; color: var(--suave); text-align: center; }
+
+  /* ---------- rende mais ---------- */
+  .tokens { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .token { padding: 26px 24px; }
+  .token .n { font-family: var(--serifa); font-style: italic; font-size: 40px; line-height: 1; color: var(--ambar); margin-bottom: 14px; }
+  .token h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; color: var(--tinta); }
+  .token p { margin: 0; font-size: 15px; color: var(--suave); }
+
+  /* ---------- o curso ---------- */
+  .modulos { list-style: none; padding: 0; margin: 0 auto; max-width: 960px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .modulo { padding: 22px; display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
+  .modulo .n, .precisa .n { width: 44px; height: 44px; display: grid; place-items: center; font: 400 italic 24px var(--serifa); color: var(--ambar-esc); background: var(--areia); border-radius: 12px; }
+  .modulo h3 { margin: 0 0 4px; font-size: 17.5px; font-weight: 600; color: var(--tinta); }
+  .modulo p { margin: 0; font-size: 15px; color: var(--suave); }
+
+  /* ---------- o que você precisa ---------- */
+  .precisa { list-style: none; padding: 0; margin: 0 auto; max-width: 820px; display: grid; gap: 10px; }
+  .precisa li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; padding: 18px 20px; }
+  .precisa strong { display: block; font-size: 17px; margin-bottom: 2px; }
+  .precisa span { color: var(--suave); font-size: 15px; }
+  .honesto { max-width: 820px; margin: 14px auto 0; padding: 16px 20px; border-radius: 14px; background: var(--areia); color: #5c4513; font-size: 15px; }
+
+  /* ---------- a oferta ---------- */
+  .oferta { position: relative; max-width: 580px; margin: 0 auto; text-align: center; background: var(--cartao); border: 1px solid var(--pedra); border-radius: 26px;
+    box-shadow: 0 1px 2px rgba(25,24,22,.05), 0 30px 80px rgba(25,24,22,.10); padding: 40px 34px 32px; }
+  .oferta::before { content: ""; position: absolute; inset: -1px; border-radius: 26px; padding: 1px; pointer-events: none;
+    background: linear-gradient(160deg, rgba(200,146,46,.65), rgba(200,146,46,0) 40%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; }
+  .oferta .preco { font-weight: 600; font-size: 68px; line-height: 1; letter-spacing: -2.5px; color: var(--tinta); margin: 14px 0 8px; }
+  .oferta .de { margin-top: 14px; font-size: 19px; color: var(--suave); }
+  .oferta .de s { color: var(--suave); text-decoration-color: #b3402e; text-decoration-thickness: 2px; }
+  .oferta .preco small { font-size: 26px; font-weight: 500; color: var(--suave); margin-right: 6px; letter-spacing: 0; }
+  .oferta ul { text-align: left; margin: 28px 0; padding: 0; list-style: none; }
+  .oferta li { padding: 7px 0 7px 30px; position: relative; font-size: 16px; }
+  .oferta li::before { content: ""; position: absolute; left: 0; top: 11px; width: 18px; height: 18px; border-radius: 50%; background: var(--areia);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-5' fill='none' stroke='%23a8761c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  .oferta li.sub { padding-left: 54px; font-size: 15px; color: var(--suave); }
+  .oferta li.sub::before { left: 30px; width: 7px; height: 7px; top: 15px; background: var(--ambar); }
+  .oferta .botao { width: 100%; font-size: 18px; padding: 18px; }
+  .depois { margin: 16px 0 0; font-size: 14px; color: var(--suave); }
+  .garantia { display: flex; gap: 14px; align-items: center; text-align: left; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--pedra); }
+  .garantia svg { flex: none; width: 44px; height: 44px; }
+
+  /* ---------- perguntas ---------- */
+  .faq { max-width: 780px; margin: 0 auto; }
+  .faq details { margin: 8px 0; padding: 18px 22px; border-radius: 14px; }
+  .faq summary { cursor: pointer; font-weight: 600; color: var(--tinta); list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font: 400 22px/1 var(--corpo); color: var(--ambar); transition: transform .2s; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq p { margin: 10px 0 0; color: var(--suave); }
+
+  .fecho { text-align: center; padding-bottom: 40px; }
+  .fecho .orbita { width: 64px; height: 64px; margin: 0 auto 26px; }
+  .rodape { text-align: center; padding: 34px 16px 24px; border-top: 1px solid var(--pedra); color: var(--suave); font-size: 14px; }
+  .rodape p { margin: 0; }
+  .rodape .marca { justify-content: center; margin-bottom: 10px; }
+
+  /* entrada suave, só com o script ligado */
+  .anima .revela { opacity: 0; transform: translateY(18px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .anima .revela.vista { opacity: 1; transform: none; }
+
+  .janela .tela-corte { width: 100%; height: auto; aspect-ratio: 16 / 9.6; object-fit: cover; object-position: right top; }
+
+  @media (max-width: 900px) {
+    .topo nav { display: none; }
+    .equipe, .tela-linha, .tela-linha:nth-child(even), .seguranca { grid-template-columns: 1fr; gap: 28px; }
+    .tela-linha:nth-child(even) .tela-texto { order: 0; }
+    .postos, .recursos, .modulos, .pilares, .tokens { grid-template-columns: 1fr 1fr; }
+    .agentes, .dores, .skills { grid-template-columns: 1fr; }
+    .equipe .texto { text-align: center; }
+    .compara tbody th { width: auto; }
+    section { padding-top: 88px; }
+    .telas { gap: 72px; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    section { padding-top: 72px; }
+    .postos, .recursos, .modulos, .pilares, .tokens { grid-template-columns: 1fr; }
+    .heroi { padding-top: 52px; }
+    .heroi h1 { letter-spacing: -1.6px; }
+    .heroi .lead { font-size: 17px; }
+    .tela-texto h3, .equipe .texto h3 { font-size: 25px; }
+    .janela { border-radius: 10px; }
+    .janela .barra b { font-size: 11.5px; padding-right: 0; }
+    .rotulo { font-size: 10px; left: 8px; bottom: 8px; padding: 4px 9px; }
+    .som { font-size: 14px; padding: 12px 18px; }
+    .oferta { padding: 30px 18px 24px; }
+    .oferta .preco { font-size: 56px; }
+    .marca span { font-size: 16px; white-space: nowrap; }
+    .topo .botao-pequeno { font-size: 12.5px; padding: 8px 12px; white-space: nowrap; }
+    .escuro { padding: 72px 16px; border-radius: 20px; }
+    .compara thead { display: none; }
+    .compara, .compara tbody, .compara tr, .compara th, .compara td { display: block; width: 100%; }
+    .compara { border: none; background: none; }
+    .compara tr { border: 1px solid var(--pedra); border-radius: 14px; margin-bottom: 10px; overflow: hidden; background: var(--cartao); }
+    .compara th, .compara td { border-bottom: none; padding: 10px 14px; }
+    .compara td:nth-child(2)::before { content: "Sozinho: "; color: var(--suave); font-weight: 600; }
+    .compara td:last-child::before { content: "Agentic Code: "; font-weight: 600; color: var(--ambar-esc); }
+    .skill { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .som { animation: none; }
+    .anima .revela { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ---------- o movimento (19/11/2026, pedido do dono: "animações leves, estilo premium, efeitos leves no background") ---------- */
+  .ceu { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+  .ceu i { position: absolute; border-radius: 50%; opacity: .7; will-change: transform; }
+  .ceu i:nth-child(1) { width: 620px; height: 620px; left: -160px; top: -200px; background: radial-gradient(closest-side, #f3dfb6, rgba(243,223,182,0)); animation: vagar1 34s ease-in-out infinite alternate; }
+  .ceu i:nth-child(2) { width: 520px; height: 520px; right: -180px; top: 22vh; background: radial-gradient(closest-side, #efe4d2, rgba(239,228,210,0)); animation: vagar2 40s ease-in-out infinite alternate; }
+  .ceu i:nth-child(3) { width: 460px; height: 460px; left: 30vw; bottom: -260px; background: radial-gradient(closest-side, #f6e8cc, rgba(246,232,204,0)); animation: vagar3 46s ease-in-out infinite alternate; }
+  .ceu::after { content: ""; position: absolute; inset: 0; opacity: .5;
+    background-image: radial-gradient(rgba(25,24,22,.11) 1px, transparent 1.2px); background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(70% 55% at 50% 0%, #000, transparent 75%); mask-image: radial-gradient(70% 55% at 50% 0%, #000, transparent 75%); }
+  @keyframes vagar1 { to { transform: translate(140px, 120px) scale(1.12); } }
+  @keyframes vagar2 { to { transform: translate(-160px, 90px) scale(.92); } }
+  @keyframes vagar3 { to { transform: translate(-120px, -140px) scale(1.1); } }
+
+  /* a órbita atrás do título: dois anéis finos e a lua dourada dando a volta */
+  .ceu-heroi { position: absolute; top: -40px; left: calc(50% - 50vw); width: 100vw; height: 760px; overflow: hidden; z-index: -1; pointer-events: none;
+    -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+  .orbitas { position: absolute; left: 50%; top: 80px; width: max(1400px, 100vw); transform: translateX(-50%); opacity: .9; }
+  .orbitas ellipse { fill: none; stroke: rgba(25,24,22,.10); stroke-width: 1; }
+  .orbitas .tracejada { stroke-dasharray: 2 7; stroke: rgba(168,118,28,.30); }
+  .orbitas .lua { fill: var(--ambar); }
+  .orbitas .lua-2 { fill: #191816; opacity: .5; }
+
+  /* a entrada: sobe, aparece e desfoca, um depois do outro */
+  .anima .revela { opacity: 0; transform: translateY(14px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .anima .revela.vista { opacity: 1; transform: none; }
+  .anima .janela.revela { transform: translateY(20px); }
+  .anima .janela.revela.vista { transform: none; }
+
+  /* a janela do topo com um brilho dourado que respira atrás */
+  .heroi .janela { overflow: visible; }
+  .heroi .janela > img, .heroi .janela .barra { border-radius: 14px 14px 0 0; }
+  .heroi .janela > img { border-radius: 0 0 14px 14px; }
+  .heroi .janela::before { content: ""; position: absolute; inset: 8% 6% -6%; z-index: -1; border-radius: 40px;
+    background: radial-gradient(closest-side, rgba(200,146,46,.22), transparent); animation: respirar 7s ease-in-out infinite; }
+  @keyframes respirar { 50% { opacity: .55; } }
+
+  /* os cartões sobem um pouco ao passar o mouse; o botão preto ganha um reflexo que passa */
+  .dor, .pilar, .skill, .recurso, .modulo, .faq details { transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s, border-color .35s; }
+  .dor:hover, .pilar:hover, .skill:hover, .recurso:hover, .modulo:hover { transform: translateY(-3px); border-color: #e2d6bf; box-shadow: 0 14px 34px rgba(25,24,22,.07); }
+  .botao { position: relative; overflow: hidden; }
+  .botao:not(.botao-claro)::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.22), transparent); transform: translateX(-150%) skewX(-18deg); animation: reflexo 6s ease-in-out infinite; }
+  @keyframes reflexo { 0%, 70% { transform: translateX(-150%) skewX(-18deg); } 100% { transform: translateX(330%) skewX(-18deg); } }
+
+  /* a faixa escura com uma luz dourada andando devagar */
+  .escuro { position: relative; overflow: hidden; isolation: isolate; }
+  .escuro::before { content: ""; position: absolute; width: 760px; height: 760px; left: -200px; top: -320px; z-index: -1; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(200,146,46,.22), transparent); animation: vagar2 30s ease-in-out infinite alternate; }
+  .escuro::after { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .35;
+    background-image: radial-gradient(rgba(250,249,247,.10) 1px, transparent 1.2px); background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(#000, transparent 60%); mask-image: linear-gradient(#000, transparent 60%); }
+
+  /* a linha dourada do quanto já leu, no topo */
+  .progresso { position: fixed; left: 0; top: 0; height: 2px; width: 100%; z-index: 20; transform-origin: 0 50%; transform: scaleX(0);
+    background: linear-gradient(90deg, var(--ambar), #e9c46a); }
+
+  /* as rotinas e os detalhes em quatro colunas, curtas */
+  .skills { grid-template-columns: repeat(4, 1fr); max-width: var(--largura); }
+  .skill { display: block; padding: 20px; }
+  .skill b { display: block; font: 600 16.5px var(--corpo); color: var(--tinta); margin-bottom: 6px; white-space: normal; }
+  .skill.destaque b { color: #e0ad4e; }
+  .recursos { grid-template-columns: repeat(4, 1fr); }
+  .recurso h3 { font-size: 17px; }
+  @media (max-width: 900px) { .skills, .recursos { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .skills, .recursos { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) {
+    .ceu i, .escuro::before, .heroi .janela::before, .botao::after { animation: none; }
+    .orbitas .lua, .orbitas .lua-2 { display: none; }
+  }
+  .cta-vsl { margin-top: 26px; }
+  .cta-vsl .botao { font-size: 18px; padding: 18px 34px; }
+  .cta-meio { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 56px; }
+  .cta-meio span { font: 500 13px var(--corpo); color: var(--suave, #6c6860); letter-spacing: .02em; }
+  .escuro .cta-meio .botao { background: #fff; color: var(--tinta); }
+  .escuro .cta-meio span { color: rgba(255,255,255,.6); }
+</style>
+<script>
+/* ENQUANTO A VSL NÃO EXISTIR (img/vsl.mp4 e img/vsl-poster.jpg), o vídeo do escritório toca no lugar dela, mudo e em loop, sem o
+   botão "Toque pra ouvir" e sem a linha do que o vídeo mostra. Quem chama é o onerror do <source> da VSL. */
+window.semVSL = function () {
+  if (window.SEM_VSL) return;
+  window.SEM_VSL = true;
+  var v = document.getElementById("vsl");
+  if (!v) return;
+  var fonte = v.querySelector("source");
+  if (fonte) fonte.remove();
+  v.poster = "img/equipe-poster.jpg";
+  v.src = "img/equipe.mp4";
+  v.setAttribute("aria-label", "O escritório do Agentic Code: um pedido de revisão vira três sub-agentes trabalhando ao mesmo tempo");
+  v.muted = true; v.loop = true;
+  v.load();
+  v.play().catch(function () {});
+  var caixa = v.parentElement;
+  caixa.classList.add("sem-vsl");
+  ["som", "legenda-vsl"].forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  var barra = caixa.querySelector(".vsl-barra");
+  if (barra) barra.hidden = true;
+};
+</script>
+<script src="medir.js" data-pagina="agentic-b"></script>
+<script src="vsl-player.js"></script>
+</head>
+<body>
+<div class="ceu" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="progresso" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <clipPath id="anel-frente" clipPathUnits="userSpaceOnUse"><rect x="-10" y="27" width="74" height="40"/></clipPath>
+  <symbol id="orbita" viewBox="0 0 54 54">
+    <g transform="rotate(-10 27 27)"><ellipse cx="27" cy="27" rx="25" ry="8" fill="none" stroke="var(--tinta)" stroke-width="2.3"/></g>
+    <circle cx="27" cy="27" r="13.1" fill="var(--fundo-logo)"/>
+    <circle cx="27" cy="27" r="11.5" fill="var(--tinta)"/>
+    <g transform="rotate(-10 27 27)" clip-path="url(#anel-frente)"><ellipse cx="27" cy="27" rx="25" ry="8" fill="none" stroke="var(--fundo-logo)" stroke-width="4.4"/><ellipse cx="27" cy="27" rx="25" ry="8" fill="none" stroke="var(--tinta)" stroke-width="2.3"/></g>
+    <circle cx="49.66" cy="20.23" r="5.6" fill="var(--fundo-logo)"/><circle cx="49.66" cy="20.23" r="4.3" fill="var(--ambar)"/>
+  </symbol></defs></svg>
+
+<header class="topo">
+  <a class="marca" href="#" aria-label="Agentic Code">
+    <svg class="orbita" viewBox="0 0 54 54" aria-hidden="true"><use href="#orbita"/></svg>
+    <span>Agentic Code</span>
+  </a>
+  <nav><a href="#editor">A IDE</a><a href="#os">O cérebro</a><a href="#seguranca">Segurança</a><a href="#oferta">Preço</a></nav>
+  <a class="botao botao-pequeno" href="#vsl" data-vai-pro-video data-medir="ver_video_topo">Quero o Agentic Code</a>
+</header>
+
+<main class="pagina">
+
+  <section class="heroi">
+    <div class="brilho"></div>
+    <div class="ceu-heroi" aria-hidden="true"><svg class="orbitas" viewBox="0 0 1400 560">
+      <g transform="rotate(-8 700 280)">
+        <ellipse cx="700" cy="280" rx="640" ry="190"/>
+        <path id="trilha-1" d="M60 280 A640 190 0 1 1 1340 280 A640 190 0 1 1 60 280" fill="none"/>
+        <circle class="lua" r="6"><animateMotion dur="38s" repeatCount="indefinite"><mpath href="#trilha-1"/></animateMotion></circle>
+      </g>
+      <g transform="rotate(6 700 300)">
+        <ellipse class="tracejada" cx="700" cy="300" rx="540" ry="250"/>
+        <path id="trilha-2" d="M1240 300 A540 250 0 1 1 160 300 A540 250 0 1 1 1240 300" fill="none"/>
+        <circle class="lua-2" r="3.5"><animateMotion dur="52s" repeatCount="indefinite"><mpath href="#trilha-2"/></animateMotion></circle>
+      </g>
+    </svg></div>
+    <div class="selo revela"><i></i>A IDE com IA pra Windows</div>
+    <h1 class="revela">Descreva o site e o sistema. <em>A sua equipe de IA constrói</em> na sua frente.</h1>
+    <p class="lead revela">O <strong>Agentic Code</strong> é uma IDE completa, com a IA no centro: você pede no chat, uma equipe de agentes escreve o código, e você vê o site e o sistema ganhando forma na prévia. E ele tem um cérebro, o Agentic OS, que lembra do projeto e aprende com você e te ajuda a economizar tokens.</p>
+    <div class="acao revela">
+      <div class="botoes"><a class="botao" href="#oferta" data-onde="heroi" data-medir="ver_oferta_heroi">Quero o Agentic Code</a><a class="botao botao-claro" href="#vsl" id="ver-por-dentro" data-vai-pro-video data-medir="ver_por_dentro">Ver por dentro</a></div>
+      <div class="confianca"><span>Windows 10 e 11</span><span>7 dias de garantia</span></div>
+      <div class="compativel"><span class="compativel-rotulo">Compatível com</span><span><img src="img/compat-claude.svg" alt="" width="20" height="20">Claude Code</span><span><img src="img/compat-codex.svg" alt="" width="20" height="20">Codex</span><span><img src="img/compat-antigravity.svg" alt="" width="20" height="20">Antigravity</span></div>
+    </div>
+    <div class="janela revela">
+      <div class="barra"><b>doceria-da-ana · Agentic Code</b><i></i><i></i><i></i></div>
+      <img src="img/os-pergunta.jpg" alt="O Agentic Code com o chat aberto: o pedido da página de encomendas, e o agente respondendo com o que entendeu, sugestões e perguntas com opções antes de escrever qualquer código" width="1600" height="960">
+      <span class="rotulo">O CHAT, O CÓDIGO E A SUA EQUIPE NUMA JANELA</span>
+    </div>
+  </section>
+
+  <section>
+    <span class="kicker revela">VEJA FUNCIONANDO</span>
+    <h2 class="tit revela">O Agentic Code inteiro, <em>por dentro.</em></h2>
+    <p class="chamada revela">Seis minutos com o programa aberto, parte por parte: o chat, a IDE, a prévia, o escritório da equipe, o Agentic OS com a memória e as rotinas, o Blindar e o cérebro do projeto. E no fim, o site e o sistema de uma clínica funcionando dentro dele.</p>
+    <div class="janela revela">
+      <div class="barra"><b>Agentic Code · por dentro</b><i></i><i></i><i></i></div>
+      <div class="tela-vsl">
+        <video id="vsl" poster="img/vsl-poster.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo: o Agentic Code por dentro, parte por parte, e o site e o sistema de uma clínica de estética como exemplo">
+          <source src="img/vsl-b.mp4" type="video/mp4" onerror="window.semVSL && window.semVSL()">
+        </video>
+        <button class="som" id="som" type="button">&#9654; Toque pra ouvir</button>
+      </div>
+    </div>
+    <div class="botoes cta-vsl"><a class="botao" href="#oferta" data-onde="vsl" data-medir="ver_oferta_vsl">Quero o Agentic Code</a></div>
+    <p class="legenda-vsl revela" id="legenda-vsl">No vídeo: o Agentic Code por dentro, parte por parte, e o site e o sistema de uma clínica de harmonização facial como exemplo.</p>
+  </section>
+
+  <section id="editor">
+    <span class="kicker revela">A IDE</span>
+    <h2 class="tit revela">Uma IDE de verdade. <em>Com a IA dentro.</em></h2>
+    <p class="chamada revela">O editor, o terminal, a prévia e o depurador de uma IDE como o VS Code, com o chat do Claude Code no meio. Você não troca de janela nunca.</p>
+    <div class="telas">
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">O CHAT</p>
+          <h3>Você pede, ele escreve. E você vê cada linha.</h3>
+          <ul class="lista-check">
+            <li>O texto aparecendo enquanto ele escreve</li>
+            <li>Cada edição com as linhas que entram e saem</li>
+            <li>Permissão com botões: permitir, sempre ou negar</li>
+            <li>Histórico de conversas por dia, pra voltar de onde parou</li>
+            <li>Cite um arquivo com <code>@</code>, troque o modelo e o esforço, pare na hora</li>
+          </ul>
+        </div>
+        <div class="janela revela">
+          <div class="barra"><b>Agentic Code · a edição pedindo permissão</b><i></i><i></i><i></i></div>
+          <img src="img/os-permissao.jpg" alt="O Agentic Code com o histórico de conversas à esquerda, o editor no meio e o chat à direita mostrando a edição de um arquivo com as linhas novas e os botões Permitir e Negar" width="1600" height="960" loading="lazy">
+        </div>
+      </div>
+
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">O CÓDIGO</p>
+          <h3>Quer pôr a mão no código? Ele está ali.</h3>
+          <p>O mesmo editor do VS Code, com as ferramentas de linguagem ligadas no projeto inteiro: autocompletar, o erro sublinhado na hora e o pulo pra definição.</p>
+          <ul class="lista-check">
+            <li>Explorador, abas, pesquisa em todos os arquivos</li>
+            <li>Terminal com várias abas, pra rodar o que precisar</li>
+            <li>Autocompletar e erros em JavaScript e TypeScript</li>
+            <li>MCP: ligue ferramentas ao Claude, ao Codex e ao Antigravity num painel</li>
+          </ul>
+        </div>
+        <div class="janela revela">
+          <div class="barra"><b>Agentic Code · o código do sistema</b><i></i><i></i><i></i></div>
+          <img src="img/ide-codigo.jpg" alt="O Agentic Code com o explorador de arquivos, o código do sistema da clínica aberto no editor e o terminal embaixo" width="1600" height="960" loading="lazy">
+        </div>
+      </div>
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">A PRÉVIA</p>
+          <h3>O site aparece do lado do código, enquanto ele é feito.</h3>
+          <p>O navegador fica dentro do programa. Quando o projeto liga um servidor, a prévia abre sozinha. Uma página <code>.html</code> abre pelo botão Prévia do próprio chat. E com um clique você vê como ela fica no celular.</p>
+          <ul class="lista-check">
+            <li>Computador, tablet e celular</li>
+            <li>Abre sozinha quando o servidor liga</li>
+            <li>Inspecionar: o console, os elementos e a rede da página, como o F12 do Chrome</li>
+          </ul>
+        </div>
+        <div class="janela revela">
+          <div class="barra"><b>Prévia · instituto-aurora/site</b><i></i><i></i><i></i></div>
+          <img src="img/ide-previa.jpg" alt="O Agentic Code com a prévia do site da clínica de exemplo aberta dentro do programa" width="1600" height="960" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div class="cta-meio revela"><a class="botao" href="#oferta" data-onde="editor" data-medir="ver_oferta_editor">Quero o Agentic Code</a><span>Windows 10 e 11 · 7 dias de garantia</span></div>
+  </section>
+
+  <section>
+    <span class="kicker revela">O ESCRITÓRIO</span>
+    <h2 class="tit revela">E você vê a sua equipe de IA trabalhando</h2>
+    <p class="chamada revela">Cada agente tem um boneco num escritório em pixel art: escrevendo, lendo, pesquisando ou esperando você. Bate o olho e você sabe.</p>
+    <div class="equipe">
+      <div class="texto revela">
+        <span class="kicker" style="text-align:inherit">A equipe</span>
+        <h3>Um pedido, uma equipe ao mesmo tempo</h3>
+        <p>"Revisa tudo, cada um numa parte" virou um time: um confere o site e o sistema no celular, outro testa se o formulário chega como lead, outro revisa os textos. Cada um na sua mesa, com a tarefa na etiqueta.</p>
+        <ul class="lista-check">
+          <li>Clicou num funcionário, abre o arquivo que ele está mexendo</li>
+          <li>Ele junta as partes e confere se tudo funciona junto</li>
+        </ul>
+      </div>
+      <div class="revela">
+        <div class="janela">
+          <div class="barra"><b>Escritório · Salão da Equipe</b><i></i><i></i><i></i></div>
+          <video class="escritorio" src="img/equipe.mp4" poster="img/equipe-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O escritório do Agentic Code: um pedido de revisão vira três sub-agentes trabalhando ao mesmo tempo no salão da Equipe"></video>
+          <span class="rotulo">3 SUB-AGENTES AO MESMO TEMPO</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="kicker revela">POR QUE ELE ACERTA MAIS</span>
+    <h2 class="tit revela">A IA é brilhante. E começa toda conversa <em>do zero.</em></h2>
+    <p class="chamada revela">Quem já criou alguma coisa com IA conhece a rotina.</p>
+    <div class="dores">
+      <div class="dor revela"><h3>Você explica o projeto de novo. E de novo.</h3><p>Conversa nova, IA nova: ela não sabe o que é o projeto, pra quem é, quais as cores, qual o tom, o que você já decidiu.</p></div>
+      <div class="dor revela"><h3>Ela faz o que você disse, não o que você precisava.</h3><p>Um pedido de uma linha vira uma suposição. O resultado sai genérico, e você gasta as próximas mensagens consertando.</p></div>
+      <div class="dor revela"><h3>Você corrige hoje. Amanhã, o mesmo erro.</h3><p>A preferência que você explicou com tanto cuidado vale até a conversa acabar.</p></div>
+      <div class="dor revela"><h3>Você não vê o que está acontecendo.</h3><p>Texto rolando num terminal. Quem mexe em qual arquivo, o que falta, se travou: você só descobre no fim.</p></div>
+    </div>
+    <p class="virada revela">O problema não é a IA. <em>É tudo o que falta em volta dela.</em></p>
+  </section>
+
+  <section id="os">
+    <span class="kicker revela">O CÉREBRO</span>
+    <h2 class="tit revela">Por isso o Agentic Code tem um cérebro: <em>o Agentic OS.</em></h2>
+    <p class="chamada revela">Ele não troca a IA. Dá à mesma IA o que um bom profissional tem: memória, método, a capacidade de aprender com você e uma equipe pra dividir o trabalho.</p>
+    <div class="pilares">
+      <div class="pilar revela"><div class="ic">MEMÓRIA</div><h3>Ele já começa sabendo.</h3><p>O projeto, o público, o tom, as cores e as suas regras ficam na pasta <code>.agentic</code> do projeto e entram em toda conversa. Você explica uma vez.</p></div>
+      <div class="pilar revela"><div class="ic">MÉTODO</div><h3>Ele pensa antes de fazer.</h3><p>Pediu algo novo? Ele lê o projeto, entende o pedido, sugere o que deixaria melhor e pergunta só o que muda o resultado, com as opções pra clicar.</p></div>
+      <div class="pilar revela"><div class="ic">APRENDIZADO</div><h3>Corrigiu uma vez, vale pra sempre.</h3><p>"Nunca use roxo." "Preço sempre em R$ 0,00." Ele guarda sozinho, avisa o que guardou e segue a regra nas próximas conversas.</p></div>
+      <div class="pilar revela"><div class="ic">EQUIPE</div><h3>Pedido grande vira um time.</h3><p>Ele divide o trabalho, chama sub-agentes que trabalham ao mesmo tempo, junta as partes e confere tudo no fim. Você vê cada um numa mesa.</p></div>
+    </div>
+  </section>
+
+  <section id="economia">
+    <span class="kicker revela">ECONOMIA DE TOKENS</span>
+    <h2 class="tit revela">Parece que gasta mais. <em>Na prática, economiza.</em></h2>
+    <p class="chamada revela">Memória, perguntas e equipe parecem coisa a mais pra IA processar. Mas o que mais queima o seu limite não é isso: é a IA relendo o projeto a cada conversa e refazendo o que entendeu errado. O Agentic OS corta os dois, e o token vai pro trabalho.</p>
+    <div class="pilares">
+      <div class="pilar revela"><div class="ic">MEMÓRIA</div><h3>Não relê o projeto toda vez.</h3><p>Sem memória, cada conversa nova começa abrindo arquivo por arquivo pra entender o que já existe. Com ela, o resumo do projeto entra pronto, curto, e o agente vai direto ao pedido.</p></div>
+      <div class="pilar revela"><div class="ic">PERGUNTAS</div><h3>Não refaz o que entendeu errado.</h3><p>Uma pergunta antes custa pouco. Um site inteiro no caminho errado custa o pedido de novo, e o conserto. Ele pergunta só o que muda o resultado.</p></div>
+      <div class="pilar revela"><div class="ic">EQUIPE</div><h3>A conversa principal não incha.</h3><p>Cada sub-agente trabalha só com a parte dele e devolve o resumo. O agente principal não carrega cada arquivo de todo mundo, e a conversa longa continua leve.</p></div>
+      <div class="pilar revela"><div class="ic">APRENDIZADO</div><h3>Não repete o mesmo erro.</h3><p>Corrigiu uma vez, a regra fica guardada. Você não gasta pedido explicando a mesma coisa de novo na semana seguinte.</p></div>
+    </div>
+    <p class="honesto revela">Quanto economiza depende do projeto e do pedido. O que muda é pra onde o token vai: pro que você pediu, não pra IA se situar de novo.</p>
+  </section>
+
+  <section id="telas">
+    <span class="kicker revela">O CÉREBRO TRABALHANDO</span>
+    <h2 class="tit revela">Ele pensa, lembra e <em>mostra o que sabe.</em></h2>
+    <p class="chamada revela">Telas reais do programa, num projeto de exemplo: o site da Doceria da Ana.</p>
+    <div class="telas">
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">ENTENDE, SUGERE E PERGUNTA</p>
+          <h3>Você pede uma frase. Ele volta com um plano melhor.</h3>
+          <p>O pedido foi "cria a página de encomendas, com o formulário do pedido". Antes de escrever uma linha, ele olhou o projeto e perguntou o que ninguém tinha dito: como o pedido chega até a Ana, quais campos o formulário pede e se a página inicial ganha o botão.</p>
+          <ul class="lista-check">
+            <li>Ele lê o projeto antes de perguntar</li>
+            <li>As sugestões vêm como opções pra clicar</li>
+            <li>A recomendada primeiro, e espaço pra sua resposta</li>
+            <li>Pedido pequeno ou "faz direto": ele faz na hora</li>
+          </ul>
+        </div>
+        <div class="janela revela">
+          <div class="barra"><b>Chat · as perguntas</b><i></i><i></i><i></i></div>
+          <img src="img/os-perguntas.jpg" alt="O cartão de perguntas no chat do Agentic Code, com as opções de cada pergunta e a recomendada primeiro" width="880" height="960" loading="lazy">
+        </div>
+      </div>
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">MEMÓRIA QUE SE ATUALIZA SOZINHA</p>
+          <h3>Terminou a tarefa? A memória já sabe.</h3>
+          <p>No fim de cada tarefa, ele registra o que mudou e o que vem a seguir, e conta numa linha. Amanhã, a conversa nova começa exatamente daí. Projeto que já existe? Ele lê e monta a memória sozinho.</p>
+          <ul class="lista-check">
+            <li>Arquivos em português, dentro do projeto</li>
+            <li>Você lê e edita quando quiser</li>
+          </ul>
+        </div>
+        <div class="janela revela">
+          <div class="barra"><b>Chat · a tarefa pronta</b><i></i><i></i><i></i></div>
+          <img src="img/os-memoria-linha.jpg" alt="O fim de uma tarefa no chat: o que foi feito e a linha Memória com o que foi registrado no projeto" width="880" height="960" loading="lazy">
+        </div>
+      </div>
+
+
+
+
+
+      <div class="tela-linha">
+        <div class="tela-texto revela">
+          <p class="etiqueta-tela">O CÉREBRO DO PROJETO</p>
+          <h3>Veja o que a sua IA sabe. <em>Literalmente.</em></h3>
+          <p>Um clique e o projeto vira um mapa, como no Obsidian: o projeto no centro, ligado à memória, a cada regra que você ensinou, às pastas, às páginas, ao código e às conversas, cada grupo numa cor. Clique num ponto e leia o que tem dentro, ou abra no editor.</p>
+          <ul class="lista-check">
+            <li>Cada arquivo, regra e conversa vira um ponto ligado ao projeto</li>
+            <li>Filtre por grupo, procure, arraste e aproxime</li>
+            <li>O "Animar" mostra o projeto crescendo, ponto a ponto</li>
+          </ul>
+        </div>
+        <div class="janela revela">
+          <div class="barra"><b>O cérebro do projeto · instituto-aurora</b><i></i><i></i><i></i></div>
+          <img src="img/os-cerebro.jpg" alt="O cérebro do projeto: o mapa do Instituto Aurora, com o projeto no centro ligado à memória, às regras, às pastas, às páginas, ao código, às imagens e às conversas, e o painel dos grupos ao lado" width="1100" height="731" loading="lazy">
+        </div>
+      </div>
+
+
+    </div>
+    <div class="cta-meio revela"><a class="botao" href="#oferta" data-onde="telas" data-medir="ver_oferta_telas">Quero o Agentic Code</a><span>Windows 10 e 11 · 7 dias de garantia</span></div>
+  </section>
+
+  <section>
+    <span class="kicker revela">ROTINAS PRONTAS</span>
+    <h2 class="tit revela">Oito rotinas que deixam o projeto <em>em ordem.</em></h2>
+    <div class="skills">
+      <div class="skill revela"><b>Retomar</b><span>Mostra onde o projeto parou e sugere o próximo passo.</span></div>
+      <div class="skill revela"><b>Conhecer a marca</b><span>Uma conversa sobre o público, o tom e o visual, guardada na memória.</span></div>
+      <div class="skill revela"><b>Lembrar</b><span>Uma preferência ou regra que vale daqui pra frente.</span></div>
+      <div class="skill revela"><b>Atualizar a memória</b><span>Revisa o projeto e deixa tudo em dia.</span></div>
+      <div class="skill revela"><b>Salvar</b><span>Guarda no GitHub, mesmo sem saber git, sem deixar senha ir junto.</span></div>
+      <div class="skill revela"><b>Criar uma rotina</b><span>A tarefa que você repete vira um comando do projeto.</span></div>
+      <div class="skill destaque revela"><b>Blindar</b><span>Lê o projeto inteiro e acha as brechas de segurança.</span></div>
+      <div class="skill revela"><b>Revisar</b><span>Confere erros e o que falta antes de publicar.</span></div>
+    </div>
+  </section>
+
+
+  <section id="seguranca" class="escuro">
+    <span class="kicker revela">Segurança</span>
+    <h2 class="tit revela">Um botão. Um especialista em segurança lendo <em>cada linha</em> do seu projeto.</h2>
+    <p class="chamada revela">Site e sistema feitos com IA funcionam. A pergunta é se estão protegidos. O <strong>Blindar</strong> é um agente de cibersegurança que lê o código inteiro procurando por onde alguém entraria, e te mostra como fechar.</p>
+    <div class="seguranca">
+      <ol class="passos-seg">
+        <li class="passo-seg revela"><b>Mapeia</b><span>Descobre por onde o projeto recebe dados de fora: páginas, formulários, rotas, login, banco e chaves.</span></li>
+        <li class="passo-seg revela"><b>Varre</b><span>Divide o código entre sub-agentes, que procuram ao mesmo tempo: senha no código, banco aberto, login frágil, XSS, dependência com falha conhecida.</span></li>
+        <li class="passo-seg revela"><b>Relata</b><span>Cada achado com o arquivo, a linha, o risco em uma frase e o conserto. E uma nota de 0 a 10 pro projeto.<div class="gravidades" style="margin-top:10px"><span class="g1">Crítico</span><span class="g2">Alto</span><span class="g3">Médio</span><span class="g4">Baixo</span></div></span></li>
+        <li class="passo-seg revela"><b>Blinda com você</b><span>Pergunta o que corrigir primeiro. Nada muda sem o seu ok, e o relatório fica na memória, em <code>seguranca.md</code>.</span></li>
+      </ol>
+      <div class="janela revela">
+        <div class="barra"><b>Chat · Blindar o projeto</b><i></i><i></i><i></i></div>
+        <img src="img/os-blindar.jpg" alt="O Blindar no chat do Agentic Code: o seguranca.md gravado com a nota 9 de 10 e os achados por gravidade, e a pergunta do que corrigir" width="936" height="1508" loading="lazy">
+      </div>
+    </div>
+    <p class="honesto-escuro revela">Nenhuma ferramenta garante segurança total. O Blindar encontra o que dá pra encontrar lendo o código, explica em português simples e conserta com você. Ele só lê o seu projeto: nunca testa nada contra site ou servidor de outra pessoa.</p>
+    <div class="cta-meio revela"><a class="botao" href="#oferta" data-onde="seguranca" data-medir="ver_oferta_seguranca">Quero o Agentic Code</a><span>Windows 10 e 11 · 7 dias de garantia</span></div>
+  </section>
+
+  <section>
+    <span class="kicker revela">POR QUE O RESULTADO É MELHOR</span>
+    <h2 class="tit revela">A mesma IA. <em>Outro nível</em> de trabalho.</h2>
+    <table class="compara revela">
+      <thead><tr><th></th><th>O AGENTE SOZINHO</th><th>COM O AGENTIC CODE</th></tr></thead>
+      <tbody>
+        <tr><th>Contexto do projeto</th><td>Você explica a cada conversa, ou escreve e mantém um arquivo de instruções à mão</td><td>Memória montada e atualizada sozinha, em toda conversa</td></tr>
+        <tr><th>Pedido curto</th><td>Ele supõe o que faltou e sai fazendo</td><td>Ele sugere melhorias e pergunta o que muda o resultado</td></tr>
+        <tr><th>Suas correções</th><td>Valem até a conversa acabar</td><td>Viram regra do projeto, guardadas sozinhas</td></tr>
+        <tr><th>Onde você trabalha</th><td>Um terminal, e o editor e o navegador em outras janelas</td><td>Uma IDE só: chat, código, terminal, prévia e depurador</td></tr>
+        <tr><th>Ver o que está criando</th><td>Abrir o navegador e atualizar à mão</td><td>A prévia dentro do programa, que abre sozinha</td></tr>
+        <tr><th>Segurança</th><td>Uma revisão, quando você lembra de pedir</td><td>O Blindar: o projeto inteiro lido, com nota e conserto</td></tr>
+        <tr><th>Voltar amanhã</th><td>Achar a conversa e relembrar onde parou</td><td>Histórico por dia e o resumo de onde parou</td></tr>
+      </tbody>
+    </table>
+    <p class="compara-nota revela">O agente sozinho: o Claude Code no terminal, sem configuração. O Agentic Code usa o seu próprio Claude Code, com a sua conta.</p>
+  </section>
+
+
+  <section>
+    <span class="kicker revela">VEM JUNTO</span>
+    <h2 class="tit revela">E os detalhes do dia a dia</h2>
+    <div class="recursos">
+      <div class="recurso revela"><h3>Você vê onde ele mexe</h3><p>O arquivo que o agente lê ou escreve ganha a marca dele.</p></div>
+      <div class="recurso revela"><h3>O resumo do dia</h3><p>Pedidos, tarefas prontas e arquivos mudados, num clique.</p></div>
+      <div class="recurso revela"><h3>O Windows te chama</h3><p>O agente precisa de você? Chega um aviso. Um clique e você está na conversa.</p></div>
+      <div class="recurso revela"><h3>Claude Code, Codex e Antigravity</h3><p>O Agentic OS completo no Claude Code. Os outros no terminal do programa.</p></div>
+    </div>
+  </section>
+
+
+  <section id="curso">
+    <span class="kicker revela">O CURSO</span>
+    <h2 class="tit revela">Junto com o programa, quatro cursos</h2>
+    <p class="chamada revela">Do primeiro clique ao seu sistema no ar, protegido.</p>
+    <ul class="modulos">
+      <li class="modulo revela"><div class="n">1</div><div><h3>Instalar, ativar e usar</h3><p>O Agentic Code de ponta a ponta.</p></div></li>
+      <li class="modulo revela"><div class="n">2</div><div><h3>Criar sites com o Agentic Code</h3><p>Curso completo.</p></div></li>
+      <li class="modulo revela"><div class="n">3</div><div><h3>Criar sistemas, SaaS e aplicativos web</h3><p>Curso completo.</p></div></li>
+      <li class="modulo revela"><div class="n">4</div><div><h3>Cibersegurança: proteger o seu site e o seu sistema</h3><p>Curso completo.</p></div></li>
+    </ul>
+    <div class="cta-meio revela"><a class="botao" href="#oferta" data-onde="curso" data-medir="ver_oferta_curso">Quero o Agentic Code</a><span>Windows 10 e 11 · 7 dias de garantia</span></div>
+  </section>
+
+  <section id="requisitos">
+    <span class="kicker revela">ANTES DE COMPRAR</span>
+    <h2 class="tit revela">O que você precisa</h2>
+    <ul class="precisa">
+      <li class="revela"><div class="n">1</div><div><strong>Um PC com Windows 10 ou 11</strong><span>Não funciona no Mac nem no Linux.</span></div></li>
+      <li class="revela"><div class="n">2</div><div><strong>Pelo menos um agente instalado, com a sua conta</strong><span>O Claude Code com uma assinatura do Claude (pro Agentic OS completo), ou o Codex, ou o Antigravity.</span></div></li>
+      <li class="revela"><div class="n">3</div><div><strong>Internet pra ativar</strong><span>A ativação é no primeiro uso, com o e-mail da compra.</span></div></li>
+    </ul>
+    <p class="honesto revela">O Agentic Code não inclui nem substitui a assinatura do Claude, do Codex ou do Antigravity. Ele é o editor e o sistema onde o agente que você já tem trabalha.</p>
+  </section>
+
+  <section id="oferta">
+    <h2 class="tit revela">O Agentic Code completo, <em>com os cursos.</em></h2>
+    <div class="oferta revela">
+      <div class="pequeno">licença de 1 ano, com todas as atualizações</div>
+      <div class="de">de <s>R$ 197</s> por</div>
+      <div class="preco" style="margin-top:6px"><small>R$</small>97</div>
+      <ul>
+        <li><strong>O Agentic Code</strong>, a IDE com IA pra Windows</li>
+        <li class="sub">O chat no estilo Claude Code desktop, com o histórico de conversas</li>
+        <li class="sub">A prévia do site dentro do programa, no computador e no celular</li>
+        <li class="sub">Editor com autocompletar, explorador, pesquisa, terminal e MCP</li>
+        <li class="sub">Inspecionar: o depurador da página, dentro da prévia</li>
+        <li class="sub">Claude Code, Codex e Antigravity num editor só</li>
+        <li class="sub">O escritório dos agentes e a equipe de sub-agentes</li>
+        <li><strong>O cérebro, o Agentic OS:</strong> memória do projeto, método e aprendizado</li>
+        <li class="sub">Ele sugere e pergunta antes de fazer</li>
+        <li class="sub">A memória que se atualiza sozinha, e o mapa dela</li>
+        <li class="sub">8 rotinas prontas, como retomar, salvar e revisar</li>
+        <li><strong>O Blindar</strong>, o agente de cibersegurança do seu projeto</li>
+        <li><strong>Curso:</strong> instalar, ativar e usar</li>
+        <li><strong>Curso completo:</strong> Criar sites com o Agentic Code</li>
+        <li><strong>Curso completo:</strong> Criar sistemas, SaaS e aplicativos web</li>
+        <li><strong>Curso completo:</strong> Cibersegurança: proteger o seu site e o seu sistema</li>
+      </ul>
+      <a class="botao comprar" href="#oferta" data-onde="oferta">Quero o Agentic Code</a>
+      <p class="depois">Depois da compra, você baixa pelo link com o e-mail da compra e os 4 últimos números do CPF, e ativa no primeiro uso.</p>
+      <div class="garantia">
+        <svg viewBox="0 0 18 20" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#a8761c"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#e0ad4e"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#191816"/></svg>
+        <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Não gostou, devolvemos o seu dinheiro.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tit revela">Perguntas</h2>
+    <div class="faq">
+      <details class="revela"><summary>O Agentic Code é uma IDE, como o VS Code?</summary><p>É. Tem o editor de código com autocompletar e erros, o explorador, a pesquisa, o terminal, a prévia com o depurador da página e os servidores MCP. A diferença é que o chat da IA e a equipe de agentes moram dentro dela. As extensões do VS Code não rodam nele.</p></details>
+      <details class="revela"><summary>Dá pra fazer sistema de verdade, não só site?</summary><p>Dá. Sistema com login, cadastro, agenda, painel e banco de dados, SaaS e aplicativo web. No vídeo, o mesmo pedido fez o site da clínica e o sistema de gestão dela, ligados. O curso de sistemas ensina do primeiro pedido até colocar no ar.</p></details>
+      <details class="revela"><summary>O que é o Agentic OS?</summary><p>É o cérebro do Agentic Code, e trabalha junto com o Claude Code: a memória de cada projeto (na pasta <code>.agentic</code>), o método de sugerir e perguntar antes de fazer, o aprendizado com as suas correções, as rotinas prontas, o Blindar e a equipe de sub-agentes.</p></details>
+      <details class="revela"><summary>Ele vai ficar me perguntando tudo?</summary><p>Não. Ele pergunta quando o pedido é criar algo novo ou tem mais de um jeito de fazer, uma rodada só. Pergunta simples, mudança pequena ou "faz direto": ele faz na hora. E dá pra desligar no painel do Agentic OS.</p></details>
+      <details class="revela"><summary>A memória gasta mais do meu plano?</summary><p>Ela entra no começo de cada conversa: alguns arquivos de texto do projeto. Em troca, você não explica o projeto de novo e ele erra e refaz menos.</p></details>
+      <details class="revela"><summary>Preciso ter o Claude Code, o Codex ou o Antigravity?</summary><p>Sim. Pelo menos um deles, instalado e com a sua conta. O Agentic OS completo (memória, perguntas, skills e equipe) funciona com o Claude Code. O Codex e o Antigravity rodam no terminal do programa, com o boneco deles no escritório.</p></details>
+      <details class="revela"><summary>Preciso escrever código?</summary><p>Não precisa escrever o código você mesmo: você descreve e o agente escreve. Se quiser mexer, o editor está ali.</p></details>
+      <details class="revela"><summary>Como recebo depois da compra?</summary><p>Você baixa pelo link com o e-mail da compra e os 4 últimos números do CPF. Instala, abre e ativa no primeiro uso.</p></details>
+      <details class="revela"><summary>Posso usar em mais de um computador?</summary><p>A sua cópia é pessoal, ligada à sua licença e ao seu computador.</p></details>
+      <details class="revela"><summary>O acesso é pra sempre?</summary><p>Não. É uma licença de 1 ano, com todas as atualizações. Depois, é só renovar.</p></details>
+      <details class="revela"><summary>Os meus projetos saem do meu computador?</summary><p>O Agentic Code e a memória ficam no seu computador. O que vai pra fora é o que o próprio agente já manda pra IA, como sempre mandou, agora com o resumo do projeto junto.</p></details>
+      <details class="revela"><summary>O Blindar garante que o meu site não vai ser invadido?</summary><p>Não, e ninguém pode garantir isso. Ele lê o projeto inteiro procurando as falhas mais comuns e as mais graves, explica cada uma e conserta com você. É o que um bom especialista faria olhando o código.</p></details>
+      <details class="revela"><summary>E se eu não gostar?</summary><p>7 dias de garantia. Devolvemos o seu dinheiro.</p></details>
+    </div>
+  </section>
+
+  <section class="fecho">
+    <svg class="orbita revela" viewBox="0 0 54 54" aria-hidden="true"><use href="#orbita"/></svg>
+    <h2 class="tit revela">Você traz a ideia. O Agentic Code <em>constrói com você.</em></h2>
+    <p class="chamada revela">Descreva o site, o sistema ou o app. Responda duas perguntas. E veja a sua equipe de IA construir, na sua IDE.</p>
+    <div class="acao revela" style="margin-top:8px">
+      <a class="botao comprar" href="#oferta" data-onde="fecho">Quero o Agentic Code</a>
+      <div class="confianca"><span>Windows 10 e 11</span><span>7 dias de garantia</span></div>
+      <div class="compativel"><span class="compativel-rotulo">Compatível com</span><span><img src="img/compat-claude.svg" alt="" width="20" height="20">Claude Code</span><span><img src="img/compat-codex.svg" alt="" width="20" height="20">Codex</span><span><img src="img/compat-antigravity.svg" alt="" width="20" height="20">Antigravity</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <div class="marca"><svg class="orbita" viewBox="0 0 54 54" aria-hidden="true"><use href="#orbita"/></svg><span>Agentic Code</span></div>
+  <p>Claude Code, Codex e Antigravity são marcas dos seus donos. O Agentic Code não tem ligação com eles.</p>
+</footer>
+
+<script>
+// O LINK DO CHECKOUT NA KIRVANO. Todos os botões de compra (classe "comprar") usam ele, com a UTM de quem chegou.
+const CHECKOUT = "https://pay.kirvano.com/fea630bf-f2db-40b2-add1-da8ad7c36aa5";
+
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  // A UTM DE QUEM CHEGOU VAI PRO CHECKOUT (o mesmo da página da Fábrica): o link do anúncio traz utm_source e o nome da campanha,
+  // do conjunto e do anúncio, e a Kirvano devolve isso na venda. Sem UTM na chegada, vai a de sempre (site, agentic).
+  var aqui = new URLSearchParams(location.search), utm = new URLSearchParams();
+  ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { var v = aqui.get(k); if (v) utm.set(k, v.slice(0, 120)); });
+  if (!utm.get("utm_source")) { utm = new URLSearchParams(); utm.set("utm_source", "site"); utm.set("utm_medium", "pagina"); utm.set("utm_campaign", "agentic"); }
+  // o clique do anúncio também segue (fbclid), senão a compra não se liga ao anúncio que trouxe a pessoa
+  var fbclid = aqui.get("fbclid");
+  if (fbclid) utm.set("fbclid", fbclid.slice(0, 500));
+  // a versão do teste A/B vai no utm_medium ("-va" ou "-vb"), e a Kirvano devolve na venda
+  utm.set("utm_medium", (utm.get("utm_medium") || "site") + "-v" + (window.VARIANTE || "a"));
+  var destino = CHECKOUT + (CHECKOUT.indexOf("?") < 0 ? "?" : "&") + utm.toString();
+  if (/A-DEFINIR/.test(CHECKOUT)) console.warn("Agentic Code: o link do checkout ainda não foi definido (const CHECKOUT).");
+
+  document.querySelectorAll(".comprar").forEach(function (b) {
+    b.href = destino;
+    b.dataset.medir = "comprar_agentic_" + (b.dataset.onde || "pagina");
+  });
+
+  // a VSL, com o player da página da Fábrica (../vsl-player.js copiado aqui): começa muda e em loop, o "Toque pra ouvir" liga o som
+  // do começo, sem barra de tempo e sem avançar; o medir.js conta a retenção pelo mesmo <video id="vsl">.
+  // Sem a VSL no ar, quem toca é o vídeo do escritório (window.semVSL, no <head>), e o botão some.
+  if (window.montarVSL) window.montarVSL({});
+  if (window.SEM_VSL) { var b = document.querySelector(".tela-vsl .vsl-barra"); if (b) b.hidden = true; }
+
+  // os vídeos de baixo só tocam quando aparecem na tela (economiza dados no celular)
+  var vids = document.querySelectorAll("video[data-quando-aparecer]");
+  if ("IntersectionObserver" in window) {
+    var ov = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) e.target.play().catch(function () {}); else e.target.pause(); });
+    }, { threshold: 0.25 });
+    vids.forEach(function (v) { ov.observe(v); });
+  }
+
+  // a entrada suave de cada bloco, sem biblioteca; sem o observador, tudo já está visível
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("anima");
+  var or = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("vista"); or.unobserve(e.target); } });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".revela").forEach(function (el) {
+    // os irmãos entram um depois do outro (até 5 por vez)
+    var irmãos = Array.prototype.filter.call(el.parentElement.children, function (x) { return x.classList.contains("revela"); });
+    var k = irmãos.indexOf(el) % 6;
+    if (k > 0) el.style.transitionDelay = (k * 0.07) + "s";
+    or.observe(el);
+  });
+  var barra = document.querySelector(".progresso"), pedido = false;
+  function andar() { pedido = false; var t = document.documentElement; barra.style.transform = "scaleX(" + Math.min(1, t.scrollTop / Math.max(1, t.scrollHeight - innerHeight)) + ")"; }
+  addEventListener("scroll", function () { if (!pedido) { pedido = true; requestAnimationFrame(andar); } }, { passive: true });
+});
+</script>
+<script>
+/* "Ver por dentro" (20/11/2026, pedido do dono): leva até a VSL e começa a tocar com som, como o "Toque pra ouvir". */
+/* O "Quero o Agentic Code" do topo faz o mesmo (20/11/2026, pedido do dono). */
+document.querySelectorAll("[data-vai-pro-video]").forEach(function (b) {
+  b.addEventListener("click", function (e) {
+    var v = document.getElementById("vsl"), som = document.getElementById("som");
+    if (!v) return;
+    e.preventDefault();
+    v.closest(".janela").scrollIntoView({ behavior: "smooth", block: "center" });
+    if (som && !som.hidden) som.click(); else v.play().catch(function () {});
+  });
+});
+</script>
+<script>
+/* A PÁGINA ABRE NO TOPO (20/11/2026, o dono no celular: "o site carrega direto nessa parte"): o botão pra oferta deixava #oferta no
+   endereço, e ao recarregar ou voltar o Safari pulava direto pra oferta, além de lembrar onde a pessoa parou. Os links internos rolam
+   sem mudar o endereço, e sem âncora no endereço a página sempre começa na headline. */
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+if (!location.hash) addEventListener("load", function () { scrollTo(0, 0); });
+else history.replaceState(null, "", location.pathname + location.search);
+document.addEventListener("click", function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="#"]');
+  if (!a || e.defaultPrevented) return;
+  var alvo = document.getElementById(a.getAttribute("href").slice(1));
+  if (!alvo) return;
+  e.preventDefault();
+  alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+</script>
+</body>
+</html>
