@@ -466,14 +466,14 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
   </section>
 
   <section id="oferta">
-    <h2 class="tit revela">Tudo isso por R$ 0,40 por dia</h2>
+    <h2 class="tit revela" id="oferta-dia">Tudo isso por R$ 0,40 por dia</h2>
     <div class="oferta revela">
       <div class="pequeno">preço de lançamento, por tempo limitado</div>
-      <div class="ancora">de <s>R$ 297</s> por</div>
-      <div class="preco">R$ 147</div>
-      <div class="pequeno">depois do dia 19, o preço sobe</div>
+      <div class="ancora" id="oferta-ancora">de <s>R$ 297</s> por</div>
+      <div class="preco" id="oferta-preco">R$ 147</div>
+      <div class="pequeno" id="oferta-sobe">depois do dia 19, o preço sobe</div>
       <div class="pequeno">em até 12x no cartão · 1 ano de acesso</div>
-      <div class="cupom-aviso" id="cupom-aviso" hidden>🎁 Seu cupom <strong id="cupom-nome"></strong> de 10% já entra no checkout</div>
+      <div class="cupom-aviso" id="cupom-aviso" hidden>🎁 Seu cupom <strong id="cupom-nome"></strong> <span id="cupom-valor">de 10%</span> já entra no checkout</div>
       <ul>
         <li><strong>A Fábrica de Conteúdo</strong>, com 15 produções</li>
         <li>Vídeo longo pro YouTube, com thumbnails, títulos e tags</li>
@@ -512,7 +512,7 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
     <div class="acao revela" style="text-align:center">
       <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_fecho">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:10px 0 0">De R$ 297 por R$ 147 por tempo limitado, em até 12x · 7 dias de garantia</p>
+      <p class="pequeno" style="margin:10px 0 0" id="oferta-fim">De R$ 297 por R$ 147 por tempo limitado, em até 12x · 7 dias de garantia</p>
     </div>
   </section>
 
@@ -589,6 +589,19 @@ document.addEventListener("DOMContentLoaded", function () {
   if (CUPOM) {
     document.getElementById("cupom-nome").textContent = CUPOM;
     document.getElementById("cupom-aviso").hidden = false;
+    // O CUPOM DO DOWNSELL (23/11/2026): quem foi ao checkout e não comprou vê o anúncio com `?cupom=VOLTA67`, R$ 80 de desconto na oferta
+    // de R$ 147 (R$ 67, abaixo das duas versões do teste A/B). A página mostra o preço com o cupom em todo lugar que mostra o de R$ 147.
+    // Cupom novo com outro valor entra nesta lista; o que não está nela segue como o de 10% dos 1.000 seguidores.
+    var CUPONS = { VOLTA67: { valor: "de R$ 80", preco: "R$ 67", dia: "R$ 0,18" } };
+    var c = CUPONS[CUPOM];
+    if (c) {
+      document.getElementById("cupom-valor").textContent = c.valor;
+      document.getElementById("oferta-ancora").innerHTML = "de <s>R$ 147</s> por";
+      document.getElementById("oferta-preco").textContent = c.preco;
+      document.getElementById("oferta-dia").textContent = "Tudo isso por " + c.dia + " por dia";
+      document.getElementById("oferta-sobe").textContent = "condição só pra quem voltou, por tempo limitado";
+      document.getElementById("oferta-fim").textContent = "De R$ 147 por " + c.preco + " com o seu cupom, em até 12x · 7 dias de garantia";
+    }
   }
 
   document.querySelectorAll(".comprar").forEach(function (b) {
