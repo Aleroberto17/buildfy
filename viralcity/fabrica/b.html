@@ -473,7 +473,7 @@ fbq('track', 'PageView');
       </ul>
       <a class="botao brilhar comprar" href="#oferta" data-onde="oferta">Quero a Fábrica de Conteúdo</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_oferta">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:12px 0 0">Pra Windows. Usa a sua assinatura do Claude.</p>
+      <p class="pequeno" style="margin:12px 0 0">Pra Windows. Funciona com a IA grátis ou com a sua assinatura do Claude ou do ChatGPT.</p>
       <div class="garantia">
         <svg viewBox="0 0 18 20" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h14v9l-2 3-2 2-3 2-3-2-2-2-2-3z" fill="#3f9a52"/><path d="M3 3h12v8l-2 3-2 2-2 1-2-1-2-2-2-3z" fill="#5fcf75"/><path d="M5 9h2v2h1v-1h1V9h1V8h1V7h2v2h-1v1h-1v1H9v1H8v1H6v-1H5z" fill="#0b1d24"/></svg>
         <div><strong>7 dias de garantia.</strong><br><span class="pequeno">Mudou de ideia, devolvo o seu dinheiro.</span></div>
@@ -486,7 +486,7 @@ fbq('track', 'PageView');
     <div class="faq">
       <details class="revela"><summary>Preciso aparecer ou gravar a minha voz?</summary><p>Não. Quem narra é a Fábrica.</p></details>
       <details class="revela"><summary>Preciso saber programar?</summary><p>Não. Escreve o tema e clica. O curso mostra o resto.</p></details>
-      <details class="revela"><summary>Tem algum outro custo?</summary><p>Só a sua assinatura do Claude. A voz é grátis.</p></details>
+      <details class="revela"><summary>Tem algum outro custo?</summary><p>Não precisa ter. Dá pra usar a Fábrica sem pagar nada de IA: com o Gemini, pela chave grátis do Google, ou com o Llama, rodando no seu computador. Se você já tem o Claude ou o ChatGPT, ela usa a sua assinatura, e com o Claude os roteiros ficam ainda mais caprichados. A voz é grátis.</p></details>
       <details class="revela"><summary>Serve pro meu assunto?</summary><p>Curiosidades, como as coisas funcionam, lugares, natureza, invenções. Se tem imagem, ela faz.</p></details>
       <details class="revela"><summary>Funciona no Mac ou no celular?</summary><p>Não. Só Windows.</p></details>
       <details class="revela"><summary>O acesso é pra sempre?</summary><p>É de 1 ano, com todas as atualizações. Depois, é só renovar.</p></details>
@@ -624,7 +624,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // A TRAVA: o resto da página e os botões só aparecem quando a VSL, com som, chega na oferta. Quem já chegou uma vez (guardado
   // no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
-  var OFERTA_EM = 85; // a VSL B (teste A/B de 17/11/2026, fazer-teste-ab.py)
+  var OFERTA_EM = 78; // a VSL B (teste A/B de 17/11/2026, fazer-teste-ab.py; 78 desde 24/11/2026, com o vídeo a 1,25x)
   var CHAVE_DA_TRAVA = "fabrica-b:viu-oferta";
   function jaViu() { try { return localStorage.getItem(CHAVE_DA_TRAVA) === "1"; } catch (e) { return false; } }
   function liberar(marcar) {
