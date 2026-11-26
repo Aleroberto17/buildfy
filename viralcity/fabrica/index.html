@@ -2,19 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<!-- sorteio A/B -->
+<!-- teste A/B encerrado -->
 <script>
-/* O TESTE A/B (17/11/2026): metade das visitas vai pra versão B (b.html). Ver fazer-teste-ab.py. */
-(function () {
-  var q = location.search, v = (q.match(/[?&]v=(a|b)(?:&|$)/i) || [])[1];
-  if (/[?&]cupom=/.test(q)) v = "a";
-  try {
-    v = (v || localStorage.getItem("fabrica:ab") || (Math.random() < 0.5 ? "a" : "b")).toLowerCase();
-    localStorage.setItem("fabrica:ab", v);
-  } catch (e) { v = v || "a"; }
-  window.VARIANTE = v === "b" ? "b" : "a";
-  if (window.VARIANTE === "b") location.replace("b.html" + q + location.hash);
-})();
+/* O TESTE A/B (17/11 a 26/11/2026) ACABOU: a A venceu (4 vendas a 0; na B a oferta abria aos 1min18 e quem clicava chegava no preco
+   sem ter visto o produto). Todo mundo fica na A, inclusive quem foi sorteado pra B antes. A b.html manda pra ca. */
+window.VARIANTE = "a";
+try { localStorage.setItem("fabrica:ab", "a"); } catch (e) {}
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">

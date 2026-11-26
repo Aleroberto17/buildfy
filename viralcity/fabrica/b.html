@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<script>window.VARIANTE = "b"; try { localStorage.setItem("fabrica:ab", "b"); } catch (e) {}</script>
+<script>/* teste A/B encerrado em 26/11/2026: a B manda pra A */ try { localStorage.setItem("fabrica:ab", "a"); } catch (e) {} location.replace("./" + location.search.replace(/([?&])v=b(&|$)/i, "$1").replace(/[?&]$/, "") + location.hash);</script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fábrica de Conteúdo</title>
