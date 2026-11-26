@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Sua Fábrica vitalícia</title>
+<!-- O UPSELL DA LICENÇA VITALÍCIA (25/11/2026): a Kirvano manda pra cá quem acabou de comprar a Fábrica (oferta A, "Pós-compra").
+     Os botões usam as classes da Kirvano (kirvano-payment-trigger e kirvano-refuse-trigger), e o script da estratégia de upsell vai
+     no fim do body. A licença fica vitalícia sozinha: o servidor de licença lê a venda (licenca-worker.js, tabela vitalicias). -->
+<link rel="icon" href="../../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --fundo:#0b1d24; --fundo-2:#0f2a33; --linha:#1f4a56; --ambar:#ffb238; --amarelo:#ffd84d; --verde:#3ddc84; --texto:#e6f0f2; --suave:#9fbcc3; color-scheme:dark; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--fundo); color:var(--texto); font:17px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing:antialiased; }
+  .faixa { background:var(--verde); color:#06301a; text-align:center; font-weight:800; padding:10px 16px; font-size:15px; }
+  main { max-width:620px; margin:0 auto; padding:36px 16px 56px; }
+  .selo { display:inline-block; font-size:13px; font-weight:800; letter-spacing:1.5px; color:var(--ambar); border:1px solid var(--ambar); border-radius:99px; padding:4px 12px; }
+  h1 { font-size:clamp(30px, 7vw, 44px); line-height:1.08; margin:16px 0 12px; color:#fff; letter-spacing:-.5px; }
+  h1 em { font-style:normal; color:var(--amarelo); }
+  .sub { color:var(--suave); font-size:18px; margin:0 0 26px; }
+  .caixa { background:var(--fundo-2); border:1px solid var(--linha); border-radius:16px; padding:22px 22px 8px; }
+  .lista { list-style:none; margin:0; padding:0; }
+  .lista li { display:flex; gap:12px; margin:0 0 14px; }
+  .lista b { color:#fff; }
+  .ok { flex:none; width:24px; height:24px; border-radius:50%; background:var(--verde); color:#06301a; font-weight:800; display:grid; place-items:center; font-size:14px; margin-top:2px; }
+  .conta { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:22px 0; }
+  .conta div { background:var(--fundo-2); border:1px solid var(--linha); border-radius:14px; padding:14px 16px; }
+  .conta small { display:block; color:var(--suave); font-size:13px; }
+  .conta strong { font-size:22px; color:#fff; }
+  .conta .bom { border-color:var(--ambar); }
+  .conta .bom strong { color:var(--amarelo); }
+  .preco { text-align:center; margin:28px 0 14px; }
+  .preco .valor { font-size:46px; font-weight:800; color:#fff; line-height:1; }
+  .preco .valor span { font-size:20px; color:var(--suave); font-weight:500; }
+  .preco p { margin:8px 0 0; color:var(--suave); font-size:15px; }
+  .sim { display:block; width:100%; border:0; border-radius:14px; padding:18px 16px; background:var(--amarelo); color:#1b1400; font:800 19px/1.2 Inter, sans-serif; cursor:pointer; box-shadow:0 6px 0 #c99a12; }
+  .sim:active { transform:translateY(3px); box-shadow:0 3px 0 #c99a12; }
+  .nao { display:block; width:100%; margin-top:16px; background:none; border:0; color:var(--suave); font:500 15px Inter, sans-serif; text-decoration:underline; cursor:pointer; padding:8px; }
+  .garantia { margin-top:26px; text-align:center; color:var(--suave); font-size:14px; }
+  @media (max-width:420px) { .conta { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="faixa">✓ Compra aprovada. Sua Fábrica já está liberada no seu e-mail.</div>
+<main>
+  <span class="selo">SÓ NESTA PÁGINA</span>
+  <h1>Deixe a sua Fábrica <em>vitalícia</em></h1>
+  <p class="sub">A sua licença vale 1 ano. Com mais R$&nbsp;97, uma vez só, ela nunca mais vence.</p>
+
+  <div class="caixa">
+    <ul class="lista">
+      <li><span class="ok">✓</span><span><b>Sem renovação todo ano.</b> Você não paga os R$&nbsp;147 de novo no ano que vem, nem nos outros.</span></li>
+      <li><span class="ok">✓</span><span><b>As atualizações continuam chegando.</b> Tudo que entrar de novo na Fábrica chega pra você também.</span></li>
+      <li><span class="ok">✓</span><span><b>Liga sozinha.</b> No mesmo e-mail da compra, sem você precisar fazer nada.</span></li>
+    </ul>
+  </div>
+
+  <div class="conta">
+    <div><small>Renovando todo ano</small><strong>R$ 147 por ano</strong></div>
+    <div class="bom"><small>Vitalícia</small><strong>R$ 97, uma vez</strong></div>
+  </div>
+
+  <div class="preco">
+    <div class="valor">R$ 97 <span>uma vez só</span></div>
+    <p>Essa oferta aparece só agora, logo depois da compra.</p>
+  </div>
+
+  <button class="sim kirvano-payment-trigger" type="button">Sim, quero a Fábrica vitalícia</button>
+  <button class="nao kirvano-refuse-trigger" type="button">Não, prefiro renovar todo ano</button>
+
+  <p class="garantia">7 dias de garantia, como na compra da Fábrica.</p>
+</main>
+<!-- KIRVANO: script da estratégia "Upsell vitalícia" (produto Fábrica de Conteúdo), oferta de R$ 97 do produto da vitalícia -->
+<script>
+  var offer = "febfdfb9-5ba3-419e-9fac-cd0080b961ac";
+  var nextPageURL = null;
+  var refusePageURL = null;
+</script>
+<script src="https://snippets.kirvano.com/upsell.min.js"></script>
+</body>
+</html>
