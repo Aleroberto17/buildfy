@@ -162,6 +162,10 @@
   /* ---------- a oferta ---------- */
   .oferta { position: relative; max-width: 560px; margin: 0 auto; text-align: center; background: var(--fundo-2); border: 3px solid var(--laranja); box-shadow: 8px 8px 0 var(--laranja); padding: 32px 24px 28px; }
   .oferta .preco { font-family: var(--pixel); font-size: 42px; color: var(--amarelo); margin: 12px 0 6px; text-shadow: 4px 4px 0 #3a1a07; }
+  .oferta .parcela { font-family: var(--pixel); font-size: 18px; color: var(--ambar); margin: 12px 0 -4px; }
+  .oferta .parcela + .preco { margin-top: 6px; white-space: nowrap; font-size: clamp(28px, 9vw, 42px); }
+  .oferta .parcela[hidden] { display: none; }
+  .oferta .avista { color: var(--texto); font-size: 18px; margin: 0 0 4px; }
   .oferta ul { text-align: left; margin: 20px 0; padding-left: 0; list-style: none; }
   .oferta li { padding: 6px 0 6px 28px; position: relative; }
   .oferta li::before { content: ""; position: absolute; left: 0; top: 12px; width: 14px; height: 14px; background: var(--ambar); box-shadow: 2px 2px 0 var(--laranja); }
@@ -470,9 +474,14 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
     <div class="oferta revela">
       <div class="pequeno">preço de lançamento, por tempo limitado</div>
       <div class="ancora" id="oferta-ancora">de <s>R$ 297</s> por</div>
-      <div class="preco" id="oferta-preco">R$ 147</div>
+      <!-- A PARCELA EM DESTAQUE (25/11/2026, pedido do dono): quem vem do anúncio abria o checkout, via R$ 147 e fechava. O número grande é a
+           parcela do cartão, a mesma do checkout da Kirvano (12x de R$ 15,14, com os juros dela), e o à vista fica embaixo. Mudou o preço ou
+           as parcelas na Kirvano, muda aqui e na b.html. Com cupom, volta o à vista grande (o código do cupom, no fim da página). -->
+      <div class="parcela" id="oferta-parcela">12x de</div>
+      <div class="preco" id="oferta-preco">R$ 15,14</div>
+      <div class="avista" id="oferta-avista">ou R$ 147 à vista</div>
       <div class="pequeno" id="oferta-sobe">depois, o preço sobe</div>
-      <div class="pequeno">em até 12x no cartão · 1 ano de acesso</div>
+      <div class="pequeno">1 ano de acesso</div>
       <div class="cupom-aviso" id="cupom-aviso" hidden>🎁 Seu cupom <strong id="cupom-nome"></strong> <span id="cupom-valor">de 10%</span> já entra no checkout</div>
       <ul>
         <li><strong>A Fábrica de Conteúdo</strong>, com 15 produções</li>
@@ -512,7 +521,7 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
     <div class="acao revela" style="text-align:center">
       <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_fecho">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:10px 0 0" id="oferta-fim">De R$ 297 por R$ 147 por tempo limitado, em até 12x · 7 dias de garantia</p>
+      <p class="pequeno" style="margin:10px 0 0" id="oferta-fim">De R$ 297 por 12x de R$ 15,14 (ou R$ 147 à vista) por tempo limitado · 7 dias de garantia</p>
     </div>
   </section>
 
@@ -595,6 +604,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Cupom novo com outro valor entra nesta lista; o que não está nela segue como o de 10% dos 1.000 seguidores.
     var CUPONS = { VOLTA67: { valor: "de R$ 80", preco: "R$ 67", dia: "R$ 0,18" } };
     var c = CUPONS[CUPOM];
+    // Com cupom a parcela de R$ 15,14 não vale mais: volta o à vista grande, e as parcelas só na linha de baixo.
+    document.getElementById("oferta-parcela").hidden = true;
+    document.getElementById("oferta-preco").textContent = "R$ 147";
+    document.getElementById("oferta-avista").textContent = "à vista, ou em até 12x no cartão";
+    document.getElementById("oferta-fim").textContent = "De R$ 297 por R$ 147 por tempo limitado, em até 12x · 7 dias de garantia";
     if (c) {
       document.getElementById("cupom-valor").textContent = c.valor;
       document.getElementById("oferta-ancora").innerHTML = "de <s>R$ 147</s> por";
