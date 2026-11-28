@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<script>window.VARIANTE = "b"; try { localStorage.setItem("fabrica:ab-estilos", "b"); } catch (e) {}</script>
+<script>/* teste A/B dos estilos encerrado em 27/11/2026: a B virou a página principal, e o link b.html manda pra ela */ try { localStorage.removeItem("fabrica:ab-estilos"); } catch (e) {} location.replace("./" + location.search.replace(/([?&])v=b(&|$)/i, "$1").replace(/[?&]$/, "") + location.hash);</script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fábrica de Conteúdo</title>
@@ -122,9 +122,6 @@
   .postos li { background: var(--fundo-2); border: 2px solid var(--linha); padding: 10px 12px; font-size: 14px; color: var(--texto-suave); }
   .postos li b { display: block; font-family: var(--pixel); font-size: 9px; color: var(--amarelo); margin-bottom: 4px; line-height: 1.5; }
   .escritorio .monitor::before { display: none; }
-  /* o minerador (27/11/2026): o mesmo bloco do escritório, com a tela à esquerda */
-  .escritorio.invertido .texto { order: 2; }
-  @media (max-width: 720px) { .escritorio.invertido .texto { order: 0; } }
 
   /* ---------- números da licença ---------- */
   .modos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 860px; margin: 0 auto; }
@@ -154,7 +151,6 @@
   .oferta .preco { font-family: var(--pixel); font-size: 42px; color: var(--amarelo); margin: 12px 0 6px; text-shadow: 4px 4px 0 #3a1a07; }
   .oferta .parcela { font-family: var(--pixel); font-size: 18px; color: var(--ambar); margin: 12px 0 -4px; }
   .oferta .parcela + .preco { margin-top: 6px; white-space: nowrap; font-size: clamp(28px, 9vw, 42px); }
-  .oferta .parcela[hidden] { display: none; }
   .oferta .avista { color: var(--texto); font-size: 18px; margin: 0 0 4px; }
   .oferta ul { text-align: left; margin: 20px 0; padding-left: 0; list-style: none; }
   .oferta li { padding: 6px 0 6px 28px; position: relative; }
@@ -234,14 +230,6 @@
   .cupom-aviso { margin: 14px auto 4px; padding: 10px 14px; background: #143843; border: 2px dashed var(--ambar); color: var(--texto); font-size: 15px; max-width: 420px; }
   .cupom-aviso strong { color: var(--amarelo); }
   .cupom-aviso[hidden] { display: none; }
-  /* os 22 estilos (teste A/B de 27/11/2026) */
-  .estilos-grade { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; max-width: 1000px; margin: 22px auto 0; }
-  .estilos-grade figure { width: calc((100% - 42px) / 4); margin: 0; background: #061218; border: 3px solid var(--linha); box-shadow: 6px 6px 0 #05242c; }
-  .estilos-grade video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; }
-  .estilos-grade figcaption { font-family: var(--pixel); font-size: 9px; line-height: 1.5; color: #1a0f05; background: var(--ambar); padding: 7px 8px; }
-  .estilos-grade figure.mistura figcaption { background: var(--amarelo); }
-  .estilos-sub { text-align: center; max-width: 760px; margin: 0 auto; color: rgba(255,255,255,.82); font-size: 17px; line-height: 1.6; }
-  @media (max-width: 720px) { .estilos-grade { gap: 10px; } .estilos-grade figure { width: calc((100% - 10px) / 2); } .estilos-grade figcaption { font-size: 8px; } }
 </style>
 <!-- O PIXEL DA META (17/11/2026, pro tráfego pago): "Fábrica de Conteúdo", 2601205323715303, na conta CA#1. Aqui ele marca só a visita
      (PageView). A ida ao checkout (InitiateCheckout), o pagamento (AddPaymentInfo) e a compra (Purchase) quem manda é a Kirvano, pelo
@@ -254,7 +242,7 @@ fbq('init', '2601205323715303');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2601205323715303&ev=PageView&noscript=1"></noscript>
-<script src="../medir.js" data-pagina="fabrica-estilos"></script>
+<script src="../medir.js" data-pagina="fabrica-b"></script>
 <script src="../vsl-player.js"></script>
 </head>
 <body class="travada">
@@ -275,7 +263,7 @@ fbq('track', 'PageView');
     <h1 class="revela">Seu canal com vídeo novo todo dia. <em>Sem gravar, sem editar, sem aparecer.</em></h1>
     <p class="lead revela">Você escolhe o assunto. A Fábrica pesquisa, escreve, narra, monta e posta. <b>Você só aprova.</b></p>
     <div class="monitor revela">
-      <video id="vsl" src="midia/vsl-nova.mp4" poster="midia/vsl-nova.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo de apresentação da Fábrica de Conteúdo"></video>
+      <video id="vsl" src="midia/vsl-b.mp4" poster="midia/vsl-b.jpg" muted playsinline autoplay loop preload="metadata" aria-label="Vídeo de apresentação da Fábrica de Conteúdo"></video>
       <button class="som" id="som" type="button">▶ Toque pra ouvir</button>
     </div>
     <p class="trava-aviso">Toque em <b>"Toque pra ouvir"</b> e assista para garantir seu acesso à Fábrica.</p>
@@ -324,35 +312,6 @@ fbq('track', 'PageView');
         <div class="fone"><video src="img/corte.mp4" poster="img/corte-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Trecho de um corte em pé feito pela Fábrica"></video></div>
         <div class="legenda-pixel">+ 3 CORTES EM PÉ</div>
       </div>
-    </div>
-  </section>
-
-  <section id="estilos">
-    <h2 class="tit revela">22 estilos de vídeo. Você escolhe.</h2>
-    <p class="estilos-sub revela">De documentário com imagem real a animação, globo em 3D, terror e quiz. E dá pra misturar vários no mesmo vídeo, com as mesmas cores.</p>
-    <div class="estilos-grade">
-      <figure class="revela"><video src="img/estilos/documentario.mp4" poster="img/estilos/documentario.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Documentário"></video><figcaption>Documentário</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/banco.mp4" poster="img/estilos/banco.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Vídeos reais"></video><figcaption>Vídeos reais</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/ia.mp4" poster="img/estilos/ia.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Imagens de IA"></video><figcaption>Imagens de IA</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/animacao.mp4" poster="img/estilos/animacao.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Animação"></video><figcaption>Animação</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/palito.mp4" poster="img/estilos/palito.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Boneco de palito"></video><figcaption>Boneco de palito</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/quadro.mp4" poster="img/estilos/quadro.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Quadro branco"></video><figcaption>Quadro branco</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/mapa.mp4" poster="img/estilos/mapa.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Mapa animado"></video><figcaption>Mapa animado</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/globo.mp4" poster="img/estilos/globo.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Globo 3D"></video><figcaption>Globo 3D</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/ranking.mp4" poster="img/estilos/ranking.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Ranking"></video><figcaption>Ranking</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/escala.mp4" poster="img/estilos/escala.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Escala"></video><figcaption>Escala</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/tres.mp4" poster="img/estilos/tres.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Curiosidades 3D"></video><figcaption>Curiosidades 3D</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/texto.mp4" poster="img/estilos/texto.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Texto animado"></video><figcaption>Texto animado</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/recorte.mp4" poster="img/estilos/recorte.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Recorte de papel"></video><figcaption>Recorte de papel</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/quadrinhos.mp4" poster="img/estilos/quadrinhos.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Quadrinhos"></video><figcaption>Quadrinhos</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/investigacao.mp4" poster="img/estilos/investigacao.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Investigação"></video><figcaption>Investigação</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/jornal.mp4" poster="img/estilos/jornal.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Telejornal"></video><figcaption>Telejornal</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/terror.mp4" poster="img/estilos/terror.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Terror"></video><figcaption>Terror</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/chat.mp4" poster="img/estilos/chat.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo História no celular"></video><figcaption>História no celular</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/relato.mp4" poster="img/estilos/relato.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Relato"></video><figcaption>Relato</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/relaxar.mp4" poster="img/estilos/relaxar.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Relaxar e dormir"></video><figcaption>Relaxar e dormir</figcaption></figure>
-      <figure class="revela"><video src="img/estilos/quiz.mp4" poster="img/estilos/quiz.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Quiz"></video><figcaption>Quiz</figcaption></figure>
-      <figure class="revela mistura"><video src="img/estilos/mistura.mp4" poster="img/estilos/mistura.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="Exemplo do estilo Misturar estilos"></video><figcaption>Misturar estilos</figcaption></figure>
     </div>
   </section>
 
@@ -487,25 +446,6 @@ fbq('track', 'PageView');
     </div>
   </section>
 
-  <section class="escritorio invertido">
-    <div class="texto revela">
-      <h2 class="tit" style="text-align:left">Não sabe o nicho? O minerador acha.</h2>
-      <p>Você escreve um assunto. Ele procura no YouTube os canais sem rosto que estão crescendo e mostra quanto cada um faz.</p>
-      <ul class="postos">
-        <li><b>NICHO</b>você escreve</li>
-        <li><b>CANAIS</b>sem rosto, crescendo</li>
-        <li><b>VIEWS</b>por vídeo</li>
-        <li><b>RECEITA</b>estimada</li>
-      </ul>
-    </div>
-    <div class="revela">
-      <div class="monitor">
-        <video src="img/minerador.mp4" poster="img/minerador-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O minerador de canais da Fábrica de Conteúdo"></video>
-      </div>
-      <div class="legenda-pixel">O MINERADOR DE CANAIS</div>
-    </div>
-  </section>
-
   <section>
     <h2 class="tit revela">15 produções numa compra só</h2>
     <div class="numeros-licenca">
@@ -516,19 +456,17 @@ fbq('track', 'PageView');
   </section>
 
   <section id="oferta">
-    <h2 class="tit revela" id="oferta-dia">Tudo isso por R$ 0,40 por dia</h2>
+    <h2 class="tit revela">Tudo isso por R$ 0,40 por dia</h2>
     <div class="oferta revela">
       <div class="pequeno">preço de lançamento, por tempo limitado</div>
-      <div class="ancora" id="oferta-ancora">de <s>R$ 297</s> por</div>
-      <!-- A PARCELA EM DESTAQUE (25/11/2026, pedido do dono): quem vem do anúncio abria o checkout, via R$ 147 e fechava. O número grande é a
-           parcela do cartão, a mesma do checkout da Kirvano (12x de R$ 15,14, com os juros dela), e o à vista fica embaixo. Mudou o preço ou
-           as parcelas na Kirvano, muda aqui e na b.html. Com cupom, volta o à vista grande (o código do cupom, no fim da página). -->
-      <div class="parcela" id="oferta-parcela">12x de</div>
-      <div class="preco" id="oferta-preco">R$&nbsp;15,14</div>
-      <div class="avista" id="oferta-avista">ou R$ 147 à vista</div>
-      <div class="pequeno" id="oferta-sobe">depois, o preço sobe</div>
+      <div class="ancora">de <s>R$ 297</s> por</div>
+      <!-- A PARCELA EM DESTAQUE (25/11/2026): a mesma da index.html, 12x de R$ 15,14 como no checkout da Kirvano, e o à vista embaixo. -->
+      <div class="parcela">12x de</div>
+      <div class="preco">R$&nbsp;15,14</div>
+      <div class="avista">ou R$ 147 à vista</div>
+      <div class="pequeno">depois, o preço sobe</div>
       <div class="pequeno">1 ano de acesso</div>
-      <div class="cupom-aviso" id="cupom-aviso" hidden>🎁 Seu cupom <strong id="cupom-nome"></strong> <span id="cupom-valor">de 10%</span> já entra no checkout</div>
+      <div class="cupom-aviso" id="cupom-aviso" hidden>🎁 Seu cupom <strong id="cupom-nome"></strong> de 10% já entra no checkout</div>
       <ul>
         <li><strong>A Fábrica de Conteúdo</strong>, com 15 produções</li>
         <li>Vídeo longo pro YouTube, com thumbnails, títulos e tags</li>
@@ -536,7 +474,6 @@ fbq('track', 'PageView');
         <li>Modo gameplay: edita a sua gameplay crua, com legenda, zoom, thumbnails e cortes em pé com a sua webcam</li>
         <li>O maestro: um vídeo por dia, sozinho</li>
         <li>O escritório dos agentes</li>
-        <li>O minerador de canais: os nichos sem rosto que estão crescendo</li>
         <li>O curso da Fábrica, passo a passo</li>
         <li>1 ano de acesso, com todas as atualizações</li>
       </ul>
@@ -568,7 +505,7 @@ fbq('track', 'PageView');
     <div class="acao revela" style="text-align:center">
       <a class="botao brilhar comprar" href="#oferta" data-onde="fecho">Quero a minha Fábrica</a>
       <p class="aviso-breve" hidden>A venda abre em breve. Acompanhe o <a href="https://www.instagram.com/viralcity.jogo/" target="_blank" rel="noopener" data-medir="instagram_fecho">@viralcity.jogo</a> pra saber quando.</p>
-      <p class="pequeno" style="margin:10px 0 0" id="oferta-fim">De R$ 297 por 12x de R$ 15,14 (ou R$ 147 à vista) por tempo limitado · 7 dias de garantia</p>
+      <p class="pequeno" style="margin:10px 0 0">De R$ 297 por 12x de R$ 15,14 (ou R$ 147 à vista) por tempo limitado · 7 dias de garantia</p>
     </div>
   </section>
 
@@ -601,7 +538,7 @@ fbq('track', 'PageView');
 <script>
 // O LINK DO CHECKOUT NA KIRVANO. Vazio, os botões de compra dizem "Em breve" e não levam a lugar nenhum.
 // Com o link, eles vão pra Kirvano com a origem do Instagram, e o medir.js marca "foi_pro_checkout".
-var CHECKOUT_URL = "https://pay.kirvano.com/b7049a09-e281-48a3-9e5b-14cdecbd79ad";
+var CHECKOUT_URL = "https://pay.kirvano.com/b7049a09-e281-48a3-9e5b-14cdecbd79ad"; // desde 24/11/2026 a B vende a R$ 147, no checkout da A (a versão segue no "-vb")
 
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
@@ -646,24 +583,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (CUPOM) {
     document.getElementById("cupom-nome").textContent = CUPOM;
     document.getElementById("cupom-aviso").hidden = false;
-    // O CUPOM DO DOWNSELL (23/11/2026): quem foi ao checkout e não comprou vê o anúncio com `?cupom=VOLTA67`, R$ 80 de desconto na oferta
-    // de R$ 147 (R$ 67, abaixo das duas versões do teste A/B). A página mostra o preço com o cupom em todo lugar que mostra o de R$ 147.
-    // Cupom novo com outro valor entra nesta lista; o que não está nela segue como o de 10% dos 1.000 seguidores.
-    var CUPONS = { VOLTA67: { valor: "de R$ 80", preco: "R$ 67", dia: "R$ 0,18" } };
-    var c = CUPONS[CUPOM];
-    // Com cupom a parcela de R$ 15,14 não vale mais: volta o à vista grande, e as parcelas só na linha de baixo.
-    document.getElementById("oferta-parcela").hidden = true;
-    document.getElementById("oferta-preco").textContent = "R$ 147";
-    document.getElementById("oferta-avista").textContent = "à vista, ou em até 12x no cartão";
-    document.getElementById("oferta-fim").textContent = "De R$ 297 por R$ 147 por tempo limitado, em até 12x · 7 dias de garantia";
-    if (c) {
-      document.getElementById("cupom-valor").textContent = c.valor;
-      document.getElementById("oferta-ancora").innerHTML = "de <s>R$ 147</s> por";
-      document.getElementById("oferta-preco").textContent = c.preco;
-      document.getElementById("oferta-dia").textContent = "Tudo isso por " + c.dia + " por dia";
-      document.getElementById("oferta-sobe").textContent = "condição só pra quem voltou, por tempo limitado";
-      document.getElementById("oferta-fim").textContent = "De R$ 147 por " + c.preco + " com o seu cupom, em até 12x · 7 dias de garantia";
-    }
   }
 
   document.querySelectorAll(".comprar").forEach(function (b) {
@@ -711,7 +630,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // A TRAVA: o resto da página e os botões só aparecem quando a VSL, com som, chega na oferta. Quem já chegou uma vez (guardado
   // no navegador) vê tudo direto; `?tudo=1` mostra a página inteira (pro dono conferir).
-  var OFERTA_EM = 227; // a VSL nova (teste A/B dos estilos de 27/11/2026, fazer-teste-estilos.py)
+  var OFERTA_EM = 78; // a VSL B (teste A/B de 17/11/2026, fazer-teste-ab.py; 78 desde 24/11/2026, com o vídeo a 1,25x)
   var CHAVE_DA_TRAVA = "fabrica-b:viu-oferta";
   function jaViu() { try { return localStorage.getItem(CHAVE_DA_TRAVA) === "1"; } catch (e) { return false; } }
   function liberar(marcar) {
