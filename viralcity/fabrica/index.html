@@ -136,6 +136,9 @@
   .postos li { background: var(--fundo-2); border: 2px solid var(--linha); padding: 10px 12px; font-size: 14px; color: var(--texto-suave); }
   .postos li b { display: block; font-family: var(--pixel); font-size: 9px; color: var(--amarelo); margin-bottom: 4px; line-height: 1.5; }
   .escritorio .monitor::before { display: none; }
+  /* o minerador (27/11/2026): o mesmo bloco do escritório, com a tela à esquerda */
+  .escritorio.invertido .texto { order: 2; }
+  @media (max-width: 720px) { .escritorio.invertido .texto { order: 0; } }
 
   /* ---------- números da licença ---------- */
   .modos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 860px; margin: 0 auto; }
@@ -461,6 +464,25 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
     </div>
   </section>
 
+  <section class="escritorio invertido">
+    <div class="texto revela">
+      <h2 class="tit" style="text-align:left">Não sabe o nicho? O minerador acha.</h2>
+      <p>Você escreve um assunto. Ele procura no YouTube os canais sem rosto que estão crescendo e mostra quanto cada um faz.</p>
+      <ul class="postos">
+        <li><b>NICHO</b>você escreve</li>
+        <li><b>CANAIS</b>sem rosto, crescendo</li>
+        <li><b>VIEWS</b>por vídeo</li>
+        <li><b>RECEITA</b>estimada</li>
+      </ul>
+    </div>
+    <div class="revela">
+      <div class="monitor">
+        <video src="img/minerador.mp4" poster="img/minerador-poster.jpg" muted playsinline loop preload="none" data-quando-aparecer aria-label="O minerador de canais da Fábrica de Conteúdo"></video>
+      </div>
+      <div class="legenda-pixel">O MINERADOR DE CANAIS</div>
+    </div>
+  </section>
+
   <section>
     <h2 class="tit revela">15 produções numa compra só</h2>
     <div class="numeros-licenca">
@@ -491,6 +513,7 @@ if (window.VARIANTE !== 'b') fbq('track', 'PageView');
         <li>Modo gameplay: edita a sua gameplay crua, com legenda, zoom, thumbnails e cortes em pé com a sua webcam</li>
         <li>O maestro: um vídeo por dia, sozinho</li>
         <li>O escritório dos agentes</li>
+        <li>O minerador de canais: os nichos sem rosto que estão crescendo</li>
         <li>O curso da Fábrica, passo a passo</li>
         <li>1 ano de acesso, com todas as atualizações</li>
       </ul>
